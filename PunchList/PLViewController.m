@@ -21,6 +21,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
     self.PropertyScrollView.contentSize=CGSizeMake(2000, 2000);
     [self.PropertyScrollView setDecelerationRate:0.0];
+    [self.PropertyScrollView setBouncesZoom:NO];
     [self updateUI];
     
 }
