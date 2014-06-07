@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PLItem.h"
 
 @interface PLViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UITextField *PropertyName;
+@property (weak, nonatomic) IBOutlet UIScrollView *PropertyScrollView;
 
 @end

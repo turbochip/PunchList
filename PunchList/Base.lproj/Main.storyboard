@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5023" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="dnP-Ow-poG">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--class Prefix:identifier View Controller-->
+        <!--View Controller - Property-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="PLViewController" sceneMemberID="viewController">
@@ -15,11 +15,74 @@
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="winston" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vRt-jG-PkZ">
+                                <rect key="frame" x="83" y="65" width="217" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name :" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fut-jh-SpY">
+                                <rect key="frame" x="20" y="65" width="55" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rrT-jo-Img">
+                                <rect key="frame" x="20" y="103" width="280" height="445"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="ss2-mE-Sol" appends="YES" id="qEi-Bo-m0I"/>
+                                </connections>
+                            </scrollView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="vRt-jG-PkZ" firstAttribute="top" secondItem="Fut-jh-SpY" secondAttribute="top" id="2nY-GR-aUR"/>
+                            <constraint firstItem="vRt-jG-PkZ" firstAttribute="leading" secondItem="Fut-jh-SpY" secondAttribute="trailing" constant="8" symbolic="YES" id="Ccz-2S-X3E"/>
+                            <constraint firstItem="rrT-jo-Img" firstAttribute="top" secondItem="vRt-jG-PkZ" secondAttribute="bottom" constant="8" symbolic="YES" id="Dc8-CV-9Ia"/>
+                            <constraint firstAttribute="trailing" secondItem="vRt-jG-PkZ" secondAttribute="trailing" constant="20" symbolic="YES" id="KLE-sV-vHP"/>
+                            <constraint firstItem="Fut-jh-SpY" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="20" symbolic="YES" id="Mcb-Q4-HJ1"/>
+                            <constraint firstItem="Fut-jh-SpY" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="1" id="SWA-bz-leN"/>
+                            <constraint firstItem="rrT-jo-Img" firstAttribute="leading" secondItem="Fut-jh-SpY" secondAttribute="leading" id="h83-5W-Udl"/>
+                            <constraint firstItem="rrT-jo-Img" firstAttribute="trailing" secondItem="vRt-jG-PkZ" secondAttribute="trailing" id="wSZ-qr-o7q"/>
+                            <constraint firstAttribute="bottom" secondItem="rrT-jo-Img" secondAttribute="bottom" constant="20" symbolic="YES" id="x0w-60-0WK"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Property" id="7Ul-MM-khU"/>
+                    <connections>
+                        <outlet property="PropertyName" destination="vRt-jG-PkZ" id="aDc-LA-NZj"/>
+                        <outlet property="PropertyScrollView" destination="rrT-jo-Img" id="sf0-AV-89A"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="ss2-mE-Sol">
+                    <connections>
+                        <action selector="scrollTap:" destination="vXZ-lx-hvc" id="ExP-gX-gdU"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
+            <point key="canvasLocation" x="741" y="27"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="CRt-mE-iEs">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dnP-Ow-poG" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hbd-SM-9tK">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="V2j-T7-ro0"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YyR-h4-Mcs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="350" y="45"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

@@ -21,6 +21,9 @@
 		F1A1A34D1943440D0018B092 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A1A32F1943440D0018B092 /* UIKit.framework */; };
 		F1A1A3551943440D0018B092 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F1A1A3531943440D0018B092 /* InfoPlist.strings */; };
 		F1A1A3571943440D0018B092 /* PunchListTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A1A3561943440D0018B092 /* PunchListTests.m */; };
+		F1A1A3611943481D0018B092 /* Winston FloorPlan 1st Floor.png in Resources */ = {isa = PBXBuildFile; fileRef = F1A1A3601943481D0018B092 /* Winston FloorPlan 1st Floor.png */; };
+		F1A1A3631943482C0018B092 /* Winston FloorPlan 2nd floor.png in Resources */ = {isa = PBXBuildFile; fileRef = F1A1A3621943482C0018B092 /* Winston FloorPlan 2nd floor.png */; };
+		F1A1A3661943AE030018B092 /* PLItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A1A3651943AE030018B092 /* PLItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +56,10 @@
 		F1A1A3521943440D0018B092 /* PunchListTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PunchListTests-Info.plist"; sourceTree = "<group>"; };
 		F1A1A3541943440D0018B092 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		F1A1A3561943440D0018B092 /* PunchListTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PunchListTests.m; sourceTree = "<group>"; };
+		F1A1A3601943481D0018B092 /* Winston FloorPlan 1st Floor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Winston FloorPlan 1st Floor.png"; sourceTree = "<group>"; };
+		F1A1A3621943482C0018B092 /* Winston FloorPlan 2nd floor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Winston FloorPlan 2nd floor.png"; sourceTree = "<group>"; };
+		F1A1A3641943AE030018B092 /* PLItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLItem.h; sourceTree = "<group>"; };
+		F1A1A3651943AE030018B092 /* PLItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,12 +119,14 @@
 		F1A1A3311943440D0018B092 /* PunchList */ = {
 			isa = PBXGroup;
 			children = (
-				F1A1A33A1943440D0018B092 /* PLAppDelegate.h */,
-				F1A1A33B1943440D0018B092 /* PLAppDelegate.m */,
 				F1A1A33D1943440D0018B092 /* Main.storyboard */,
 				F1A1A3401943440D0018B092 /* PLViewController.h */,
 				F1A1A3411943440D0018B092 /* PLViewController.m */,
+				F1A1A3641943AE030018B092 /* PLItem.h */,
+				F1A1A3651943AE030018B092 /* PLItem.m */,
 				F1A1A3431943440D0018B092 /* Images.xcassets */,
+				F1A1A3621943482C0018B092 /* Winston FloorPlan 2nd floor.png */,
+				F1A1A3601943481D0018B092 /* Winston FloorPlan 1st Floor.png */,
 				F1A1A3321943440D0018B092 /* Supporting Files */,
 			);
 			path = PunchList;
@@ -126,6 +135,8 @@
 		F1A1A3321943440D0018B092 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F1A1A33A1943440D0018B092 /* PLAppDelegate.h */,
+				F1A1A33B1943440D0018B092 /* PLAppDelegate.m */,
 				F1A1A3331943440D0018B092 /* PunchList-Info.plist */,
 				F1A1A3341943440D0018B092 /* InfoPlist.strings */,
 				F1A1A3371943440D0018B092 /* main.m */,
@@ -230,8 +241,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1A1A3441943440D0018B092 /* Images.xcassets in Resources */,
+				F1A1A3631943482C0018B092 /* Winston FloorPlan 2nd floor.png in Resources */,
 				F1A1A3361943440D0018B092 /* InfoPlist.strings in Resources */,
 				F1A1A33F1943440D0018B092 /* Main.storyboard in Resources */,
+				F1A1A3611943481D0018B092 /* Winston FloorPlan 1st Floor.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,6 +265,7 @@
 			files = (
 				F1A1A33C1943440D0018B092 /* PLAppDelegate.m in Sources */,
 				F1A1A3421943440D0018B092 /* PLViewController.m in Sources */,
+				F1A1A3661943AE030018B092 /* PLItem.m in Sources */,
 				F1A1A3381943440D0018B092 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

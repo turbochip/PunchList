@@ -1,0 +1,17 @@
+{
+  "images" : [
+    {
+      "idiom" : "universal",
+      "scale" : "1x",
+      "filename" : "Winston FloorPlan 1st Floor.png"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    }
+  ],
+  "info" : {
+    "version" : 1,
+    "author" : "xcode"
+  }
+}
