@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F173D9D41944C25F00980960 /* PLfloorView.m in Sources */ = {isa = PBXBuildFile; fileRef = F173D9D31944C25F00980960 /* PLfloorView.m */; };
 		F1A1A32C1943440D0018B092 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A1A32B1943440D0018B092 /* Foundation.framework */; };
 		F1A1A32E1943440D0018B092 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A1A32D1943440D0018B092 /* CoreGraphics.framework */; };
 		F1A1A3301943440D0018B092 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A1A32F1943440D0018B092 /* UIKit.framework */; };
@@ -37,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F173D9D21944C25F00980960 /* PLfloorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLfloorView.h; sourceTree = "<group>"; };
+		F173D9D31944C25F00980960 /* PLfloorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLfloorView.m; sourceTree = "<group>"; };
 		F1A1A3281943440D0018B092 /* PunchList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PunchList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1A1A32B1943440D0018B092 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F1A1A32D1943440D0018B092 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -124,9 +127,9 @@
 				F1A1A3411943440D0018B092 /* PLViewController.m */,
 				F1A1A3641943AE030018B092 /* PLItem.h */,
 				F1A1A3651943AE030018B092 /* PLItem.m */,
+				F173D9D21944C25F00980960 /* PLfloorView.h */,
+				F173D9D31944C25F00980960 /* PLfloorView.m */,
 				F1A1A3431943440D0018B092 /* Images.xcassets */,
-				F1A1A3621943482C0018B092 /* Winston FloorPlan 2nd floor.png */,
-				F1A1A3601943481D0018B092 /* Winston FloorPlan 1st Floor.png */,
 				F1A1A3321943440D0018B092 /* Supporting Files */,
 			);
 			path = PunchList;
@@ -135,6 +138,8 @@
 		F1A1A3321943440D0018B092 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F1A1A3621943482C0018B092 /* Winston FloorPlan 2nd floor.png */,
+				F1A1A3601943481D0018B092 /* Winston FloorPlan 1st Floor.png */,
 				F1A1A33A1943440D0018B092 /* PLAppDelegate.h */,
 				F1A1A33B1943440D0018B092 /* PLAppDelegate.m */,
 				F1A1A3331943440D0018B092 /* PunchList-Info.plist */,
@@ -265,6 +270,7 @@
 			files = (
 				F1A1A33C1943440D0018B092 /* PLAppDelegate.m in Sources */,
 				F1A1A3421943440D0018B092 /* PLViewController.m in Sources */,
+				F173D9D41944C25F00980960 /* PLfloorView.m in Sources */,
 				F1A1A3661943AE030018B092 /* PLItem.m in Sources */,
 				F1A1A3381943440D0018B092 /* main.m in Sources */,
 			);
@@ -471,6 +477,7 @@
 				F1A1A35C1943440D0018B092 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F1A1A35D1943440D0018B092 /* Build configuration list for PBXNativeTarget "PunchListTests" */ = {
 			isa = XCConfigurationList;
@@ -479,6 +486,7 @@
 				F1A1A35F1943440D0018B092 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

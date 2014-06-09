@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PLItem.h"
+#import "PLfloorView.h"
 
 @interface PLViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITextField *PropertyName;

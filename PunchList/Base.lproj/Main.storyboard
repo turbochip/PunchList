@@ -51,7 +51,13 @@
                             <constraint firstAttribute="bottom" secondItem="rrT-jo-Img" secondAttribute="bottom" constant="20" symbolic="YES" id="x0w-60-0WK"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Property" id="7Ul-MM-khU"/>
+                    <navigationItem key="navigationItem" title="Property" id="7Ul-MM-khU">
+                        <barButtonItem key="rightBarButtonItem" title="Load" id="SWf-Nw-Wnb">
+                            <connections>
+                                <action selector="loadProperty:" destination="vXZ-lx-hvc" id="Zaq-cT-27N"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="PropertyName" destination="vRt-jG-PkZ" id="aDc-LA-NZj"/>
                         <outlet property="PropertyScrollView" destination="rrT-jo-Img" id="sf0-AV-89A"/>

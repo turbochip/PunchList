@@ -7,10 +7,14 @@
 //
 
 #import "PLViewController.h"
-#import "PLItem.h"
+//#import "PLItem.h"
+//#import "PLfloorView.h"
 
 @interface PLViewController ()
 @property (nonatomic,strong) NSMutableArray *itemArray;
+@property (nonatomic,strong) UIImage *propertyImage;
+@property (nonatomic,strong) PLfloorView *propertyImageView;
+@property (nonatomic,strong) UIView *propertyViewOverlay;
 @end
 
 @implementation PLViewController
@@ -39,13 +43,31 @@
     newItem.itemDescription=@"Test Description";
     newItem.itemLoc=locationOfTap;
     [self.itemArray addObject:newItem];
+    [self updateUI];
+}
+
+- (IBAction)loadProperty:(UIBarButtonItem *)sender {
+    // build image
+    self.itemArray=nil;
+    self.propertyImage =[UIImage imageNamed:@"Winston 1st Floor"];
+    
+    //propertyimageview is a uiview that will store the subview with the image.
+    self.propertyImageView=[[PLfloorView alloc] initWithFrame:CGRectMake(0, 0, self.PropertyScrollView.contentSize.width, self.PropertyScrollView.contentSize.height)];
+    [self.PropertyScrollView addSubview:[[UIImageView alloc] initWithImage:self.propertyImage]];
+    [self.PropertyScrollView addSubview:self.propertyImageView];
+    
+    
+    [self updateUI];
+    
 }
 
 - (void) updateUI
 {
-    UIImage *propertyName =[UIImage imageNamed:@"Winston 1st Floor"];
-    UIImageView *propertyImageView = [[UIImageView alloc] initWithImage:propertyName];
-    [self.PropertyScrollView addSubview:propertyImageView];
+    for(PLItem *item in self.itemArray) {
+        self.propertyImageView.ploc=item.itemLoc;
+        //[self.propertyImageView drawPoint:item.itemLoc];
+    }
+//    [self.PropertyScrollView addSubview:self.propertyImageView];
   
 }
 
