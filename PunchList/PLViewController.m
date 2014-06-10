@@ -15,6 +15,7 @@
 @property (nonatomic,strong) PLfloorView *propertyImageView;
 @property (nonatomic,strong) UIView *propertyViewOverlay;
 @property (nonatomic,strong) UIView *propertyView;
+@property (nonatomic) NSInteger selectedIssue;
 @end
 
 @implementation PLViewController
@@ -66,6 +67,12 @@
         if([self.propertyImageView.path containsPoint:locationOfTap])
         {
             NSLog(@"Point already exists");
+            for(PLItem *issue in self.itemArray)
+                if(((issue.itemLoc.x>=locationOfTap.x-5) && (issue.itemLoc.x<=locationOfTap.x+5)) &&
+                   ((issue.itemLoc.y>=locationOfTap.y-5) && (issue.itemLoc.y<=locationOfTap.y+5))) {
+                    self.selectedIssue=issue.itemNumber;
+                    [self performSegueWithIdentifier:@"IssueSegue" sender:self];
+                }
             // we need to segue to a new screen showing the information about the existing point.
         } else {
             //we need to segue to a new screen allowing us to enter the information about the new point.
@@ -74,6 +81,8 @@
             newItem.itemDescription=@"Test Description";
             newItem.itemLoc=locationOfTap;
             [self.itemArray addObject:newItem];
+            [[self.itemArray lastObject] setItemNumber:self.itemArray.count-1];
+            self.selectedIssue=self.itemArray.count-1;
             [self performSegueWithIdentifier:@"IssueSegue" sender:self];
         }
     }
@@ -118,10 +127,7 @@
     // Get the new view controller using [segue destinationViewController].
     NSLog(@"Destination view controller is %@",[[segue destinationViewController] description]);
     PLIssueViewController *pivc=(PLIssueViewController *) segue.destinationViewController;
-    pivc.xIssueNumber=self.itemArray.count;
-
-
-
+    pivc.xIssue=self.itemArray[self.selectedIssue];
 }
 
 - (void)didReceiveMemoryWarning

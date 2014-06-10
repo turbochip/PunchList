@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PLItem.h"
 
 @interface PLIssueViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *IssueNumber;
@@ -14,5 +15,5 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *IssueImage;
 
-@property (nonatomic) NSInteger xIssueNumber;
+@property (nonatomic) PLItem * xIssue;
 @end

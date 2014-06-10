@@ -9,7 +9,7 @@
 #import "PLIssueViewController.h"
 
 @interface PLIssueViewController ()
-
+@property (nonatomic) BOOL cancel;
 @end
 
 @implementation PLIssueViewController
@@ -23,11 +23,25 @@
     return self;
 }
 
+- (IBAction)CancelButton:(UIBarButtonItem *)sender {
+    self.cancel=YES;
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.cancel=NO;
     // Do any additional setup after loading the view.
-    self.IssueNumber.text=[[NSString alloc] initWithFormat:@"Issue :%d",self.xIssueNumber];
+    self.IssueNumber.text=[[NSString alloc] initWithFormat:@"Issue : %d",self.xIssue.itemNumber ];
+    self.IssueDescription.text=[[NSString alloc] initWithFormat:@"%@",self.xIssue.itemDescription];
+}
+
+- (void) viewWillDisappear:(BOOL)animated
+{
+    if (!self.cancel)
+        self.xIssue.itemDescription=self.IssueDescription.text;
+
 }
 
 - (void)didReceiveMemoryWarning

@@ -120,7 +120,13 @@
                             <constraint firstAttribute="centerY" secondItem="3g9-Ur-Vaw" secondAttribute="bottom" constant="10" id="ziP-07-kN7"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="CTD-gz-ZlH"/>
+                    <navigationItem key="navigationItem" id="CTD-gz-ZlH">
+                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="UN5-lh-o3z">
+                            <connections>
+                                <action selector="CancelButton:" destination="4vy-1c-fmU" id="Far-3t-vUT"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="IssueDescription" destination="3g9-Ur-Vaw" id="aZB-gv-Di8"/>
                         <outlet property="IssueImage" destination="7Da-T7-4GL" id="Tli-Ze-GTt"/>
