@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13D65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="dnP-Ow-poG">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller - Property-->
@@ -61,6 +62,7 @@
                     <connections>
                         <outlet property="PropertyName" destination="vRt-jG-PkZ" id="aDc-LA-NZj"/>
                         <outlet property="PropertyScrollView" destination="rrT-jo-Img" id="sf0-AV-89A"/>
+                        <segue destination="4vy-1c-fmU" kind="push" identifier="IssueSegue" id="o20-3D-II4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -70,7 +72,64 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="741" y="27"/>
+            <point key="canvasLocation" x="1267" y="27"/>
+        </scene>
+        <!--Issue View Controller-->
+        <scene sceneID="TbK-JZ-cCo">
+            <objects>
+                <viewController id="4vy-1c-fmU" customClass="PLIssueViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dHA-8q-ea1"/>
+                        <viewControllerLayoutGuide type="bottom" id="vP0-Pq-dSS"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="U6q-dE-Epj">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3g9-Ur-Vaw">
+                                <rect key="frame" x="20" y="107" width="280" height="167"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Issue : 00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s1R-hA-qOw">
+                                <rect key="frame" x="20" y="78" width="280" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7Da-T7-4GL">
+                                <rect key="frame" x="20" y="284" width="280" height="264"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="7Da-T7-4GL" secondAttribute="top" id="2sV-Kq-0v1"/>
+                            <constraint firstAttribute="trailing" secondItem="s1R-hA-qOw" secondAttribute="trailing" constant="20" symbolic="YES" id="Cgi-b1-B8P"/>
+                            <constraint firstAttribute="bottom" secondItem="7Da-T7-4GL" secondAttribute="bottom" constant="20" symbolic="YES" id="EgE-r5-00F"/>
+                            <constraint firstItem="s1R-hA-qOw" firstAttribute="top" secondItem="U6q-dE-Epj" secondAttribute="top" constant="78" id="Oy8-eD-NX5"/>
+                            <constraint firstItem="s1R-hA-qOw" firstAttribute="leading" secondItem="3g9-Ur-Vaw" secondAttribute="leading" id="WOi-NF-fzj"/>
+                            <constraint firstItem="3g9-Ur-Vaw" firstAttribute="top" secondItem="s1R-hA-qOw" secondAttribute="bottom" constant="8" symbolic="YES" id="ao9-Mq-92k"/>
+                            <constraint firstItem="7Da-T7-4GL" firstAttribute="leading" secondItem="3g9-Ur-Vaw" secondAttribute="leading" id="dA7-dD-r2W"/>
+                            <constraint firstItem="s1R-hA-qOw" firstAttribute="leading" secondItem="U6q-dE-Epj" secondAttribute="leading" constant="20" symbolic="YES" id="hKu-Zs-jNe"/>
+                            <constraint firstItem="s1R-hA-qOw" firstAttribute="trailing" secondItem="3g9-Ur-Vaw" secondAttribute="trailing" id="lKW-sS-jB4"/>
+                            <constraint firstItem="7Da-T7-4GL" firstAttribute="trailing" secondItem="3g9-Ur-Vaw" secondAttribute="trailing" id="phI-w1-hec"/>
+                            <constraint firstAttribute="centerY" secondItem="3g9-Ur-Vaw" secondAttribute="bottom" constant="10" id="ziP-07-kN7"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="CTD-gz-ZlH"/>
+                    <connections>
+                        <outlet property="IssueDescription" destination="3g9-Ur-Vaw" id="aZB-gv-Di8"/>
+                        <outlet property="IssueImage" destination="7Da-T7-4GL" id="Tli-Ze-GTt"/>
+                        <outlet property="IssueNumber" destination="s1R-hA-qOw" id="bu3-sV-Btu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="81P-Wx-oXW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1744" y="27"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="CRt-mE-iEs">
@@ -83,12 +142,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="V2j-T7-ro0"/>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="xxT-tX-1Qa"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YyR-h4-Mcs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="350" y="45"/>
+            <point key="canvasLocation" x="707" y="37"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

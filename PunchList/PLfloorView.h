@@ -10,7 +10,7 @@
 
 @interface PLfloorView : UIView
 @property (nonatomic) CGPoint ploc;
-
+@property (nonatomic,strong) UIBezierPath *path;
 - (void) drawPoint:(CGPoint) pointLoc;
 
 @end

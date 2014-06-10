@@ -11,7 +11,7 @@
 
 @interface PLfloorView()
 @property (nonatomic,strong) UIImageView * imgv;
-@property (nonatomic,strong) UIBezierPath *path;
+
 @end
 @implementation PLfloorView
 @synthesize ploc=_ploc;
@@ -49,17 +49,19 @@
 
 - (void) drawPoint:(CGPoint) pointLoc
 {
+    //use move to point, this raises the pen to avoid drawing lines between points.
     [self.path moveToPoint:pointLoc];
-    [self.path addArcWithCenter:CGPointMake(pointLoc.x-2, pointLoc.y-2) radius:5 startAngle:0 endAngle:(2*M_PI) clockwise:YES];
-//    self.path = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(pointLoc.x-2, pointLoc.y-2, 5, 5)];
-//    [self.path moveToPoint:pointLoc];
+    
+    [self.path addArcWithCenter:CGPointMake(pointLoc.x-2, pointLoc.y-2)
+                         radius:5 startAngle:0
+                       endAngle:(2*M_PI)
+                      clockwise:YES];
+    
     [[UIColor redColor] setStroke];
     [[UIColor redColor] setFill];
 
     [self.path stroke];
     [self.path fill];
     [self setNeedsDisplay];
-    [self.path closePath];
-    
 }
 @end
