@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		F12B38231946807900DC67F4 /* PLIssueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F12B38221946807900DC67F4 /* PLIssueViewController.m */; };
+		F1415CB81948ADF3007C5017 /* PLProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = F1415CB71948ADF3007C5017 /* PLProperty.m */; };
+		F1415CBB1948C71E007C5017 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1415CB91948C71E007C5017 /* AddressBook.framework */; };
+		F1415CBC1948C71E007C5017 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1415CBA1948C71E007C5017 /* AddressBookUI.framework */; };
+		F1415CBF1948CAE8007C5017 /* PLAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1415CBE1948CAE8007C5017 /* PLAddressViewController.m */; };
 		F173D9D41944C25F00980960 /* PLfloorView.m in Sources */ = {isa = PBXBuildFile; fileRef = F173D9D31944C25F00980960 /* PLfloorView.m */; };
 		F1A1A32C1943440D0018B092 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A1A32B1943440D0018B092 /* Foundation.framework */; };
 		F1A1A32E1943440D0018B092 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A1A32D1943440D0018B092 /* CoreGraphics.framework */; };
@@ -41,6 +45,12 @@
 /* Begin PBXFileReference section */
 		F12B38211946807900DC67F4 /* PLIssueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLIssueViewController.h; sourceTree = "<group>"; };
 		F12B38221946807900DC67F4 /* PLIssueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLIssueViewController.m; sourceTree = "<group>"; };
+		F1415CB61948ADF3007C5017 /* PLProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLProperty.h; sourceTree = "<group>"; };
+		F1415CB71948ADF3007C5017 /* PLProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLProperty.m; sourceTree = "<group>"; };
+		F1415CB91948C71E007C5017 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		F1415CBA1948C71E007C5017 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		F1415CBD1948CAE8007C5017 /* PLAddressViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLAddressViewController.h; sourceTree = "<group>"; };
+		F1415CBE1948CAE8007C5017 /* PLAddressViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLAddressViewController.m; sourceTree = "<group>"; };
 		F173D9D21944C25F00980960 /* PLfloorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLfloorView.h; sourceTree = "<group>"; };
 		F173D9D31944C25F00980960 /* PLfloorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLfloorView.m; sourceTree = "<group>"; };
 		F1A1A3281943440D0018B092 /* PunchList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PunchList.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,6 +83,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1415CBB1948C71E007C5017 /* AddressBook.framework in Frameworks */,
+				F1415CBC1948C71E007C5017 /* AddressBookUI.framework in Frameworks */,
 				F1A1A32E1943440D0018B092 /* CoreGraphics.framework in Frameworks */,
 				F1A1A3301943440D0018B092 /* UIKit.framework in Frameworks */,
 				F1A1A32C1943440D0018B092 /* Foundation.framework in Frameworks */,
@@ -114,6 +126,8 @@
 		F1A1A32A1943440D0018B092 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F1415CB91948C71E007C5017 /* AddressBook.framework */,
+				F1415CBA1948C71E007C5017 /* AddressBookUI.framework */,
 				F1A1A32B1943440D0018B092 /* Foundation.framework */,
 				F1A1A32D1943440D0018B092 /* CoreGraphics.framework */,
 				F1A1A32F1943440D0018B092 /* UIKit.framework */,
@@ -136,6 +150,10 @@
 				F173D9D31944C25F00980960 /* PLfloorView.m */,
 				F1A1A3431943440D0018B092 /* Images.xcassets */,
 				F1A1A3321943440D0018B092 /* Supporting Files */,
+				F1415CB61948ADF3007C5017 /* PLProperty.h */,
+				F1415CB71948ADF3007C5017 /* PLProperty.m */,
+				F1415CBD1948CAE8007C5017 /* PLAddressViewController.h */,
+				F1415CBE1948CAE8007C5017 /* PLAddressViewController.m */,
 			);
 			path = PunchList;
 			sourceTree = "<group>";
@@ -275,8 +293,10 @@
 			files = (
 				F1A1A33C1943440D0018B092 /* PLAppDelegate.m in Sources */,
 				F1A1A3421943440D0018B092 /* PLViewController.m in Sources */,
+				F1415CB81948ADF3007C5017 /* PLProperty.m in Sources */,
 				F12B38231946807900DC67F4 /* PLIssueViewController.m in Sources */,
 				F173D9D41944C25F00980960 /* PLfloorView.m in Sources */,
+				F1415CBF1948CAE8007C5017 /* PLAddressViewController.m in Sources */,
 				F1A1A3661943AE030018B092 /* PLItem.m in Sources */,
 				F1A1A3381943440D0018B092 /* main.m in Sources */,
 			);
