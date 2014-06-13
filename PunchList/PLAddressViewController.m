@@ -8,7 +8,7 @@
 
 #import "PLAddressViewController.h"
 
-@interface PLAddressViewController ()
+@interface PLAddressViewController () <ABNewPersonViewControllerDelegate>
 
 
 @end
@@ -29,13 +29,33 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
-
-- (IBAction)showPicker:(UIButton *)sender {
+- (IBAction)searchContacts:(UIButton *)sender {
     ABPeoplePickerNavigationController *picker =[[ABPeoplePickerNavigationController alloc] init];
     picker.peoplePickerDelegate = self;
     
     [self presentViewController:picker animated:YES completion:nil];
+}
 
+
+
+- (IBAction)addContact:(id)sender {
+    
+     ABNewPersonViewController *view = [[ABNewPersonViewController alloc] init];
+     view.newPersonViewDelegate = self;
+     
+     UINavigationController *newNavigationController = [[UINavigationController alloc]
+     initWithRootViewController:view];
+     [self presentViewController:newNavigationController
+                        animated:YES completion:nil];
+     
+}
+
+- (void) newPersonViewController:(ABNewPersonViewController *)newPersonView didCompleteWithNewPerson:(ABRecordRef)person
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)deleteContact:(id)sender {
 }
 
 - (void)peoplePickerNavigationControllerDidCancel:

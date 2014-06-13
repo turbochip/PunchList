@@ -148,12 +148,11 @@
 				F1A1A3651943AE030018B092 /* PLItem.m */,
 				F173D9D21944C25F00980960 /* PLfloorView.h */,
 				F173D9D31944C25F00980960 /* PLfloorView.m */,
-				F1A1A3431943440D0018B092 /* Images.xcassets */,
-				F1A1A3321943440D0018B092 /* Supporting Files */,
 				F1415CB61948ADF3007C5017 /* PLProperty.h */,
 				F1415CB71948ADF3007C5017 /* PLProperty.m */,
 				F1415CBD1948CAE8007C5017 /* PLAddressViewController.h */,
 				F1415CBE1948CAE8007C5017 /* PLAddressViewController.m */,
+				F1A1A3321943440D0018B092 /* Supporting Files */,
 			);
 			path = PunchList;
 			sourceTree = "<group>";
@@ -161,6 +160,7 @@
 		F1A1A3321943440D0018B092 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F1A1A3431943440D0018B092 /* Images.xcassets */,
 				F1A1A3621943482C0018B092 /* Winston FloorPlan 2nd floor.png */,
 				F1A1A3601943481D0018B092 /* Winston FloorPlan 1st Floor.png */,
 				F1A1A33A1943440D0018B092 /* PLAppDelegate.h */,
