@@ -8,7 +8,7 @@
 
 #import "PLAddressViewController.h"
 
-@interface PLAddressViewController () <ABNewPersonViewControllerDelegate>
+@interface PLAddressViewController () <ABNewPersonViewControllerDelegate> 
 
 
 @end

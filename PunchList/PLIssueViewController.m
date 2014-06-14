@@ -10,9 +10,18 @@
 
 @interface PLIssueViewController ()
 @property (nonatomic) BOOL cancel;
+
 @end
 
 @implementation PLIssueViewController
+- (IBAction)DoneButton:(UIBarButtonItem *)sender {
+    self.cancel=NO;
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+- (IBAction)CancelButton:(UIBarButtonItem *)sender {
+    self.cancel=YES;
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -21,11 +30,6 @@
         // Custom initialization
     }
     return self;
-}
-
-- (IBAction)CancelButton:(UIBarButtonItem *)sender {
-    self.cancel=YES;
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidLoad

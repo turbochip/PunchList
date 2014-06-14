@@ -89,8 +89,7 @@
     [self updateUI];
 }
 
-// the thing to remember is that property is a house, not a object property.
-- (IBAction)loadProperty:(UIBarButtonItem *)sender
+- (IBAction)loadProperty:(UIButton *)sender
 {
     // build image
     self.itemArray=nil;
