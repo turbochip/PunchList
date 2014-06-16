@@ -10,9 +10,9 @@
 
 @implementation PLItem
 
-- (NSMutableArray *) itemPic
+- (UIImage *) itemPic
 {
-    if(!_itemPic) _itemPic=[[NSMutableArray alloc] init];
+    if(!_itemPic) _itemPic=[[UIImage alloc] init];
     return _itemPic;
 }
 

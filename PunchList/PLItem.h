@@ -11,6 +11,6 @@
 @interface PLItem : NSObject
 @property (nonatomic) NSInteger itemNumber;
 @property (nonatomic,strong) NSString *itemDescription;
-@property (nonatomic,strong) NSMutableArray *itemPic;
+@property (nonatomic,strong) UIImage *itemPic;
 @property (nonatomic) CGPoint itemLoc;
 @end

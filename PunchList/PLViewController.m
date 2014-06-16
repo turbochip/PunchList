@@ -80,6 +80,7 @@
             PLItem *newItem= [[PLItem alloc] init];
             newItem.itemDescription=@"Test Description";
             newItem.itemLoc=locationOfTap;
+            newItem.itemPic=[[UIImage alloc] init];
             [self.itemArray addObject:newItem];
             [[self.itemArray lastObject] setItemNumber:self.itemArray.count-1];
             self.selectedIssue=self.itemArray.count-1;

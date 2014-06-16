@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "PLItem.h"
 
-@interface PLIssueViewController : UIViewController
+@interface PLIssueViewController : UIViewController <UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *IssueNumber;
 @property (weak, nonatomic) IBOutlet UITextView *IssueDescription;
 
 @property (weak, nonatomic) IBOutlet UIImageView *IssueImage;
+@property (weak, nonatomic) IBOutlet UIScrollView *baseScrollView;
 
 @property (nonatomic) PLItem * xIssue;
 @end

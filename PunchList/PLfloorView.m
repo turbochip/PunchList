@@ -52,8 +52,8 @@
     //use move to point, this raises the pen to avoid drawing lines between points.
     [self.path moveToPoint:pointLoc];
     
-    [self.path addArcWithCenter:CGPointMake(pointLoc.x-2, pointLoc.y-2)
-                         radius:5 startAngle:0
+    [self.path addArcWithCenter:CGPointMake(pointLoc.x-4, pointLoc.y-4)
+                         radius:10 startAngle:0
                        endAngle:(2*M_PI)
                       clockwise:YES];
     
