@@ -34,6 +34,11 @@
     [self updateUI];
 }
 
+- (void) viewWillAppear:(BOOL)animated
+{
+    NSLog(@"view will now appear %d",self.selectedIssue);
+}
+
 // required method for zooming
 - (UIView *) viewForZoomingInScrollView:(UIScrollView *)scrollView
 {

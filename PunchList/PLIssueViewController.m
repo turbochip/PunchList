@@ -16,14 +16,30 @@
 @end
 
 @implementation PLIssueViewController
-- (IBAction)DoneButton:(UIBarButtonItem *)sender {
-    self.cancel=NO;
-    [self dismissViewControllerAnimated:YES completion:nil];
+
+- (void) closeScreenCancel: (BOOL) cancel
+{
+    self.cancel=cancel;
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (IBAction)CancelButton:(UIBarButtonItem *)sender {
-    self.cancel=YES;
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (IBAction)saveButton:(UIBarButtonItem *)sender {
+#warning Need to add save code in here.
+    [self closeScreenCancel:NO];
+}
+
+- (IBAction)photoLibrary:(UIBarButtonItem *)sender {
+    [self startPhotoLibraryFromViewController:self usingDelegate:self];
+}
+
+- (IBAction)pictureButton:(UIBarButtonItem *)sender {
+    [self startCameraControllerFromViewController:self usingDelegate:self];
+
+}
+
+- (IBAction)cancelButton:(UIBarButtonItem *)sender {
+#warning need to add code to tell parent that it should remove place marker
+    [self closeScreenCancel:YES];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -104,10 +120,6 @@
 
 }
 
-- (IBAction)pictureButton:(UIButton *)sender {
-    [self startCameraControllerFromViewController:self usingDelegate:self];
-}
-
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -153,6 +165,30 @@
     [controller presentViewController:cameraUI animated:YES completion:nil];
     return YES;
 }
+
+- (BOOL) startPhotoLibraryFromViewController: (UIViewController*) controller
+                                   usingDelegate: (id <UIImagePickerControllerDelegate,
+                                                   UINavigationControllerDelegate>) delegate {
+    
+    UIImagePickerController *cameraUI = [[UIImagePickerController alloc] init];
+    cameraUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    // Displays a control that allows the user to choose picture or
+    // movie capture, if both are available:
+    cameraUI.mediaTypes =
+    [UIImagePickerController availableMediaTypesForSourceType:
+     UIImagePickerControllerSourceTypePhotoLibrary];
+    
+    // Hides the controls for moving & scaling pictures, or for
+    // trimming movies. To instead show the controls, use YES.
+    cameraUI.allowsEditing = NO;
+    
+    cameraUI.delegate = delegate;
+    
+    [controller presentViewController:cameraUI animated:YES completion:nil];
+    return YES;
+}
+
 
 - (void)didReceiveMemoryWarning
 {
