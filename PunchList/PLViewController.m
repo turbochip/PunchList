@@ -16,9 +16,17 @@
 @property (nonatomic,strong) UIView *propertyViewOverlay;
 @property (nonatomic,strong) UIView *propertyView;
 @property (nonatomic) NSInteger selectedIssue;
+@property (nonatomic,strong) NSMutableArray *propertyArray;
+@property (weak, nonatomic) IBOutlet UILabel *propertyName;
 @end
 
 @implementation PLViewController
+
+- (NSMutableArray *) propertyArray
+{
+    if(!_propertyArray) _propertyArray=[[NSMutableArray alloc] init];
+    return _propertyArray;
+}
 
 - (void)viewDidLoad
 {
@@ -31,6 +39,8 @@
     [self.PropertyScrollView setMaximumZoomScale:1];
     [self.PropertyScrollView setMinimumZoomScale:0.05];
     [self.PropertyScrollView setDelegate:self];
+    NSString * pName=[NSString stringWithFormat:@"Winston"];
+    [self.propertyArray addObject:[NSString stringWithFormat:@"%@",pName]];
     [self updateUI];
 }
 
@@ -95,16 +105,24 @@
     [self updateUI];
 }
 
-- (IBAction)loadProperty:(UIButton *)sender
+- (void)itemSelectedatRow:(NSInteger)row
 {
+    NSLog(@"row %lu selected", (unsigned long)row);
+    NSString *selectedName=[self.propertyArray objectAtIndex:row];
+    
+    [self.propertyName setText:[NSString stringWithFormat:@"Name : %@",selectedName]];
+
     // build image
     self.itemArray=nil;
-    // In the future we will build this name based on a selected text field.
+    // Now we need to query the database for the name returned in selectedName.  That will give us our floor plans.
+    // if there is more than one image associated with the property, then we can use a page control to navigate between them.
     self.propertyImage =[UIImage imageNamed:@"Winston 1st Floor"];
     
+    
+    //from here on down will probably go into a delegate for a page control.
     self.propertyView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.PropertyScrollView.contentSize.width, self.PropertyScrollView.contentSize.height)];
     [self.PropertyScrollView addSubview:self.propertyView];
-
+    
     
     //propertyimageview is a UIView subview that will lay on top of the imageview subview.
     // Build the view at the same size as the scroll view contents.
@@ -117,6 +135,16 @@
     
     [self updateUI];
     
+}
+
+- (IBAction)loadProperty:(UIButton *)sender
+{
+    UINavigationController *navigationController = (UINavigationController *)[self.storyboard instantiateViewControllerWithIdentifier:@"SimpleTableVC"];
+    KMCSimpleTableViewController *tableViewController = (KMCSimpleTableViewController *)[[navigationController viewControllers] objectAtIndex:0];
+    tableViewController.tableData = self.propertyArray;
+    tableViewController.navigationItem.title = @"Property";
+    tableViewController.delegate = self;
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (void) updateUI
