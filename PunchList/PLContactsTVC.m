@@ -8,7 +8,11 @@
 
 #import "PLContactsTVC.h"
 
-@interface PLContactsTVC ()
+@interface PLContactsTVC () <ABNewPersonViewControllerDelegate, UISearchBarDelegate>
+@property (weak, nonatomic) IBOutlet UISearchBar *searchString;
+@property (nonatomic,strong) NSMutableArray *aBook;
+@property (nonatomic,strong) NSMutableArray *searchResults;
+@property (strong, nonatomic) IBOutlet UITableView *tableView;
 @end
 
 @implementation PLContactsTVC
@@ -31,42 +35,83 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.searchString setDelegate:self];
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]
+                                    initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                    target:self
+                                    action:@selector(addContact:)];
+    self.navigationItem.rightBarButtonItem = rightButton;
     
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    ABAddressBookRef aBook=ABAddressBookCreateWithOptions(NULL, NULL);
-    PLContactsTVC * __weak weakSelf = self;  // avoid capturing self in the block
-    ABAddressBookRequestAccessWithCompletion(aBook,
-                                             ^(bool granted, CFErrorRef error) {
-                                                 if (granted) {
-                                                     NSArray *contacts = CFBridgingRelease(
-                                                                                            ABAddressBookCopyPeopleWithName(aBook,
-                                                                                                                            CFSTR("Cox")
-                                                                                                                            )
-                                                                                            );
-                                                 } else {
-                                                     // Handle the case of being denied access and/or the error.
-                                                 }
-                                                 CFRelease(aBook);
-                                             });
+    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied ||
+        ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusRestricted){
+        //1
+        NSLog(@"Denied");
+    } else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized){
+        //2
+        NSLog(@"Authorized");
+        [self loadAddressData];
+    } else{ //ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined
+        //3
+        NSLog(@"Not determined");
+        ABAddressBookRequestAccessWithCompletion(ABAddressBookCreateWithOptions(NULL, nil), ^(bool granted, CFErrorRef error) {
+            if (!granted){
+                //4
+                NSLog(@"Just denied");
+                return;
+            }
+            //5
+            NSLog(@"Just authorized");
+        });
+    }
 
 }
+- (IBAction)refreshTable:(UIRefreshControl *)sender {
+    [self loadAddressData];
+}
 
-- (void)didReceiveMemoryWarning
+- (void) loadAddressData
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    ABAddressBookRef addressbook=ABAddressBookCreateWithOptions(nil, nil);
+    NSLog(@"self.searchString=%@",self.searchString.text);
+    if([self.searchString.text isEqual:@""]) {
+        self.aBook= (__bridge NSMutableArray *)(ABAddressBookCopyArrayOfAllPeople(addressbook));
+    } else {
+        self.aBook= (__bridge NSMutableArray *)(ABAddressBookCopyPeopleWithName(addressbook, (__bridge CFStringRef)(self.searchString.text)));
+    }
+    [self.tableView reloadData];
+}
+
+- (void) searchBarTextDidEndEditing:(UISearchBar *)searchBar
+{
+    [self loadAddressData];
+}
+
+- (void) searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    [self loadAddressData];
+}
+
+- (IBAction)addContact:(UIBarButtonItem *)sender
+{
+    NSLog(@"Add Contact clicked");
+    ABNewPersonViewController *newPerson=[[ABNewPersonViewController alloc] init];
+    newPerson.newPersonViewDelegate=self;
+    UINavigationController *newNavigationController=[[UINavigationController alloc]
+                                                     initWithRootViewController:newPerson];
+    [self presentViewController:newNavigationController animated:YES completion:^{
+        [self loadAddressData];
+        }];
+}
+
+- (void) newPersonViewController:(ABNewPersonViewController *)newPersonView didCompleteWithNewPerson:(ABRecordRef)person
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
@@ -74,30 +119,29 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.contacts count];
+    return [self.aBook count];
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ContactCell" forIndexPath:indexPath];
     // Configure the cell...
-    
+    ABRecordRef person=(__bridge ABRecordRef)([self.aBook objectAtIndex:indexPath.row]);
+    if(ABRecordGetRecordType(person)==kABPersonType){
+        NSLog(@"person=%@, %@",ABRecordCopyValue(person, kABPersonLastNameProperty),ABRecordCopyValue(person, kABPersonFirstNameProperty));
+        NSString *addName=[[NSString alloc] initWithFormat:@"%@, %@",ABRecordCopyValue(person, kABPersonLastNameProperty),ABRecordCopyValue(person, kABPersonFirstNameProperty)];
+        cell.textLabel.text=addName;
+        cell.detailTextLabel.text=(__bridge NSString *)(ABRecordCopyValue(person, kABPersonOrganizationProperty));
+    }
+
     return cell;
 }
-*/
 
+
+
+
+// OLD CODE
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 - (IBAction)searchContacts:(UIButton *)sender {
     
     ABPeoplePickerNavigationController *picker =[[ABPeoplePickerNavigationController alloc] init];
@@ -106,18 +150,12 @@
     [self presentViewController:picker animated:YES completion:nil];
 }
 
-- (void) newPersonViewController:(ABNewPersonViewController *)newPersonView didCompleteWithNewPerson:(ABRecordRef)person
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
 - (void)peoplePickerNavigationControllerDidCancel:
 (ABPeoplePickerNavigationController *)peoplePicker
 {
     [self dismissViewControllerAnimated:YES completion:nil];
     
 }
-
 
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
       shouldContinueAfterSelectingPerson:(ABRecordRef)person {
@@ -140,5 +178,11 @@
 {
 }
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+*/
 
 @end
