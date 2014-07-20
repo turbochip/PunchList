@@ -2,7 +2,7 @@
 //  Photos.h
 //  PunchList
 //
-//  Created by Chip Cox on 7/4/14.
+//  Created by Chip Cox on 7/20/14.
 //  Copyright (c) 2014 Home. All rights reserved.
 //
 
@@ -13,10 +13,10 @@
 
 @interface Photos : NSManagedObject
 
-@property (nonatomic, retain) NSString * photoURL;
 @property (nonatomic, retain) NSString * photoTitle;
+@property (nonatomic, retain) NSString * photoURL;
+@property (nonatomic, retain) FloorPlans *ofFloorPlan;
 @property (nonatomic, retain) Property *ofProperty;
 @property (nonatomic, retain) Issue *photoOf;
-@property (nonatomic, retain) FloorPlans *ofFloorPlan;
 
 @end

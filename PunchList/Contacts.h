@@ -2,7 +2,7 @@
 //  Contacts.h
 //  PunchList
 //
-//  Created by Chip Cox on 7/4/14.
+//  Created by Chip Cox on 7/20/14.
 //  Copyright (c) 2014 Home. All rights reserved.
 //
 
@@ -13,8 +13,8 @@
 
 @interface Contacts : NSManagedObject
 
-@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * activity;
+@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSSet *properties;
 @end
 

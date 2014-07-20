@@ -42,7 +42,7 @@
   
   if ([self.delegate respondsToSelector:@selector(itemSelectedatRow:)]) {
     [self.delegate itemSelectedatRow:indexPath.row];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
   }
 }
 

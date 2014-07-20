@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "CCExtras.h"
 @protocol KMCSimpleTableViewControllerDelegate <NSObject>
 
 @required

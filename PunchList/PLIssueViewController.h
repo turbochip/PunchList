@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PLItem.h"
+#import "CCExtras.h"
 
 @interface PLIssueViewController : UIViewController <UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *IssueNumber;

@@ -2,7 +2,7 @@
 //  Issue.m
 //  PunchList
 //
-//  Created by Chip Cox on 7/4/14.
+//  Created by Chip Cox on 7/20/14.
 //  Copyright (c) 2014 Home. All rights reserved.
 //
 
@@ -13,12 +13,12 @@
 
 @implementation Issue
 
-@dynamic title;
 @dynamic dateEntered;
 @dynamic dateResolved;
 @dynamic locationx;
 @dynamic locationY;
-@dynamic property;
+@dynamic title;
 @dynamic photoOf;
+@dynamic property;
 
 @end

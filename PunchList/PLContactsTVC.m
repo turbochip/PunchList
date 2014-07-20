@@ -45,22 +45,22 @@
     if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied ||
         ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusRestricted){
         //1
-        NSLog(@"Denied");
+        CCLog(@"Denied");
     } else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized){
         //2
-        NSLog(@"Authorized");
+        CCLog(@"Authorized");
         [self loadAddressData];
     } else{ //ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined
         //3
-        NSLog(@"Not determined");
+        CCLog(@"Not determined");
         ABAddressBookRequestAccessWithCompletion(ABAddressBookCreateWithOptions(NULL, nil), ^(bool granted, CFErrorRef error) {
             if (!granted){
                 //4
-                NSLog(@"Just denied");
+                CCLog(@"Just denied");
                 return;
             }
             //5
-            NSLog(@"Just authorized");
+            CCLog(@"Just authorized");
         });
     }
 
@@ -72,7 +72,7 @@
 - (void) loadAddressData
 {
     ABAddressBookRef addressbook=ABAddressBookCreateWithOptions(nil, nil);
-    NSLog(@"self.searchString=%@",self.searchString.text);
+    CCLog(@"self.searchString=%@",self.searchString.text);
     if([self.searchString.text isEqual:@""]) {
         self.aBook= (__bridge NSMutableArray *)(ABAddressBookCopyArrayOfAllPeople(addressbook));
     } else {
@@ -93,7 +93,7 @@
 
 - (IBAction)addContact:(UIBarButtonItem *)sender
 {
-    NSLog(@"Add Contact clicked");
+    CCLog(@"Add Contact clicked");
     ABNewPersonViewController *newPerson=[[ABNewPersonViewController alloc] init];
     newPerson.newPersonViewDelegate=self;
     UINavigationController *newNavigationController=[[UINavigationController alloc]
@@ -128,7 +128,7 @@
     // Configure the cell...
     ABRecordRef person=(__bridge ABRecordRef)([self.aBook objectAtIndex:indexPath.row]);
     if(ABRecordGetRecordType(person)==kABPersonType){
-        NSLog(@"person=%@, %@",ABRecordCopyValue(person, kABPersonLastNameProperty),ABRecordCopyValue(person, kABPersonFirstNameProperty));
+        CCLog(@"person=%@, %@",ABRecordCopyValue(person, kABPersonLastNameProperty),ABRecordCopyValue(person, kABPersonFirstNameProperty));
         NSString *addName=[[NSString alloc] initWithFormat:@"%@, %@",ABRecordCopyValue(person, kABPersonLastNameProperty),ABRecordCopyValue(person, kABPersonFirstNameProperty)];
         cell.textLabel.text=addName;
         cell.detailTextLabel.text=(__bridge NSString *)(ABRecordCopyValue(person, kABPersonOrganizationProperty));

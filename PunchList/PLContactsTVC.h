@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
+#import "CCExtras.h"
 
 @interface PLContactsTVC : UITableViewController
 @property (strong, nonatomic) NSMutableArray *contacts;

@@ -46,7 +46,7 @@
 
 - (void) viewWillAppear:(BOOL)animated
 {
-    NSLog(@"view will now appear %d",self.selectedIssue);
+    CCLog(@"view will now appear %d",self.selectedIssue);
 }
 
 // required method for zooming
@@ -81,7 +81,7 @@
         // ok, we are zoomed at the normal level so are we clicking on an existing point or a new point
         if([self.propertyImageView.path containsPoint:locationOfTap])
         {
-            NSLog(@"Point already exists");
+            CCLog(@"Point already exists");
             for(PLItem *issue in self.itemArray)
                 if(((issue.itemLoc.x>=locationOfTap.x-5) && (issue.itemLoc.x<=locationOfTap.x+5)) &&
                    ((issue.itemLoc.y>=locationOfTap.y-5) && (issue.itemLoc.y<=locationOfTap.y+5))) {
@@ -91,7 +91,7 @@
             // we need to segue to a new screen showing the information about the existing point.
         } else {
             //we need to segue to a new screen allowing us to enter the information about the new point.
-            NSLog(@"Adding point");
+            CCLog(@"Adding point");
             PLItem *newItem= [[PLItem alloc] init];
             newItem.itemDescription=@"Test Description";
             newItem.itemLoc=locationOfTap;
@@ -107,7 +107,7 @@
 
 - (void)itemSelectedatRow:(NSInteger)row
 {
-    NSLog(@"row %lu selected", (unsigned long)row);
+    CCLog(@"row %lu selected", (unsigned long)row);
     NSString *selectedName=[self.propertyArray objectAtIndex:row];
     
     [self.propertyName setText:[NSString stringWithFormat:@"Name : %@",selectedName]];
@@ -158,7 +158,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     // Get the new view controller using [segue destinationViewController].
-    NSLog(@"Destination view controller is %@",[[segue destinationViewController] description]);
+    CCLog(@"Destination view controller is %@",[[segue destinationViewController] description]);
     PLIssueViewController *pivc=(PLIssueViewController *) segue.destinationViewController;
     pivc.xIssue=self.itemArray[self.selectedIssue];
 }

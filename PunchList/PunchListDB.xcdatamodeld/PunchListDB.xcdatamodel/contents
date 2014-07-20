@@ -40,10 +40,10 @@
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photo" inverseName="ofProperty" inverseEntity="Photo" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Property" positionX="-74" positionY="-81" width="128" height="208"/>
         <element name="Contact" positionX="-299" positionY="35" width="128" height="88"/>
-        <element name="Photo" positionX="295" positionY="179" width="128" height="118"/>
         <element name="FloorPlan" positionX="142" positionY="-160" width="128" height="88"/>
         <element name="Issue" positionX="142" positionY="-58" width="128" height="148"/>
+        <element name="Photo" positionX="295" positionY="179" width="128" height="118"/>
+        <element name="Property" positionX="-74" positionY="-81" width="128" height="210"/>
     </elements>
 </model>

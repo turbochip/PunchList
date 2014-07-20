@@ -7,6 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CCExtras.h"
+#import "KMCSimpleTableViewController.h"
 
-@interface PLPropertyViewController : UIViewController
+@interface PLPropertyViewController : UIViewController <KMCSimpleTableViewControllerDelegate>
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *loadImageBarButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *addContactsBarButton;
 @end

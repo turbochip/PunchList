@@ -10,6 +10,7 @@
 #import "PLItem.h"
 #import "PLfloorView.h"
 #import "KMCSimpleTableViewController.h"
+#import "CCExtras.h"
 
 @interface PLViewController : UIViewController <KMCSimpleTableViewControllerDelegate>
 
