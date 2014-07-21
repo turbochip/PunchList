@@ -59,80 +59,9 @@
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     gestureRecognizer.cancelsTouchesInView = NO; //so that action such as clear text field button can be pressed
     [self.view addGestureRecognizer:gestureRecognizer];
-//    PLAppDelegate *delegate = (PLAppDelegate *)[[UIApplication sharedApplication] delegate];
-//    self.document = delegate.document;
 
 }
 
-- (void)itemSelectedatRow:(NSInteger)row
-{
-    CCLog(@"row %lu selected", (unsigned long)row);
-    //NSString *selectedName=[self.pArray objectAtIndex:row];
-
-    //[self searchForProperty:selectedName];
-
-//    // build image
-//    self.itemArray=nil;
-//    // Now we need to query the database for the name returned in selectedName.  That will give us our floor plans.
-//    // if there is more than one image associated with the property, then we can use a page control to navigate between them.
-//    self.propertyImage =[UIImage imageNamed:@"Winston 1st Floor"];
-//    
-//    
-//    //from here on down will probably go into a delegate for a page control.
-//    self.propertyView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.PropertyScrollView.contentSize.width, self.PropertyScrollView.contentSize.height)];
-//    [self.PropertyScrollView addSubview:self.propertyView];
-//    
-//    
-//    //propertyimageview is a UIView subview that will lay on top of the imageview subview.
-//    // Build the view at the same size as the scroll view contents.
-//    self.propertyImageView=[[PLfloorView alloc] initWithFrame:CGRectMake(0, 0, self.PropertyScrollView.contentSize.width, self.PropertyScrollView.contentSize.height)];
-//    // add the image subview
-//    [self.propertyView addSubview:[[UIImageView alloc] initWithImage:self.propertyImage]];
-//    // add the UIView subview to hold the bezier dots representing items.
-//    [self.propertyView addSubview:self.propertyImageView];
-//    
-//    
-//    [self updateUI];
-    
-}
-
-
-//-(void) searchForProperty:(NSString *) searchName
-//{
-//    NSArray *propArray=[Property searchProperty:self.propertyNameField.text onContext:self.document.managedObjectContext];
-//    
-//    if((!propArray) || (propArray.count==0)) {
-//        CCLog(@"No Properties matching %@ found",self.propertyNameField.text);
-//    } else {
-//        if(propArray.count==1) {
-//            Property *prop=[propArray objectAtIndex:0];
-//            CCLog(@"Only one property don't bother with tableview");
-//            self.propertyNameField.text=prop.name;
-//            self.StreetAddressField.text=prop.streetAddress;
-//            self.CityAddressField.text=prop.city;
-//            self.StateAddressField.text=prop.state;
-//            self.zipAddressField.text=prop.zip;
-//        } else {
-//            CCLog(@"More than one property found, display tableview");
-//            self.pArray=nil;
-//            for(Property *prop in propArray) {
-//                [self.pArray addObject:prop.name];
-//            }
-//            [self loadSTVCPropertyArray:self.pArray];
-//        }
-//    }
-//}
-
-//-(void) loadSTVCPropertyArray:(NSArray *)propertyArray
-//{
-//    UINavigationController *navigationController = (UINavigationController *)[self.storyboard instantiateViewControllerWithIdentifier:@"SimpleTableVC"];
-//    KMCSimpleTableViewController *tableViewController = (KMCSimpleTableViewController *)[[navigationController viewControllers] objectAtIndex:0];
-//    tableViewController.tableData = propertyArray;
-//    tableViewController.navigationItem.title = @"Property";
-//    tableViewController.delegate = self;
-//    [self presentViewController:navigationController animated:YES completion:nil];
-//
-//}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -155,8 +84,6 @@
         }
         case 3: {
             CCLog(@"Save Property");
-//            PLAppDelegate *delegate = (PLAppDelegate *)[[UIApplication sharedApplication] delegate];
-//            self.document = delegate.document;
             NSManagedObjectContext *context=self.document.managedObjectContext;
             NSMutableDictionary *propertyDict=[[NSMutableDictionary alloc] init];
             
@@ -194,13 +121,22 @@
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    CCLog(@"segue destinationViewController=%@",segue.destinationViewController);
     if([segue.destinationViewController isKindOfClass:[PLPropertySearchTVC class]]) {
         PLPropertySearchTVC *ps= segue.destinationViewController;
         ps.searchString=self.propertyNameField.text;
     }
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
 }
 
+- (IBAction)searchReturn:(UIStoryboardSegue *)sender
+{
+    CCLog(@"in searchReturn returnProp=%@",self.returnProperty.name);
+    self.propertyNameField.text=self.returnProperty.name;
+    self.StreetAddressField.text=self.returnProperty.streetAddress;
+    self.CityAddressField.text=self.returnProperty.city;
+    self.StateAddressField.text=self.returnProperty.state;
+    self.zipAddressField.text=self.returnProperty.zip;
+    
+}
 
 @end

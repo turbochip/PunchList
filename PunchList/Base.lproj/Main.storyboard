@@ -415,7 +415,6 @@
                                 </accessibility>
                                 <state key="normal" image="search"/>
                                 <connections>
-                                    <action selector="searchForPropertyID:" destination="FZg-pM-OQ8" eventType="touchUpInside" id="UNO-CP-4qI"/>
                                     <segue destination="nPl-vJ-2P2" kind="push" id="QdQ-Gi-QZl"/>
                                 </connections>
                             </button>
@@ -442,10 +441,10 @@
             </objects>
             <point key="canvasLocation" x="380" y="137"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Property SearchTVC-->
         <scene sceneID="xY1-xX-yGd">
             <objects>
-                <tableViewController id="nPl-vJ-2P2" sceneMemberID="viewController">
+                <tableViewController id="nPl-vJ-2P2" customClass="PLPropertySearchTVC" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="dpb-y4-yo4">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -481,9 +480,16 @@
                             <outlet property="delegate" destination="nPl-vJ-2P2" id="HMi-ri-A8i"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="c7t-k8-1Qe"/>
+                    <navigationItem key="navigationItem" id="c7t-k8-1Qe">
+                        <barButtonItem key="rightBarButtonItem" title="Ok" systemItem="done" id="1lF-Mc-Ata">
+                            <connections>
+                                <segue destination="zXB-nD-b0Y" kind="unwind" unwindAction="searchReturn:" id="qv0-2F-Kkv"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l2E-d5-6OX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="zXB-nD-b0Y" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="952" y="432"/>
         </scene>

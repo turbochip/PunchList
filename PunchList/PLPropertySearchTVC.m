@@ -10,10 +10,12 @@
 #import "PLAppDelegate.h"
 #import "Property.h"
 #import "Property+addon.h"
+#import "PLPropertyViewController.h"
 
 @interface PLPropertySearchTVC ()
 @property (nonatomic,strong) UIManagedDocument *document;
 @property (nonatomic,strong) NSArray *propArray;
+@property (nonatomic,strong) Property *returnProp;
 @end
 
 @implementation PLPropertySearchTVC
@@ -37,6 +39,7 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [self searchForProperty:self.searchString];
+    [self.tableView setDelegate:self];
 }
 
 -(void) searchForProperty:(NSString *) searchName
@@ -74,5 +77,23 @@
     
     return cell;
 }
+
+- (void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    self.returnProp = [self.propArray objectAtIndex:indexPath.row];
+    CCLog(@"selected row %d = %@",indexPath.row,self.returnProp.name);
+//    [self.navigationController popViewControllerAnimated:YES];
+
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    CCLog(@"segue destinationViewController=%@",segue.destinationViewController);
+    PLPropertyViewController *pvc=segue.destinationViewController;
+    pvc.returnProperty=self.returnProp;
+    
+}
+
+
 
 @end
