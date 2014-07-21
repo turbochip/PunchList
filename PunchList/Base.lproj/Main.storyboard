@@ -394,7 +394,7 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Kdt-TL-LQs"/>
-                                    <barButtonItem tag="2" systemItem="edit" id="kmc-pp-No0">
+                                    <barButtonItem tag="2" systemItem="trash" id="kmc-pp-No0">
                                         <connections>
                                             <action selector="toolbarButtonClick:" destination="FZg-pM-OQ8" id="Z9a-Bu-8Ml"/>
                                         </connections>
@@ -691,7 +691,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="QdQ-Gi-QZl"/>
         <segue reference="FAG-Sp-UJW"/>
-        <segue reference="mzT-6U-kxO"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -79,7 +79,7 @@
             break;
         }
         case 2: {
-            CCLog(@"Edit Property");
+            CCLog(@"Delete Property");
             break;
         }
         case 3: {
