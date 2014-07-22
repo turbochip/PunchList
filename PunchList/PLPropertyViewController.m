@@ -20,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *StateAddressField;
 @property (weak, nonatomic) IBOutlet UITextField *zipAddressField;
 @property (weak, nonatomic) IBOutlet UIStepper *ImageNumber;
+@property (nonatomic,strong) UIImage *image;
+@property (weak, nonatomic) IBOutlet UIImageView *ImageDisplay;
 
 @property (strong,nonatomic) NSMutableArray *pArray;
 
@@ -62,16 +64,12 @@
 
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 - (IBAction)toolbarButtonClick:(UIBarButtonItem *)sender
 {
     switch (sender.tag) {
         case 0: {
             CCLog(@"Associate Pictures");
+            [self startPhotoLibraryFromViewController:self usingDelegate:self];
             break;
         }
         case 1: {
@@ -111,6 +109,7 @@
         }
     }
 }
+
 - (void) hideKeyboard
 {
     [self.view endEditing:YES];
@@ -137,6 +136,46 @@
     self.StateAddressField.text=self.returnProperty.state;
     self.zipAddressField.text=self.returnProperty.zip;
     
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    CCLog(@"Image =%@",[info objectForKey:UIImagePickerControllerReferenceURL]);
+    self.image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    
+    [self.ImageDisplay setImage:self.image];
+    [self.ImageDisplay setNeedsDisplay];
+    
+    // You have the image. You can use this to present the image in the next view like you require in `#3`.
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (BOOL) startPhotoLibraryFromViewController: (UIViewController*) controller
+                               usingDelegate: (id <UIImagePickerControllerDelegate,
+                                               UINavigationControllerDelegate>) delegate {
+    
+    UIImagePickerController *cameraUI = [[UIImagePickerController alloc] init];
+    cameraUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    // Displays a control that allows the user to choose picture or
+    // movie capture, if both are available:
+    cameraUI.mediaTypes =
+    [UIImagePickerController availableMediaTypesForSourceType:
+     UIImagePickerControllerSourceTypePhotoLibrary];
+    
+    // Hides the controls for moving & scaling pictures, or for
+    // trimming movies. To instead show the controls, use YES.
+    cameraUI.allowsEditing = NO;
+    
+    cameraUI.delegate = delegate;
+    
+    [controller presentViewController:cameraUI animated:YES completion:nil];
+    return YES;
 }
 
 @end

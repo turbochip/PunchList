@@ -8,6 +8,7 @@
 
 #import "PLViewController.h"
 #import "PLIssueViewController.h"
+#import "PLPropertySearchTVC.h"
 
 @interface PLViewController () <UIScrollViewDelegate>
 @property (nonatomic,strong) NSMutableArray *itemArray;
@@ -17,7 +18,8 @@
 @property (nonatomic,strong) UIView *propertyView;
 @property (nonatomic) NSInteger selectedIssue;
 @property (nonatomic,strong) NSMutableArray *propertyArray;
-@property (weak, nonatomic) IBOutlet UILabel *propertyName;
+@property (weak, nonatomic) IBOutlet UITextField *propertyNameTextField;
+
 @end
 
 @implementation PLViewController
@@ -105,25 +107,52 @@
     [self updateUI];
 }
 
-- (void)itemSelectedatRow:(NSInteger)row
-{
-    CCLog(@"row %lu selected", (unsigned long)row);
-    NSString *selectedName=[self.propertyArray objectAtIndex:row];
-    
-    [self.propertyName setText:[NSString stringWithFormat:@"Name : %@",selectedName]];
+//- (void)itemSelectedatRow:(NSInteger)row
+//{
+//    CCLog(@"row %lu selected", (unsigned long)row);
+//    NSString *selectedName=[self.propertyArray objectAtIndex:row];
+//    
+//    [self.propertyName setText:[NSString stringWithFormat:@"Name : %@",selectedName]];
+//
+//    // build image
+//    self.itemArray=nil;
+//    // Now we need to query the database for the name returned in selectedName.  That will give us our floor plans.
+//    // if there is more than one image associated with the property, then we can use a page control to navigate between them.
+//    self.propertyImage =[UIImage imageNamed:@"Winston 1st Floor"];
+//    
+//    
+//    //from here on down will probably go into a delegate for a page control.
+//    self.propertyView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.PropertyScrollView.contentSize.width, self.PropertyScrollView.contentSize.height)];
+//    [self.PropertyScrollView addSubview:self.propertyView];
+//    
+//    
+//    //propertyimageview is a UIView subview that will lay on top of the imageview subview.
+//    // Build the view at the same size as the scroll view contents.
+//    self.propertyImageView=[[PLfloorView alloc] initWithFrame:CGRectMake(0, 0, self.PropertyScrollView.contentSize.width, self.PropertyScrollView.contentSize.height)];
+//    // add the image subview
+//    [self.propertyView addSubview:[[UIImageView alloc] initWithImage:self.propertyImage]];
+//    // add the UIView subview to hold the bezier dots representing items.
+//    [self.propertyView addSubview:self.propertyImageView];
+//    
+//    
+//    [self updateUI];
+//    
+//}
 
+- (void) loadProperty
+{
     // build image
     self.itemArray=nil;
     // Now we need to query the database for the name returned in selectedName.  That will give us our floor plans.
     // if there is more than one image associated with the property, then we can use a page control to navigate between them.
     self.propertyImage =[UIImage imageNamed:@"Winston 1st Floor"];
-    
-    
+
+
     //from here on down will probably go into a delegate for a page control.
     self.propertyView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.PropertyScrollView.contentSize.width, self.PropertyScrollView.contentSize.height)];
     [self.PropertyScrollView addSubview:self.propertyView];
-    
-    
+
+
     //propertyimageview is a UIView subview that will lay on top of the imageview subview.
     // Build the view at the same size as the scroll view contents.
     self.propertyImageView=[[PLfloorView alloc] initWithFrame:CGRectMake(0, 0, self.PropertyScrollView.contentSize.width, self.PropertyScrollView.contentSize.height)];
@@ -134,17 +163,7 @@
     
     
     [self updateUI];
-    
-}
 
-- (IBAction)loadProperty:(UIButton *)sender
-{
-    UINavigationController *navigationController = (UINavigationController *)[self.storyboard instantiateViewControllerWithIdentifier:@"SimpleTableVC"];
-    KMCSimpleTableViewController *tableViewController = (KMCSimpleTableViewController *)[[navigationController viewControllers] objectAtIndex:0];
-    tableViewController.tableData = self.propertyArray;
-    tableViewController.navigationItem.title = @"Property";
-    tableViewController.delegate = self;
-    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 - (void) updateUI
@@ -157,16 +176,24 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
     CCLog(@"Destination view controller is %@",[[segue destinationViewController] description]);
-    PLIssueViewController *pivc=(PLIssueViewController *) segue.destinationViewController;
-    pivc.xIssue=self.itemArray[self.selectedIssue];
+    // Get the new view controller using [segue destinationViewController].
+    if([segue.destinationViewController isKindOfClass:[PLIssueViewController class]]) {
+        PLIssueViewController *pivc=(PLIssueViewController *) segue.destinationViewController;
+        pivc.xIssue=self.itemArray[self.selectedIssue];
+    } else {
+        if([segue.destinationViewController isKindOfClass:[PLPropertySearchTVC class]]) {
+            PLPropertySearchTVC *pstvc=segue.destinationViewController;
+            pstvc.searchString=self.propertyNameTextField.text;
+        }
+    }
 }
 
-- (void)didReceiveMemoryWarning
+- (IBAction)searchReturn:(UIStoryboardSegue *)sender
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    CCLog(@"in searchReturn returnProp=%@",self.returnPropertyName);
+    self.propertyNameTextField.text=self.returnPropertyName;
+    [self loadProperty];
 }
 
 @end

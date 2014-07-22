@@ -9,11 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "PLItem.h"
 #import "PLfloorView.h"
-#import "KMCSimpleTableViewController.h"
+//#import "KMCSimpleTableViewController.h"
 #import "CCExtras.h"
 
-@interface PLViewController : UIViewController <KMCSimpleTableViewControllerDelegate>
+@interface PLViewController : UIViewController // <KMCSimpleTableViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *PropertyScrollView;
+@property (nonatomic,strong) NSString *returnPropertyName;
 
 @end

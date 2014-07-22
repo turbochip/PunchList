@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CCExtras.h"
 
 @interface PLPropertySearchTVC : UITableViewController
 @property (nonatomic,strong) NSString *searchString;

@@ -11,8 +11,7 @@
 #import "Property.h"
 
 
-@interface PLPropertyViewController : UIViewController 
+@interface PLPropertyViewController : UIViewController <UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *loadImageBarButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *addContactsBarButton;
 @property (strong,nonatomic) Property *returnProperty;
 @end

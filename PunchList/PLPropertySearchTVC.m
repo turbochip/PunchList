@@ -11,6 +11,7 @@
 #import "Property.h"
 #import "Property+addon.h"
 #import "PLPropertyViewController.h"
+#import "PLViewController.h"
 
 @interface PLPropertySearchTVC ()
 @property (nonatomic,strong) UIManagedDocument *document;
@@ -89,9 +90,15 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     CCLog(@"segue destinationViewController=%@",segue.destinationViewController);
-    PLPropertyViewController *pvc=segue.destinationViewController;
-    pvc.returnProperty=self.returnProp;
-    
+    if([segue.destinationViewController isKindOfClass:[PLPropertyViewController class]]){
+        PLPropertyViewController *pvc=segue.destinationViewController;
+        pvc.returnProperty=self.returnProp;
+    } else {
+        if([segue.destinationViewController isKindOfClass:[PLViewController class]]) {
+            PLViewController *plvc=segue.destinationViewController;
+            plvc.returnPropertyName=self.returnProp.name;
+        }
+    }
 }
 
 
