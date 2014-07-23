@@ -11,6 +11,7 @@
 #import "Property+addon.h"
 #import "Property.h"
 #import "PLPropertySearchTVC.h"
+#import "PLPropertyDetailTVC.h"
 
 @interface PLPropertyViewController ()
 @property (strong,nonatomic) UIManagedDocument *document;
@@ -124,6 +125,11 @@
     if([segue.destinationViewController isKindOfClass:[PLPropertySearchTVC class]]) {
         PLPropertySearchTVC *ps= segue.destinationViewController;
         ps.searchString=self.propertyNameField.text;
+    } else {
+        if([segue.destinationViewController isKindOfClass:[PLPropertyDetailTVC class]]) {
+            PLPropertyDetailTVC *pdtvc=segue.destinationViewController;
+            pdtvc.transferProperty=self.returnProperty;
+        }
     }
 }
 

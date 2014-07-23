@@ -7,6 +7,7 @@
 //
 
 #import "PLContactsTVC.h"
+#import "PLPropertyDetailTVC.h"
 
 @interface PLContactsTVC () <ABNewPersonViewControllerDelegate, UISearchBarDelegate>
 @property (weak, nonatomic) IBOutlet UISearchBar *searchString;
@@ -137,52 +138,20 @@
     return cell;
 }
 
-
-
-
-// OLD CODE
-/*
-- (IBAction)searchContacts:(UIButton *)sender {
-    
-    ABPeoplePickerNavigationController *picker =[[ABPeoplePickerNavigationController alloc] init];
-    picker.peoplePickerDelegate = self;
-    
-    [self presentViewController:picker animated:YES completion:nil];
-}
-
-- (void)peoplePickerNavigationControllerDidCancel:
-(ABPeoplePickerNavigationController *)peoplePicker
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+    if([segue.destinationViewController isKindOfClass:[PLPropertyDetailTVC class]] ) {
+        PLPropertyDetailTVC *pdtvc=segue.destinationViewController;
+        UITableViewCell *senderCell=sender;
+        pdtvc.transferContact=senderCell.textLabel.text;
+        pdtvc.transferIndexPath=self.transferIndexPath;
+        CCLog(@"sender=%@",sender);
+        CCLog(@"sender text=%@",senderCell.textLabel.text);
     
+    }
 }
 
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
-      shouldContinueAfterSelectingPerson:(ABRecordRef)person {
-    
-    [self displayPerson:person];
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-    return NO;
-}
-
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
-      shouldContinueAfterSelectingPerson:(ABRecordRef)person
-                                property:(ABPropertyID)property
-                              identifier:(ABMultiValueIdentifier)identifier
-{
-    return NO;
-}
-
-- (void)displayPerson:(ABRecordRef)person
-{
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-*/
 
 @end

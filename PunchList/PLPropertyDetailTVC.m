@@ -7,8 +7,14 @@
 //
 
 #import "PLPropertyDetailTVC.h"
+#import "PLAppDelegate.h"
 #import "PLContactAssociationVC.h"
 #import "PLFloorPlanAssociationVC.h"
+#import "PLContactsTVC.h"
+#import "Property+addon.h"
+#import "Property.h"
+#import "Contacts+addon.h"
+#import "Contacts.h"
 
 @interface PLPropertyDetailTVC ()
 
@@ -25,15 +31,20 @@
     return self;
 }
 
+- (UIManagedDocument *)document
+{
+    if(!_document) {
+        PLAppDelegate *delegate = (PLAppDelegate *)[[UIApplication sharedApplication] delegate];
+        _document = delegate.document;
+    }
+    return _document;
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -41,72 +52,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-#pragma mark - Table view data source
-/*
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
-}
-*/
-/*
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
-}
-*/
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
 
 #pragma mark - Navigation
 
@@ -117,7 +62,7 @@
 
     CCLog(@"Segue to %d:%d",indexPath.section,indexPath.row );
     
-    if([segue.destinationViewController isKindOfClass:[PLContactAssociationVC class]]) {
+    if([segue.destinationViewController isKindOfClass:[PLContactsTVC class]]) {
         PLContactAssociationVC *avc=segue.destinationViewController;
         avc.transferIndexPath=indexPath;
     } else {
@@ -134,53 +79,82 @@
 
 - (IBAction)returnSegue:(UIStoryboardSegue *)sender
 {
-    switch (self.transferIndexPath.section) {
-        case CONTACT_SECTION: {
-            switch (self.transferIndexPath.row) {
-                case CONTACT_REALTOR: {
-                    CCLog(@"Store realtor");
-                    // store realtor contact in database
-                    break;
+    CCLog(@"sender=%@",sender);
+    CCLog(@"indexpath=%d, %d",self.transferIndexPath.section,self.transferIndexPath.row);
+    NSManagedObjectContext *context=self.document.managedObjectContext;
+    NSFetchRequest *request=[[NSFetchRequest alloc] initWithEntityName:@"Property"];
+    request.sortDescriptors=@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
+    NSError *error;
+    request.predicate=[NSPredicate predicateWithFormat:@"name = %@",[self.transferProperty valueForKey:@"Name" ]];
+    NSArray *propArray=[context executeFetchRequest:request error:&error];
+    
+    if((!propArray) || (propArray.count!=1)){
+        CCLog(@"Error executing fetch %@",[self.transferProperty valueForKeyPath:@"Name"]);
+    }else {
+        Property *p=[propArray objectAtIndex:0];
+        switch (self.transferIndexPath.section) {
+            case CONTACT_SECTION: {
+                switch (self.transferIndexPath.row) {
+                    case CONTACT_REALTOR: {
+                        CCLog(@"Store realtor %@",self.transferContact);
+                        // store realtor contact in database
+                        NSMutableDictionary *cDict=[[NSMutableDictionary alloc] init];
+                        [cDict setObject:p forKey:@"Property"];
+                        [cDict setObject:self.transferContact forKey:@"Name"];
+                        [cDict setObject:@"Realtor" forKey:@"Activity"];
+                        [Contacts addContact:cDict onContext:context];
+                        break;
+                    }
+                    case CONTACT_LOAN_OFFICER: {
+                        CCLog(@"Store loan officer %@",self.transferContact);
+                        NSMutableDictionary *cDict=[[NSMutableDictionary alloc] init];
+                        [cDict setObject:p forKey:@"Property"];
+                        [cDict setObject:self.transferContact forKey:@"Name"];
+                        [cDict setObject:@"Loan Officer" forKey:@"Activity"];
+                        [Contacts addContact:cDict onContext:context];
+                        // store loan officer contact in database
+                        break;
+                    }
+                    case CONTACT_BUILDER: {
+                        CCLog(@"Store builder %@",self.transferContact);
+                        NSMutableDictionary *cDict=[[NSMutableDictionary alloc] init];
+                        [cDict setObject:p forKey:@"Property"];
+                        [cDict setObject:self.transferContact forKey:@"Name"];
+                        [cDict setObject:@"Builder" forKey:@"Activity"];
+                        [Contacts addContact:cDict onContext:context];
+                        // store builder contact in database
+                        break;
+                    }
+                    default: {
+                        CCLog(@"Unknown contact type");
+                        break;
+                    }
                 }
-                case CONTACT_LOAN_OFFICER: {
-                    CCLog(@"Store loan officer");
-                    // store loan officer contact in database
-                    break;
-                }
-                case CONTACT_BUILDER: {
-                    CCLog(@"Store builder");
-                    // store builder contact in database
-                    break;
-                }
-                default: {
-                    CCLog(@"Unknown contact type");
-                    break;
-                }
+                break; // contact section break;
             }
-            break; // contact section break;
-        }
-        case PHOTO_SECTION: {
-            switch (self.transferIndexPath.row) {
-                case PHOTO_FLOORPLAN: {
-                    CCLog(@"Store floorplan");
-                    // store floorplan photos in database
-                    break;
+            case PHOTO_SECTION: {
+                switch (self.transferIndexPath.row) {
+                    case PHOTO_FLOORPLAN: {
+                        CCLog(@"Store floorplan");
+                        // store floorplan photos in database
+                        break;
+                    }
+                    case PHOTO_ELEVATION: {
+                        CCLog(@"Store elevation photos");
+                        // store elevation photos in database
+                        break;
+                    }
+                    default: {
+                        CCLog(@"Unknow photo type");
+                        break;
+                    }
                 }
-                case PHOTO_ELEVATION: {
-                    CCLog(@"Store elevation photos");
-                    // store elevation photos in database
-                    break;
-                }
-                default: {
-                    CCLog(@"Unknow photo type");
-                    break;
-                }
+                break; // photo section break
             }
-            break; // photo section break
-        }
-        default: {
-            CCLog(@"Unknow section");
-            break;
+            default: {
+                CCLog(@"Unknow section");
+                break;
+            }
         }
     }
 }

@@ -13,6 +13,7 @@
 
 @interface PLContactsTVC : UITableViewController
 @property (strong, nonatomic) NSMutableArray *contacts;
+@property (strong,nonatomic) NSIndexPath *transferIndexPath;
 
 
 @end
