@@ -12,6 +12,9 @@
 #import "Property.h"
 #import "PLPropertySearchTVC.h"
 #import "PLPropertyDetailTVC.h"
+#import "PLContactsTVC.h"
+#import "PLContactAssociationVC.h"
+#import "Contacts.h"
 
 @interface PLPropertyViewController ()
 @property (strong,nonatomic) UIManagedDocument *document;
@@ -23,6 +26,14 @@
 @property (weak, nonatomic) IBOutlet UIStepper *ImageNumber;
 @property (nonatomic,strong) UIImage *image;
 @property (weak, nonatomic) IBOutlet UIImageView *ImageDisplay;
+@property (weak, nonatomic) IBOutlet UITextField *loanOfficerField;
+@property (weak,nonatomic) Contacts *loanOfficerObject;
+@property (weak, nonatomic) IBOutlet UITextField *builderField;
+@property (weak,nonatomic) Contacts *builderObject;
+@property (weak, nonatomic) IBOutlet UITextField *realtorField;
+@property (weak,nonatomic) Contacts *realtorObject;
+
+@property (strong, nonatomic) IBOutlet UIStepper *stepper;
 
 @property (strong,nonatomic) NSMutableArray *pArray;
 
@@ -62,7 +73,21 @@
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     gestureRecognizer.cancelsTouchesInView = NO; //so that action such as clear text field button can be pressed
     [self.view addGestureRecognizer:gestureRecognizer];
+    
+    // add vertical stepper next to imageview
+    CGRect frame = CGRectMake(235.0, 500.0, 25.0, 25.0);
+    self.stepper = [[UIStepper alloc] initWithFrame:frame];
+    self.stepper.transform= CGAffineTransformMakeRotation(degreesToRadians(-90));
+    [self.view addSubview:self.stepper];
+}
 
+- (IBAction)realtorSearch:(UIButton *)sender {
+}
+
+- (IBAction)loanOfficerSearch:(UIButton *)sender {
+}
+
+- (IBAction)builderSearch:(UIButton *)sender {
 }
 
 - (IBAction)toolbarButtonClick:(UIBarButtonItem *)sender
@@ -91,6 +116,10 @@
             [propertyDict setObject:self.CityAddressField.text forKey:@"City"];
             [propertyDict setObject:self.StateAddressField.text forKey:@"State"];
             [propertyDict setObject:self.zipAddressField.text forKey:@"ZIP"];
+            [propertyDict setObject:self.realtorObject forKey:@"Realtor"];
+            [propertyDict setObject:self.loanOfficerObject forKey:@"LoanOfficer"];
+            [propertyDict setObject:self.builderObject forKey:@"Builder"];
+            
             
             if(![Property addProperty:propertyDict onContext:context]) {
                 CCLog(@"Error adding or updating property");
@@ -122,6 +151,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     CCLog(@"segue destinationViewController=%@",segue.destinationViewController);
+    CCLog(@"sender =%@",sender);
     if([segue.destinationViewController isKindOfClass:[PLPropertySearchTVC class]]) {
         PLPropertySearchTVC *ps= segue.destinationViewController;
         ps.searchString=self.propertyNameField.text;
@@ -129,18 +159,70 @@
         if([segue.destinationViewController isKindOfClass:[PLPropertyDetailTVC class]]) {
             PLPropertyDetailTVC *pdtvc=segue.destinationViewController;
             pdtvc.transferProperty=self.returnProperty;
+        } else {
+            if([segue.destinationViewController isKindOfClass:[PLContactsTVC class]]) {
+                PLContactAssociationVC *avc=segue.destinationViewController;
+                avc.transferIndexPath=[[NSIndexPath alloc] init];
+                UIButton *myButton=(UIButton *)sender;
+                avc.transferIndexPath=[NSIndexPath indexPathForRow:myButton.tag inSection:0];
+            }
         }
     }
 }
 
 - (IBAction)searchReturn:(UIStoryboardSegue *)sender
 {
-    CCLog(@"in searchReturn returnProp=%@",self.returnProperty.name);
-    self.propertyNameField.text=self.returnProperty.name;
-    self.StreetAddressField.text=self.returnProperty.streetAddress;
-    self.CityAddressField.text=self.returnProperty.city;
-    self.StateAddressField.text=self.returnProperty.state;
-    self.zipAddressField.text=self.returnProperty.zip;
+    CCLog(@"sender=%@",sender.sourceViewController);
+    if([sender.sourceViewController isKindOfClass:[PLContactsTVC class]]) {
+        CCLog(@"We came back from PLContactsTVC indexpath=%d",self.transferIndexPath.row);
+        switch (self.transferIndexPath.row) {
+            case 1: {
+                self.realtorField.text=self.transferContact.name;
+                self.realtorObject=self.transferContact;
+                break;
+            }
+            case 2: {
+                self.loanOfficerField.text=self.transferContact.name;
+                self.loanOfficerObject=self.transferContact;
+                break;
+            }
+            case 3: {
+                self.builderField.text=self.transferContact.name;
+                self.builderObject=self.transferContact;
+                break;
+            }
+            default: {
+                CCLog(@"Invalid indexpath %d",self.transferIndexPath.row);
+            }
+        }
+    } else {
+        if([sender.sourceViewController isKindOfClass:[PLPropertySearchTVC class]]) {
+            CCLog(@"in searchReturn returnProp=%@",self.returnProperty.name);
+            CCLog(@"contactData=%@",self.returnProperty.contactData);
+            self.propertyNameField.text=self.returnProperty.name;
+            self.StreetAddressField.text=self.returnProperty.streetAddress;
+            self.CityAddressField.text=self.returnProperty.city;
+            self.StateAddressField.text=self.returnProperty.state;
+            self.zipAddressField.text=self.returnProperty.zip;
+            for (Contacts *c in self.returnProperty.contactData) {
+                if([c.activity isEqualToString:@"Realtor"]) {
+                    self.realtorField.text=c.name;
+                } else {
+                    if ([c.activity isEqualToString:@"Loan Officer"]) {
+                        self.loanOfficerField.text=c.name;
+                    } else {
+                        if ([c.activity isEqualToString:@"Builder"]) {
+                            self.builderField.text=c.name;
+                        } else {
+                            CCLog(@"Invalid activity");
+                        }
+                    }
+                }
+            }
+        } else {
+            CCLog(@"Unknown sourceViewController - %@",sender.sourceViewController);
+        }
+    }
     
 }
 

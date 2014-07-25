@@ -7,6 +7,7 @@
 //
 
 #import "Property+addon.h"
+#import "Contacts.h"
 
 @implementation Property (addon)
 
@@ -38,7 +39,11 @@
                 property.city=[p valueForKey:@"City"];
                 property.state=[p valueForKey:@"State"];
                 property.zip=[p valueForKey:@"ZIP"];
-                
+                CCLog(@"property.contactData=%@",property.contactData);
+                Contacts *c=property.contactData;
+                [c addPropertiesObject:[p valueForKey:@"Realtor"]];
+                [c addPropertiesObject:[p valueForKey:@"LoanOfficer"]];
+                [c addPropertiesObject:[p valueForKey:@"Builder"]];
                 [context save:NULL ];
                 status=YES;
                 break;
@@ -51,7 +56,11 @@
                 property.city=[p valueForKey:@"City"];
                 property.state=[p valueForKey:@"State"];
                 property.zip=[p valueForKey:@"ZIP"];
-                
+                Contacts *c=property.contactData;
+                [c addPropertiesObject:[p valueForKey:@"Realtor"]];
+                [c addPropertiesObject:[p valueForKey:@"LoanOfficer"]];
+                [c addPropertiesObject:[p valueForKey:@"Builder"]];
+               
                 [context save:NULL ];
                 status=YES;
                 break;

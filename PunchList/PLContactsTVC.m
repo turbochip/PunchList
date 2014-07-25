@@ -8,8 +8,11 @@
 
 #import "PLContactsTVC.h"
 #import "PLPropertyDetailTVC.h"
+#import "PLPropertyViewController.h"
+#import "Contacts.h"
 
 @interface PLContactsTVC () <ABNewPersonViewControllerDelegate, UISearchBarDelegate>
+@property (strong,nonatomic) UIManagedDocument *document;
 @property (weak, nonatomic) IBOutlet UISearchBar *searchString;
 @property (nonatomic,strong) NSMutableArray *aBook;
 @property (nonatomic,strong) NSMutableArray *searchResults;
@@ -31,6 +34,15 @@
         // Custom initialization
     }
     return self;
+}
+
+- (UIManagedDocument *)document
+{
+    if(!_document) {
+        PLAppDelegate *delegate = (PLAppDelegate *)[[UIApplication sharedApplication] delegate];
+        _document = delegate.document;
+    }
+    return _document;
 }
 
 - (void)viewDidLoad
@@ -149,7 +161,28 @@
         pdtvc.transferIndexPath=self.transferIndexPath;
         CCLog(@"sender=%@",sender);
         CCLog(@"sender text=%@",senderCell.textLabel.text);
-    
+    } else {
+        if([segue.destinationViewController isKindOfClass:[PLPropertyViewController class]]) {
+            CCLog(@"Returning to plpropertyviewcontroller");
+            NSManagedObjectContext *context=self.document.managedObjectContext;
+            UITableViewCell *senderCell=sender;
+            NSFetchRequest *request=[[NSFetchRequest alloc] initWithEntityName:@"Contacts"];
+            request.sortDescriptors=@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
+            NSError *error;
+            request.predicate=[NSPredicate predicateWithFormat:@"name = %@",senderCell.textLabel.text];
+            NSArray *propArray=[context executeFetchRequest:request error:&error];
+            CCLog(@"propArray=%@",propArray);
+            
+            if(!propArray) {
+                CCLog(@"Error no idea how you got here");
+            } else {
+                PLPropertyViewController *pdtvc=segue.destinationViewController;
+                pdtvc.transferContact=[propArray objectAtIndex:0];
+                pdtvc.transferIndexPath=self.transferIndexPath;
+                CCLog(@"sender=%@",sender);
+                CCLog(@"sender text=%@",senderCell.textLabel.text);
+            }
+        }
     }
 }
 

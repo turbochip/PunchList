@@ -34,7 +34,7 @@
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="streetAddress" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="contactData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contacts" inverseName="properties" inverseEntity="Contacts" syncable="YES"/>
+        <relationship name="contactData" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Contacts" inverseName="properties" inverseEntity="Contacts" syncable="YES"/>
         <relationship name="floorPlan" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FloorPlans" inverseName="property" inverseEntity="FloorPlans" syncable="YES"/>
         <relationship name="issues" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Issue" inverseName="property" inverseEntity="Issue" syncable="YES"/>
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photos" inverseName="ofProperty" inverseEntity="Photos" syncable="YES"/>
@@ -44,6 +44,6 @@
         <element name="FloorPlans" positionX="142" positionY="-160" width="128" height="88"/>
         <element name="Issue" positionX="142" positionY="-58" width="128" height="148"/>
         <element name="Photos" positionX="295" positionY="179" width="128" height="118"/>
-        <element name="Property" positionX="-74" positionY="-81" width="128" height="210"/>
+        <element name="Property" positionX="-74" positionY="-81" width="128" height="208"/>
     </elements>
 </model>

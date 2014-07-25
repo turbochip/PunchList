@@ -212,7 +212,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="81P-Wx-oXW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1084" y="1402"/>
+            <point key="canvasLocation" x="1301" y="1746"/>
         </scene>
         <!--ContactsTVC - Contacts-->
         <scene sceneID="U1P-RY-pXR">
@@ -252,7 +252,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="nTf-OP-kTZ" kind="unwind" unwindAction="returnSegue:" id="tud-sl-tq9"/>
+                                    <segue destination="nTf-OP-kTZ" kind="unwind" unwindAction="searchReturn:" id="ehL-sQ-5H2"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -298,7 +298,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1084" y="-623"/>
+            <point key="canvasLocation" x="1867" y="-452"/>
         </scene>
         <!--Property View Controller - Property Setup-->
         <scene sceneID="qrp-rX-cWh">
@@ -377,17 +377,6 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CxT-cl-RVV">
-                                <rect key="frame" x="20" y="266" width="280" height="209"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <subviews>
-                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dXp-XE-C7y">
-                                        <rect key="frame" x="0.0" y="0.0" width="280" height="209"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    </imageView>
-                                </subviews>
-                                <gestureRecognizers/>
-                            </scrollView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mMu-5h-v7S">
                                 <rect key="frame" x="0.0" y="70" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -422,21 +411,97 @@
                                     <segue destination="nPl-vJ-2P2" kind="push" id="QdQ-Gi-QZl"/>
                                 </connections>
                             </button>
-                            <stepper opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="zYT-F1-ro6">
-                                <rect key="frame" x="113" y="483" width="94" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            </stepper>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Njf-Hd-PRh">
+                                <rect key="frame" x="272" y="270" width="20" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" none="YES" button="YES" image="YES"/>
+                                </accessibility>
+                                <state key="normal" image="search"/>
+                                <connections>
+                                    <action selector="realtorSearch:" destination="FZg-pM-OQ8" eventType="touchUpInside" id="xql-TE-U9P"/>
+                                    <segue destination="AJd-9N-ai5" kind="push" id="FgH-T0-28s"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Va9-e1-X8U">
+                                <rect key="frame" x="272" y="308" width="20" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" none="YES" button="YES" image="YES"/>
+                                </accessibility>
+                                <state key="normal" image="search"/>
+                                <connections>
+                                    <action selector="loanOfficerSearch:" destination="FZg-pM-OQ8" eventType="touchUpInside" id="Mp2-Gv-GhQ"/>
+                                    <segue destination="AJd-9N-ai5" kind="push" id="Ftz-9M-F6f"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EQ9-es-C0L">
+                                <rect key="frame" x="272" y="346" width="20" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" none="YES" button="YES" image="YES"/>
+                                </accessibility>
+                                <state key="normal" image="search"/>
+                                <connections>
+                                    <action selector="builderSearch:" destination="FZg-pM-OQ8" eventType="touchUpInside" id="ie4-rn-61H"/>
+                                    <segue destination="AJd-9N-ai5" kind="push" id="SWJ-ez-ubu"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Realtor :" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RUI-DW-Zao">
+                                <rect key="frame" x="20" y="273" width="65" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wSf-Tc-WPr">
+                                <rect key="frame" x="93" y="266" width="171" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qsi-9g-J1O">
+                                <rect key="frame" x="127" y="304" width="137" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Loan Officer:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mvK-Q1-bg5">
+                                <rect key="frame" x="20" y="308" width="99" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZqT-db-Wei">
+                                <rect key="frame" x="93" y="342" width="171" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Builder :" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gJV-7I-H0m">
+                                <rect key="frame" x="20" y="345" width="64" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rth-qb-sBv">
+                                <rect key="frame" x="20" y="380" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Property Setup" id="PrY-3p-Q5v"/>
                     <connections>
                         <outlet property="CityAddressField" destination="Fwc-0L-7HA" id="izB-EQ-ncv"/>
-                        <outlet property="ImageDisplay" destination="dXp-XE-C7y" id="Y8P-g3-egL"/>
-                        <outlet property="ImageNumber" destination="zYT-F1-ro6" id="nsl-b5-rC0"/>
+                        <outlet property="ImageDisplay" destination="Rth-qb-sBv" id="qxu-4S-DRd"/>
                         <outlet property="StateAddressField" destination="pIi-bO-r2R" id="ZSO-cZ-WPH"/>
                         <outlet property="StreetAddressField" destination="MWQ-IQ-xfp" id="2t4-bx-4tD"/>
+                        <outlet property="builderField" destination="ZqT-db-Wei" id="ant-Ur-uv5"/>
+                        <outlet property="loanOfficerField" destination="qsi-9g-J1O" id="1Lt-dX-Seq"/>
                         <outlet property="propertyNameField" destination="Veq-HI-MUa" id="vnD-K4-Vaq"/>
+                        <outlet property="realtorField" destination="wSf-Tc-WPr" id="JfK-Pg-koE"/>
                         <outlet property="zipAddressField" destination="txn-uJ-o4o" id="7hY-bs-AeS"/>
                     </connections>
                 </viewController>
@@ -476,6 +541,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="zXB-nD-b0Y" kind="unwind" unwindAction="searchReturn:" id="msa-ex-ZfU"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -483,18 +551,12 @@
                             <outlet property="delegate" destination="nPl-vJ-2P2" id="HMi-ri-A8i"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="c7t-k8-1Qe">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="1lF-Mc-Ata">
-                            <connections>
-                                <segue destination="zXB-nD-b0Y" kind="unwind" unwindAction="searchReturn:" id="qv0-2F-Kkv"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="c7t-k8-1Qe"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l2E-d5-6OX" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="zXB-nD-b0Y" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1084" y="740"/>
+            <point key="canvasLocation" x="1293" y="1015"/>
         </scene>
         <!--Property DetailTVC - Property Setup-->
         <scene sceneID="mST-3B-ZTZ">
@@ -522,9 +584,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="AJd-9N-ai5" kind="push" trigger="accessoryAction" id="mTg-tu-ETf"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="detailDisclosureButton" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="JYc-Qu-UGy">
                                         <rect key="frame" x="0.0" y="163" width="320" height="44"/>
@@ -541,9 +600,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="AJd-9N-ai5" kind="push" trigger="accessoryAction" id="fMQ-rT-m0T"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="detailDisclosureButton" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Wbd-P9-hkB">
                                         <rect key="frame" x="0.0" y="207" width="320" height="44"/>
@@ -560,9 +616,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="AJd-9N-ai5" kind="push" trigger="accessoryAction" id="r7H-nD-Htq"/>
-                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -625,7 +678,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kb8-hk-Umc" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="dXX-U9-Ux7" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="897" y="27"/>
+            <point key="canvasLocation" x="1301" y="301"/>
         </scene>
         <!--Floor Plan AssociationVC-->
         <scene sceneID="Ih5-q6-yYE">
@@ -651,7 +704,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Dt-Vk-NRB" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="TCr-rl-puD" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1573" y="192"/>
+            <point key="canvasLocation" x="1949" y="448"/>
         </scene>
         <!--Contact AssociationVC-->
         <scene sceneID="8qw-IF-LCy">
@@ -677,7 +730,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i4l-6a-ZmU" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="VZo-9b-sNO" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1573" y="-470"/>
+            <point key="canvasLocation" x="-1083" y="1034"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="oXw-kN-b5C">
@@ -819,8 +872,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Si2-9C-cbM"/>
+        <segue reference="SWJ-ez-ubu"/>
+        <segue reference="QdQ-Gi-QZl"/>
         <segue reference="VdI-LV-d5Y"/>
-        <segue reference="r7H-nD-Htq"/>
     </inferredMetricsTieBreakers>
 </document>

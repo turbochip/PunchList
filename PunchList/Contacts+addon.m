@@ -35,6 +35,7 @@
                 Contacts *contact = [NSEntityDescription insertNewObjectForEntityForName:@"Contacts" inManagedObjectContext:context];
                 contact.name=[c valueForKey:@"Name"];
                 contact.activity=[c valueForKey:@"Activity"];
+                
                 [contact addPropertiesObject:[c valueForKey:@"Property"]];
 
                 
@@ -47,7 +48,7 @@
                 Contacts *contact=[contactArray objectAtIndex:0];
                 contact.name=[c valueForKey:@"Name"];
                 contact.activity=[c valueForKey:@"Activity"];
-                contact.properties=[c valueForKey:@"Property"];
+                [contact addPropertiesObject:[c valueForKey:@"Property"]];
                 
                 [context save:NULL ];
                 status=YES;

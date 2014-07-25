@@ -86,6 +86,7 @@
 {
     CCLog(@"segue destinationViewController=%@",segue.destinationViewController);
     if([segue.destinationViewController isKindOfClass:[PLPropertyViewController class]]){
+        self.returnProp=[self.propArray objectAtIndex:[self.tableView indexPathForSelectedRow].row];
         PLPropertyViewController *pvc=segue.destinationViewController;
         pvc.returnProperty=self.returnProp;
     } else {
