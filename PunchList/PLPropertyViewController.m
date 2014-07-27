@@ -13,8 +13,8 @@
 #import "PLPropertySearchTVC.h"
 #import "PLPropertyDetailTVC.h"
 #import "PLContactsTVC.h"
-#import "PLContactAssociationVC.h"
 #import "Contacts.h"
+#import "PLLoadFloorviewVC.h"
 
 @interface PLPropertyViewController ()
 @property (strong,nonatomic) UIManagedDocument *document;
@@ -27,12 +27,12 @@
 @property (nonatomic,strong) UIImage *image;
 @property (weak, nonatomic) IBOutlet UIImageView *ImageDisplay;
 @property (weak, nonatomic) IBOutlet UITextField *loanOfficerField;
-@property (weak,nonatomic) Contacts *loanOfficerObject;
+@property (strong,nonatomic) Contacts *loanOfficerObject;
 @property (weak, nonatomic) IBOutlet UITextField *builderField;
-@property (weak,nonatomic) Contacts *builderObject;
+@property (strong,nonatomic) Contacts *builderObject;
 @property (weak, nonatomic) IBOutlet UITextField *realtorField;
-@property (weak,nonatomic) Contacts *realtorObject;
-
+@property (strong,nonatomic) Contacts *realtorObject;
+@property (strong,nonatomic) Property *property;
 @property (strong, nonatomic) IBOutlet UIStepper *stepper;
 
 @property (strong,nonatomic) NSMutableArray *pArray;
@@ -75,19 +75,43 @@
     [self.view addGestureRecognizer:gestureRecognizer];
     
     // add vertical stepper next to imageview
-    CGRect frame = CGRectMake(235.0, 500.0, 25.0, 25.0);
+    CGRect frame = CGRectMake(245.0, 490.0, 25.0, 25.0);
     self.stepper = [[UIStepper alloc] initWithFrame:frame];
     self.stepper.transform= CGAffineTransformMakeRotation(degreesToRadians(-90));
     [self.view addSubview:self.stepper];
 }
 
-- (IBAction)realtorSearch:(UIButton *)sender {
+- (void)updateUI:(Property *) prop
+{
+    if(prop==nil) {
+        CCLog(@"prop is nil");
+        self.propertyNameField.text=@"";
+        self.StreetAddressField.text=@"";
+        self.CityAddressField.text=@"";
+        self.StateAddressField.text=@"";
+        self.zipAddressField.text=@"";
+        self.realtorField.text=@"";
+        self.loanOfficerField.text=@"";
+        self.builderField.text=@"";
+    } else {
+        CCLog(@"prop.name=%@",prop.name);
+        self.propertyNameField.text=(prop.name=NULL ? @"" : prop.name);
+        self.StreetAddressField.text=(prop.streetAddress=NULL ? @"" : prop.streetAddress);
+        self.CityAddressField.text=(prop.city=NULL ? @"" : prop.city);
+        self.StateAddressField.text=(prop.state=NULL ? @"" : prop.state);
+        self.zipAddressField.text=(prop.zip=NULL ? @"" : prop.zip);
+        self.realtorField.text=(prop.realtor.name=NULL ? @"" : prop.realtor.name);
+        self.loanOfficerField.text=(prop.loanOfficer.name=NULL ? @"" : prop.loanOfficer.name);
+        self.builderField.text=(prop.builder.name=NULL ? @"" : prop.builder.name);
+    }
 }
 
-- (IBAction)loanOfficerSearch:(UIButton *)sender {
-}
-
-- (IBAction)builderSearch:(UIButton *)sender {
+- (void)resetUI
+{
+    self.builderObject=nil;
+    self.loanOfficerObject=nil;
+    self.realtorObject=nil;
+    [self updateUI:nil];
 }
 
 - (IBAction)toolbarButtonClick:(UIBarButtonItem *)sender
@@ -95,11 +119,11 @@
     switch (sender.tag) {
         case 0: {
             CCLog(@"Associate Pictures");
-            [self startPhotoLibraryFromViewController:self usingDelegate:self];
             break;
         }
         case 1: {
-            CCLog(@"Associate Contacts");
+            CCLog(@"Clear fields");
+            [self resetUI];
             break;
         }
         case 2: {
@@ -116,21 +140,16 @@
             [propertyDict setObject:self.CityAddressField.text forKey:@"City"];
             [propertyDict setObject:self.StateAddressField.text forKey:@"State"];
             [propertyDict setObject:self.zipAddressField.text forKey:@"ZIP"];
-            [propertyDict setObject:self.realtorObject forKey:@"Realtor"];
-            [propertyDict setObject:self.loanOfficerObject forKey:@"LoanOfficer"];
-            [propertyDict setObject:self.builderObject forKey:@"Builder"];
+            [propertyDict setObject:self.realtorObject==nil ? [NSNull null] :self.realtorObject forKey:@"Realtor"];
+            [propertyDict setObject:self.loanOfficerObject==nil ? [NSNull null] :self.loanOfficerObject forKey:@"LoanOfficer"];
+            [propertyDict setObject:self.builderObject==nil ? [NSNull null] :self.builderObject forKey:@"Builder"];
             
             
-            if(![Property addProperty:propertyDict onContext:context]) {
+            if(!(self.property = [Property addProperty:propertyDict onContext:context])) {
                 CCLog(@"Error adding or updating property");
             }
             
-            self.propertyNameField.text=@"";
-            self.StreetAddressField.text=@"";
-            self.CityAddressField.text=@"";
-            self.StateAddressField.text=@"";
-            self.zipAddressField.text=@"";
-            
+            [self resetUI];
             break;
         }
         default: {
@@ -161,10 +180,15 @@
             pdtvc.transferProperty=self.returnProperty;
         } else {
             if([segue.destinationViewController isKindOfClass:[PLContactsTVC class]]) {
-                PLContactAssociationVC *avc=segue.destinationViewController;
+                PLContactsTVC *avc=segue.destinationViewController;
                 avc.transferIndexPath=[[NSIndexPath alloc] init];
                 UIButton *myButton=(UIButton *)sender;
                 avc.transferIndexPath=[NSIndexPath indexPathForRow:myButton.tag inSection:0];
+            } else {
+                if([segue.destinationViewController isKindOfClass:[PLLoadFloorviewVC class]]) {
+                    PLLoadFloorviewVC *lfv=segue.destinationViewController;
+                    lfv.property=self.property;
+                }
             }
         }
     }
@@ -179,16 +203,19 @@
             case 1: {
                 self.realtorField.text=self.transferContact.name;
                 self.realtorObject=self.transferContact;
+                CCLog(@"realtorObject=%@",self.realtorObject);
                 break;
             }
             case 2: {
                 self.loanOfficerField.text=self.transferContact.name;
                 self.loanOfficerObject=self.transferContact;
+                CCLog(@"loanOfficerObject=%@",self.loanOfficerObject);
                 break;
             }
             case 3: {
                 self.builderField.text=self.transferContact.name;
                 self.builderObject=self.transferContact;
+                CCLog(@"builderObject=%@",self.builderObject);
                 break;
             }
             default: {
@@ -198,72 +225,15 @@
     } else {
         if([sender.sourceViewController isKindOfClass:[PLPropertySearchTVC class]]) {
             CCLog(@"in searchReturn returnProp=%@",self.returnProperty.name);
-            CCLog(@"contactData=%@",self.returnProperty.contactData);
-            self.propertyNameField.text=self.returnProperty.name;
-            self.StreetAddressField.text=self.returnProperty.streetAddress;
-            self.CityAddressField.text=self.returnProperty.city;
-            self.StateAddressField.text=self.returnProperty.state;
-            self.zipAddressField.text=self.returnProperty.zip;
-            for (Contacts *c in self.returnProperty.contactData) {
-                if([c.activity isEqualToString:@"Realtor"]) {
-                    self.realtorField.text=c.name;
-                } else {
-                    if ([c.activity isEqualToString:@"Loan Officer"]) {
-                        self.loanOfficerField.text=c.name;
-                    } else {
-                        if ([c.activity isEqualToString:@"Builder"]) {
-                            self.builderField.text=c.name;
-                        } else {
-                            CCLog(@"Invalid activity");
-                        }
-                    }
-                }
-            }
+            self.realtorObject=self.returnProperty.realtor;
+            self.loanOfficerObject=self.returnProperty.loanOfficer;
+            self.builderObject=self.returnProperty.builder;
+            self.property=self.returnProperty;
+            [self updateUI:self.property];
         } else {
             CCLog(@"Unknown sourceViewController - %@",sender.sourceViewController);
         }
     }
-    
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    CCLog(@"Image =%@",[info objectForKey:UIImagePickerControllerReferenceURL]);
-    self.image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    
-    [self.ImageDisplay setImage:self.image];
-    [self.ImageDisplay setNeedsDisplay];
-    
-    // You have the image. You can use this to present the image in the next view like you require in `#3`.
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (BOOL) startPhotoLibraryFromViewController: (UIViewController*) controller
-                               usingDelegate: (id <UIImagePickerControllerDelegate,
-                                               UINavigationControllerDelegate>) delegate {
-    
-    UIImagePickerController *cameraUI = [[UIImagePickerController alloc] init];
-    cameraUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    
-    // Displays a control that allows the user to choose picture or
-    // movie capture, if both are available:
-    cameraUI.mediaTypes =
-    [UIImagePickerController availableMediaTypesForSourceType:
-     UIImagePickerControllerSourceTypePhotoLibrary];
-    
-    // Hides the controls for moving & scaling pictures, or for
-    // trimming movies. To instead show the controls, use YES.
-    cameraUI.allowsEditing = NO;
-    
-    cameraUI.delegate = delegate;
-    
-    [controller presentViewController:cameraUI animated:YES completion:nil];
-    return YES;
 }
 
 @end

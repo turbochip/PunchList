@@ -13,9 +13,7 @@
 +(BOOL) addContact:(NSDictionary *) c onContext:(NSManagedObjectContext *) context
 {
     BOOL status=NO;
-    CCLog(@"Contact=%@,%@,%@",[c valueForKey:@"Name"],
-          [c valueForKey:@"Activity"],
-          [c valueForKey:@"Property"]);
+    CCLog(@"Contact=%@",[c valueForKey:@"Name"]);
     
     CCLog(@"building fetch request");
     NSFetchRequest *request=[[NSFetchRequest alloc] initWithEntityName:@"Contacts"];
@@ -34,11 +32,6 @@
                 CCLog(@"Add new record");
                 Contacts *contact = [NSEntityDescription insertNewObjectForEntityForName:@"Contacts" inManagedObjectContext:context];
                 contact.name=[c valueForKey:@"Name"];
-                contact.activity=[c valueForKey:@"Activity"];
-                
-                [contact addPropertiesObject:[c valueForKey:@"Property"]];
-
-                
                 [context save:NULL ];
                 status=YES;
                 break;
@@ -47,8 +40,6 @@
                 CCLog(@"Record exists update it");
                 Contacts *contact=[contactArray objectAtIndex:0];
                 contact.name=[c valueForKey:@"Name"];
-                contact.activity=[c valueForKey:@"Activity"];
-                [contact addPropertiesObject:[c valueForKey:@"Property"]];
                 
                 [context save:NULL ];
                 status=YES;

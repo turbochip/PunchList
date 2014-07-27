@@ -2,7 +2,7 @@
 //  Property.m
 //  PunchList
 //
-//  Created by Chip Cox on 7/24/14.
+//  Created by Chip Cox on 7/26/14.
 //  Copyright (c) 2014 Home. All rights reserved.
 //
 
@@ -22,9 +22,11 @@
 @dynamic state;
 @dynamic streetAddress;
 @dynamic zip;
-@dynamic contactData;
 @dynamic floorPlan;
 @dynamic issues;
 @dynamic photos;
+@dynamic realtor;
+@dynamic loanOfficer;
+@dynamic builder;
 
 @end

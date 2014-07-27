@@ -11,7 +11,7 @@
 
 @interface Property (addon)
 
-+(BOOL) addProperty:(NSDictionary *) p onContext:(NSManagedObjectContext *) context;
++(Property *) addProperty:(NSDictionary *) p onContext:(NSManagedObjectContext *) context;
 
 +(void) deleteProperty:(NSDictionary *) p onContext:(NSManagedObjectContext *) context;
 

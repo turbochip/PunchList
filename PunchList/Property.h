@@ -2,7 +2,7 @@
 //  Property.h
 //  PunchList
 //
-//  Created by Chip Cox on 7/24/14.
+//  Created by Chip Cox on 7/26/14.
 //  Copyright (c) 2014 Home. All rights reserved.
 //
 
@@ -20,18 +20,15 @@
 @property (nonatomic, retain) NSString * state;
 @property (nonatomic, retain) NSString * streetAddress;
 @property (nonatomic, retain) NSString * zip;
-@property (nonatomic, retain) NSSet *contactData;
 @property (nonatomic, retain) NSSet *floorPlan;
 @property (nonatomic, retain) NSSet *issues;
 @property (nonatomic, retain) NSSet *photos;
+@property (nonatomic, retain) Contacts *realtor;
+@property (nonatomic, retain) Contacts *loanOfficer;
+@property (nonatomic, retain) Contacts *builder;
 @end
 
 @interface Property (CoreDataGeneratedAccessors)
-
-- (void)addContactDataObject:(Contacts *)value;
-- (void)removeContactDataObject:(Contacts *)value;
-- (void)addContactData:(NSSet *)values;
-- (void)removeContactData:(NSSet *)values;
 
 - (void)addFloorPlanObject:(FloorPlans *)value;
 - (void)removeFloorPlanObject:(FloorPlans *)value;

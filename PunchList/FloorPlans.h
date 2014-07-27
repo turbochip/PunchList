@@ -2,7 +2,7 @@
 //  FloorPlans.h
 //  PunchList
 //
-//  Created by Chip Cox on 7/24/14.
+//  Created by Chip Cox on 7/26/14.
 //  Copyright (c) 2014 Home. All rights reserved.
 //
 
@@ -14,6 +14,7 @@
 @interface FloorPlans : NSManagedObject
 
 @property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSNumber * sequence;
 @property (nonatomic, retain) Photos *drawings;
 @property (nonatomic, retain) Property *property;
 

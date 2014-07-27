@@ -2,7 +2,7 @@
 //  Contacts.h
 //  PunchList
 //
-//  Created by Chip Cox on 7/24/14.
+//  Created by Chip Cox on 7/26/14.
 //  Copyright (c) 2014 Home. All rights reserved.
 //
 
@@ -13,16 +13,27 @@
 
 @interface Contacts : NSManagedObject
 
-@property (nonatomic, retain) NSString * activity;
 @property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) NSSet *properties;
+@property (nonatomic, retain) NSSet *realtorFor;
+@property (nonatomic, retain) NSSet *builderFor;
+@property (nonatomic, retain) NSSet *loanOfficerFor;
 @end
 
 @interface Contacts (CoreDataGeneratedAccessors)
 
-- (void)addPropertiesObject:(Property *)value;
-- (void)removePropertiesObject:(Property *)value;
-- (void)addProperties:(NSSet *)values;
-- (void)removeProperties:(NSSet *)values;
+- (void)addRealtorForObject:(Property *)value;
+- (void)removeRealtorForObject:(Property *)value;
+- (void)addRealtorFor:(NSSet *)values;
+- (void)removeRealtorFor:(NSSet *)values;
+
+- (void)addBuilderForObject:(Property *)value;
+- (void)removeBuilderForObject:(Property *)value;
+- (void)addBuilderFor:(NSSet *)values;
+- (void)removeBuilderFor:(NSSet *)values;
+
+- (void)addLoanOfficerForObject:(Property *)value;
+- (void)removeLoanOfficerForObject:(Property *)value;
+- (void)addLoanOfficerFor:(NSSet *)values;
+- (void)removeLoanOfficerFor:(NSSet *)values;
 
 @end

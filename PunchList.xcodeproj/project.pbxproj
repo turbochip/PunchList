@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		F12B38231946807900DC67F4 /* PLIssueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F12B38221946807900DC67F4 /* PLIssueViewController.m */; };
 		F13D15D5197DFB990023C8F6 /* PLPropertyDetailTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F13D15D4197DFB990023C8F6 /* PLPropertyDetailTVC.m */; };
-		F13D15D8197E00AE0023C8F6 /* PLContactAssociationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F13D15D7197E00AE0023C8F6 /* PLContactAssociationVC.m */; };
-		F13D15DB197E00CA0023C8F6 /* PLFloorPlanAssociationVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F13D15DA197E00CA0023C8F6 /* PLFloorPlanAssociationVC.m */; };
 		F1415CB81948ADF3007C5017 /* PLProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = F1415CB71948ADF3007C5017 /* PLProperty.m */; };
 		F1415CBB1948C71E007C5017 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1415CB91948C71E007C5017 /* AddressBook.framework */; };
 		F1415CBC1948C71E007C5017 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1415CBA1948C71E007C5017 /* AddressBookUI.framework */; };
@@ -22,6 +20,13 @@
 		F173D9D41944C25F00980960 /* PLfloorView.m in Sources */ = {isa = PBXBuildFile; fileRef = F173D9D31944C25F00980960 /* PLfloorView.m */; };
 		F175D3CB1966FF250070F296 /* PunchListDB.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F175D3C91966FF250070F296 /* PunchListDB.xcdatamodeld */; };
 		F175D45819673F4E0070F296 /* PLContactsTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F175D45719673F4E0070F296 /* PLContactsTVC.m */; };
+		F190A25F19846E6B003FFB71 /* FloorPlans.m in Sources */ = {isa = PBXBuildFile; fileRef = F190A25E19846E6B003FFB71 /* FloorPlans.m */; };
+		F190A26219846E6B003FFB71 /* Photos.m in Sources */ = {isa = PBXBuildFile; fileRef = F190A26119846E6B003FFB71 /* Photos.m */; };
+		F190A26519846E6B003FFB71 /* Issue.m in Sources */ = {isa = PBXBuildFile; fileRef = F190A26419846E6B003FFB71 /* Issue.m */; };
+		F190A26819846E6B003FFB71 /* Property.m in Sources */ = {isa = PBXBuildFile; fileRef = F190A26719846E6B003FFB71 /* Property.m */; };
+		F190A26B19846E6B003FFB71 /* Contacts.m in Sources */ = {isa = PBXBuildFile; fileRef = F190A26A19846E6B003FFB71 /* Contacts.m */; };
+		F190A26E198475C8003FFB71 /* PLLoadFloorviewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F190A26D198475C8003FFB71 /* PLLoadFloorviewVC.m */; };
+		F190A27019848252003FFB71 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F190A26F19848252003FFB71 /* AssetsLibrary.framework */; };
 		F1A1A32C1943440D0018B092 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A1A32B1943440D0018B092 /* Foundation.framework */; };
 		F1A1A32E1943440D0018B092 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A1A32D1943440D0018B092 /* CoreGraphics.framework */; };
 		F1A1A3301943440D0018B092 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A1A32F1943440D0018B092 /* UIKit.framework */; };
@@ -41,11 +46,6 @@
 		F1A1A3661943AE030018B092 /* PLItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F1A1A3651943AE030018B092 /* PLItem.m */; };
 		F1B9E9F2197F451F00618AE2 /* Contacts+addon.m in Sources */ = {isa = PBXBuildFile; fileRef = F1B9E9F1197F451F00618AE2 /* Contacts+addon.m */; };
 		F1C865F71981FF2C00317CF3 /* CCExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = F1C865F61981FF2C00317CF3 /* CCExtras.m */; };
-		F1C865FA1982025700317CF3 /* Issue.m in Sources */ = {isa = PBXBuildFile; fileRef = F1C865F91982025700317CF3 /* Issue.m */; };
-		F1C865FD1982025700317CF3 /* Property.m in Sources */ = {isa = PBXBuildFile; fileRef = F1C865FC1982025700317CF3 /* Property.m */; };
-		F1C866001982025700317CF3 /* Contacts.m in Sources */ = {isa = PBXBuildFile; fileRef = F1C865FF1982025700317CF3 /* Contacts.m */; };
-		F1C866031982025700317CF3 /* FloorPlans.m in Sources */ = {isa = PBXBuildFile; fileRef = F1C866021982025700317CF3 /* FloorPlans.m */; };
-		F1C866061982025700317CF3 /* Photos.m in Sources */ = {isa = PBXBuildFile; fileRef = F1C866051982025700317CF3 /* Photos.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,10 +63,6 @@
 		F12B38221946807900DC67F4 /* PLIssueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLIssueViewController.m; sourceTree = "<group>"; };
 		F13D15D3197DFB990023C8F6 /* PLPropertyDetailTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLPropertyDetailTVC.h; sourceTree = "<group>"; };
 		F13D15D4197DFB990023C8F6 /* PLPropertyDetailTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLPropertyDetailTVC.m; sourceTree = "<group>"; };
-		F13D15D6197E00AE0023C8F6 /* PLContactAssociationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLContactAssociationVC.h; sourceTree = "<group>"; };
-		F13D15D7197E00AE0023C8F6 /* PLContactAssociationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLContactAssociationVC.m; sourceTree = "<group>"; };
-		F13D15D9197E00CA0023C8F6 /* PLFloorPlanAssociationVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLFloorPlanAssociationVC.h; sourceTree = "<group>"; };
-		F13D15DA197E00CA0023C8F6 /* PLFloorPlanAssociationVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLFloorPlanAssociationVC.m; sourceTree = "<group>"; };
 		F1415CB61948ADF3007C5017 /* PLProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLProperty.h; sourceTree = "<group>"; };
 		F1415CB71948ADF3007C5017 /* PLProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLProperty.m; sourceTree = "<group>"; };
 		F1415CB91948C71E007C5017 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -86,6 +82,19 @@
 		F175D3CA1966FF250070F296 /* PunchListDB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PunchListDB.xcdatamodel; sourceTree = "<group>"; };
 		F175D45619673F4E0070F296 /* PLContactsTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLContactsTVC.h; sourceTree = "<group>"; };
 		F175D45719673F4E0070F296 /* PLContactsTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLContactsTVC.m; sourceTree = "<group>"; };
+		F190A25D19846E6B003FFB71 /* FloorPlans.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloorPlans.h; sourceTree = "<group>"; };
+		F190A25E19846E6B003FFB71 /* FloorPlans.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FloorPlans.m; sourceTree = "<group>"; };
+		F190A26019846E6B003FFB71 /* Photos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photos.h; sourceTree = "<group>"; };
+		F190A26119846E6B003FFB71 /* Photos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photos.m; sourceTree = "<group>"; };
+		F190A26319846E6B003FFB71 /* Issue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Issue.h; sourceTree = "<group>"; };
+		F190A26419846E6B003FFB71 /* Issue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Issue.m; sourceTree = "<group>"; };
+		F190A26619846E6B003FFB71 /* Property.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Property.h; sourceTree = "<group>"; };
+		F190A26719846E6B003FFB71 /* Property.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Property.m; sourceTree = "<group>"; };
+		F190A26919846E6B003FFB71 /* Contacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contacts.h; sourceTree = "<group>"; };
+		F190A26A19846E6B003FFB71 /* Contacts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contacts.m; sourceTree = "<group>"; };
+		F190A26C198475C8003FFB71 /* PLLoadFloorviewVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLLoadFloorviewVC.h; sourceTree = "<group>"; };
+		F190A26D198475C8003FFB71 /* PLLoadFloorviewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLLoadFloorviewVC.m; sourceTree = "<group>"; };
+		F190A26F19848252003FFB71 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		F1A1A3281943440D0018B092 /* PunchList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PunchList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1A1A32B1943440D0018B092 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F1A1A32D1943440D0018B092 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -113,16 +122,6 @@
 		F1B9E9F1197F451F00618AE2 /* Contacts+addon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Contacts+addon.m"; sourceTree = "<group>"; };
 		F1C865F51981FF2C00317CF3 /* CCExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCExtras.h; sourceTree = "<group>"; };
 		F1C865F61981FF2C00317CF3 /* CCExtras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCExtras.m; sourceTree = "<group>"; };
-		F1C865F81982025700317CF3 /* Issue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Issue.h; sourceTree = "<group>"; };
-		F1C865F91982025700317CF3 /* Issue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Issue.m; sourceTree = "<group>"; };
-		F1C865FB1982025700317CF3 /* Property.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Property.h; sourceTree = "<group>"; };
-		F1C865FC1982025700317CF3 /* Property.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Property.m; sourceTree = "<group>"; };
-		F1C865FE1982025700317CF3 /* Contacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contacts.h; sourceTree = "<group>"; };
-		F1C865FF1982025700317CF3 /* Contacts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Contacts.m; sourceTree = "<group>"; };
-		F1C866011982025700317CF3 /* FloorPlans.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloorPlans.h; sourceTree = "<group>"; };
-		F1C866021982025700317CF3 /* FloorPlans.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FloorPlans.m; sourceTree = "<group>"; };
-		F1C866041982025700317CF3 /* Photos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photos.h; sourceTree = "<group>"; };
-		F1C866051982025700317CF3 /* Photos.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Photos.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +129,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F190A27019848252003FFB71 /* AssetsLibrary.framework in Frameworks */,
 				F1415CBB1948C71E007C5017 /* AddressBook.framework in Frameworks */,
 				F1415CBC1948C71E007C5017 /* AddressBookUI.framework in Frameworks */,
 				F1A1A32E1943440D0018B092 /* CoreGraphics.framework in Frameworks */,
@@ -191,6 +191,7 @@
 		F1A1A32A1943440D0018B092 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F190A26F19848252003FFB71 /* AssetsLibrary.framework */,
 				F1415CB91948C71E007C5017 /* AddressBook.framework */,
 				F1415CBA1948C71E007C5017 /* AddressBookUI.framework */,
 				F1A1A32B1943440D0018B092 /* Foundation.framework */,
@@ -204,51 +205,49 @@
 		F1A1A3311943440D0018B092 /* PunchList */ = {
 			isa = PBXGroup;
 			children = (
-				F1A1A33D1943440D0018B092 /* Main.storyboard */,
-				F1A1A3401943440D0018B092 /* PLViewController.h */,
-				F1A1A3411943440D0018B092 /* PLViewController.m */,
-				F12B38211946807900DC67F4 /* PLIssueViewController.h */,
-				F12B38221946807900DC67F4 /* PLIssueViewController.m */,
-				F175D45619673F4E0070F296 /* PLContactsTVC.h */,
-				F175D45719673F4E0070F296 /* PLContactsTVC.m */,
-				F1A1A3641943AE030018B092 /* PLItem.h */,
-				F1A1A3651943AE030018B092 /* PLItem.m */,
+				F190A26919846E6B003FFB71 /* Contacts.h */,
+				F190A26A19846E6B003FFB71 /* Contacts.m */,
+				F190A26619846E6B003FFB71 /* Property.h */,
+				F190A26719846E6B003FFB71 /* Property.m */,
+				F190A26319846E6B003FFB71 /* Issue.h */,
+				F190A26419846E6B003FFB71 /* Issue.m */,
+				F190A26019846E6B003FFB71 /* Photos.h */,
+				F190A26119846E6B003FFB71 /* Photos.m */,
+				F190A25D19846E6B003FFB71 /* FloorPlans.h */,
+				F190A25E19846E6B003FFB71 /* FloorPlans.m */,
 				F16A11C8197C87AE00DF6D97 /* ccUtilities */,
-				F173D9D21944C25F00980960 /* PLfloorView.h */,
-				F16A11C4197C874F00DF6D97 /* CoreDataTableViewController */,
-				F173D9D31944C25F00980960 /* PLfloorView.m */,
-				F1415CB61948ADF3007C5017 /* PLProperty.h */,
-				F1415CB71948ADF3007C5017 /* PLProperty.m */,
-				F1A1A33A1943440D0018B092 /* PLAppDelegate.h */,
-				F1A1A33B1943440D0018B092 /* PLAppDelegate.m */,
-				F1A1A3321943440D0018B092 /* Supporting Files */,
-				F175D3C91966FF250070F296 /* PunchListDB.xcdatamodeld */,
-				F1C866041982025700317CF3 /* Photos.h */,
-				F1C866051982025700317CF3 /* Photos.m */,
-				F1C866011982025700317CF3 /* FloorPlans.h */,
-				F1C866021982025700317CF3 /* FloorPlans.m */,
-				F1C865FE1982025700317CF3 /* Contacts.h */,
-				F1C865FF1982025700317CF3 /* Contacts.m */,
-				F1C865FB1982025700317CF3 /* Property.h */,
-				F1C865FC1982025700317CF3 /* Property.m */,
-				F1C865F81982025700317CF3 /* Issue.h */,
-				F1C865F91982025700317CF3 /* Issue.m */,
-				F14DD7541968BFE70062AEB4 /* PLPropertyViewController.h */,
-				F14DD7551968BFE70062AEB4 /* PLPropertyViewController.m */,
-				F1577AB21977536700117B9B /* PLHomeVC.h */,
-				F1577AB31977536700117B9B /* PLHomeVC.m */,
-				F16A11A7197BE72600DF6D97 /* Property+addon.h */,
-				F16A11A8197BE72600DF6D97 /* Property+addon.m */,
-				F16A11C1197C86AB00DF6D97 /* PLPropertySearchTVC.h */,
-				F16A11C2197C86AB00DF6D97 /* PLPropertySearchTVC.m */,
-				F13D15D3197DFB990023C8F6 /* PLPropertyDetailTVC.h */,
-				F13D15D4197DFB990023C8F6 /* PLPropertyDetailTVC.m */,
-				F13D15D6197E00AE0023C8F6 /* PLContactAssociationVC.h */,
-				F13D15D7197E00AE0023C8F6 /* PLContactAssociationVC.m */,
-				F13D15D9197E00CA0023C8F6 /* PLFloorPlanAssociationVC.h */,
-				F13D15DA197E00CA0023C8F6 /* PLFloorPlanAssociationVC.m */,
 				F1B9E9F0197F451F00618AE2 /* Contacts+addon.h */,
 				F1B9E9F1197F451F00618AE2 /* Contacts+addon.m */,
+				F16A11C4197C874F00DF6D97 /* CoreDataTableViewController */,
+				F1A1A33D1943440D0018B092 /* Main.storyboard */,
+				F1A1A33A1943440D0018B092 /* PLAppDelegate.h */,
+				F1A1A33B1943440D0018B092 /* PLAppDelegate.m */,
+				F175D45619673F4E0070F296 /* PLContactsTVC.h */,
+				F175D45719673F4E0070F296 /* PLContactsTVC.m */,
+				F173D9D21944C25F00980960 /* PLfloorView.h */,
+				F173D9D31944C25F00980960 /* PLfloorView.m */,
+				F1577AB21977536700117B9B /* PLHomeVC.h */,
+				F1577AB31977536700117B9B /* PLHomeVC.m */,
+				F12B38211946807900DC67F4 /* PLIssueViewController.h */,
+				F12B38221946807900DC67F4 /* PLIssueViewController.m */,
+				F1A1A3641943AE030018B092 /* PLItem.h */,
+				F1A1A3651943AE030018B092 /* PLItem.m */,
+				F1415CB61948ADF3007C5017 /* PLProperty.h */,
+				F1415CB71948ADF3007C5017 /* PLProperty.m */,
+				F13D15D3197DFB990023C8F6 /* PLPropertyDetailTVC.h */,
+				F13D15D4197DFB990023C8F6 /* PLPropertyDetailTVC.m */,
+				F16A11C1197C86AB00DF6D97 /* PLPropertySearchTVC.h */,
+				F16A11C2197C86AB00DF6D97 /* PLPropertySearchTVC.m */,
+				F14DD7541968BFE70062AEB4 /* PLPropertyViewController.h */,
+				F14DD7551968BFE70062AEB4 /* PLPropertyViewController.m */,
+				F1A1A3401943440D0018B092 /* PLViewController.h */,
+				F1A1A3411943440D0018B092 /* PLViewController.m */,
+				F16A11A7197BE72600DF6D97 /* Property+addon.h */,
+				F16A11A8197BE72600DF6D97 /* Property+addon.m */,
+				F175D3C91966FF250070F296 /* PunchListDB.xcdatamodeld */,
+				F1A1A3321943440D0018B092 /* Supporting Files */,
+				F190A26C198475C8003FFB71 /* PLLoadFloorviewVC.h */,
+				F190A26D198475C8003FFB71 /* PLLoadFloorviewVC.m */,
 			);
 			path = PunchList;
 			sourceTree = "<group>";
@@ -387,28 +386,27 @@
 			files = (
 				F13D15D5197DFB990023C8F6 /* PLPropertyDetailTVC.m in Sources */,
 				F175D45819673F4E0070F296 /* PLContactsTVC.m in Sources */,
-				F1C865FD1982025700317CF3 /* Property.m in Sources */,
-				F1C865FA1982025700317CF3 /* Issue.m in Sources */,
 				F16A11A9197BE72600DF6D97 /* Property+addon.m in Sources */,
+				F190A26519846E6B003FFB71 /* Issue.m in Sources */,
 				F16A11C7197C874F00DF6D97 /* CoreDataTableViewController.m in Sources */,
 				F1A1A33C1943440D0018B092 /* PLAppDelegate.m in Sources */,
 				F1A1A3421943440D0018B092 /* PLViewController.m in Sources */,
-				F13D15D8197E00AE0023C8F6 /* PLContactAssociationVC.m in Sources */,
 				F1415CB81948ADF3007C5017 /* PLProperty.m in Sources */,
 				F16A11C3197C86AB00DF6D97 /* PLPropertySearchTVC.m in Sources */,
-				F13D15DB197E00CA0023C8F6 /* PLFloorPlanAssociationVC.m in Sources */,
 				F1577AB41977536700117B9B /* PLHomeVC.m in Sources */,
+				F190A26B19846E6B003FFB71 /* Contacts.m in Sources */,
 				F1C865F71981FF2C00317CF3 /* CCExtras.m in Sources */,
+				F190A26E198475C8003FFB71 /* PLLoadFloorviewVC.m in Sources */,
 				F12B38231946807900DC67F4 /* PLIssueViewController.m in Sources */,
 				F14DD7561968BFE70062AEB4 /* PLPropertyViewController.m in Sources */,
-				F1C866061982025700317CF3 /* Photos.m in Sources */,
 				F1B9E9F2197F451F00618AE2 /* Contacts+addon.m in Sources */,
 				F173D9D41944C25F00980960 /* PLfloorView.m in Sources */,
+				F190A26819846E6B003FFB71 /* Property.m in Sources */,
+				F190A25F19846E6B003FFB71 /* FloorPlans.m in Sources */,
 				F175D3CB1966FF250070F296 /* PunchListDB.xcdatamodeld in Sources */,
-				F1C866001982025700317CF3 /* Contacts.m in Sources */,
 				F1A1A3661943AE030018B092 /* PLItem.m in Sources */,
+				F190A26219846E6B003FFB71 /* Photos.m in Sources */,
 				F1A1A3381943440D0018B092 /* main.m in Sources */,
-				F1C866031982025700317CF3 /* FloorPlans.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

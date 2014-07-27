@@ -12,7 +12,7 @@
 #import "Contacts.h"
 
 
-@interface PLPropertyViewController : UIViewController <UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface PLPropertyViewController : UIViewController //<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *loadImageBarButton;
 @property (strong,nonatomic) Property *returnProperty;
 @property (nonatomic,strong) Contacts *transferContact;
