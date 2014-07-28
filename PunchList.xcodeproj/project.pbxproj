@@ -12,6 +12,8 @@
 		F1415CB81948ADF3007C5017 /* PLProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = F1415CB71948ADF3007C5017 /* PLProperty.m */; };
 		F1415CBB1948C71E007C5017 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1415CB91948C71E007C5017 /* AddressBook.framework */; };
 		F1415CBC1948C71E007C5017 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1415CBA1948C71E007C5017 /* AddressBookUI.framework */; };
+		F14B748419859A4C00EE5BA0 /* Photos+addon.m in Sources */ = {isa = PBXBuildFile; fileRef = F14B748319859A4C00EE5BA0 /* Photos+addon.m */; };
+		F14B74871985C27200EE5BA0 /* FloorPlans+addon.m in Sources */ = {isa = PBXBuildFile; fileRef = F14B74861985C27200EE5BA0 /* FloorPlans+addon.m */; };
 		F14DD7561968BFE70062AEB4 /* PLPropertyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F14DD7551968BFE70062AEB4 /* PLPropertyViewController.m */; };
 		F1577AB41977536700117B9B /* PLHomeVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F1577AB31977536700117B9B /* PLHomeVC.m */; };
 		F16A11A9197BE72600DF6D97 /* Property+addon.m in Sources */ = {isa = PBXBuildFile; fileRef = F16A11A8197BE72600DF6D97 /* Property+addon.m */; };
@@ -67,6 +69,10 @@
 		F1415CB71948ADF3007C5017 /* PLProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLProperty.m; sourceTree = "<group>"; };
 		F1415CB91948C71E007C5017 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		F1415CBA1948C71E007C5017 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		F14B748219859A4C00EE5BA0 /* Photos+addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Photos+addon.h"; sourceTree = "<group>"; };
+		F14B748319859A4C00EE5BA0 /* Photos+addon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Photos+addon.m"; sourceTree = "<group>"; };
+		F14B74851985C27200EE5BA0 /* FloorPlans+addon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FloorPlans+addon.h"; sourceTree = "<group>"; };
+		F14B74861985C27200EE5BA0 /* FloorPlans+addon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FloorPlans+addon.m"; sourceTree = "<group>"; };
 		F14DD7541968BFE70062AEB4 /* PLPropertyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLPropertyViewController.h; sourceTree = "<group>"; };
 		F14DD7551968BFE70062AEB4 /* PLPropertyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLPropertyViewController.m; sourceTree = "<group>"; };
 		F1577AB21977536700117B9B /* PLHomeVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLHomeVC.h; sourceTree = "<group>"; };
@@ -248,6 +254,10 @@
 				F1A1A3321943440D0018B092 /* Supporting Files */,
 				F190A26C198475C8003FFB71 /* PLLoadFloorviewVC.h */,
 				F190A26D198475C8003FFB71 /* PLLoadFloorviewVC.m */,
+				F14B748219859A4C00EE5BA0 /* Photos+addon.h */,
+				F14B748319859A4C00EE5BA0 /* Photos+addon.m */,
+				F14B74851985C27200EE5BA0 /* FloorPlans+addon.h */,
+				F14B74861985C27200EE5BA0 /* FloorPlans+addon.m */,
 			);
 			path = PunchList;
 			sourceTree = "<group>";
@@ -385,12 +395,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				F13D15D5197DFB990023C8F6 /* PLPropertyDetailTVC.m in Sources */,
+				F14B74871985C27200EE5BA0 /* FloorPlans+addon.m in Sources */,
 				F175D45819673F4E0070F296 /* PLContactsTVC.m in Sources */,
 				F16A11A9197BE72600DF6D97 /* Property+addon.m in Sources */,
 				F190A26519846E6B003FFB71 /* Issue.m in Sources */,
 				F16A11C7197C874F00DF6D97 /* CoreDataTableViewController.m in Sources */,
 				F1A1A33C1943440D0018B092 /* PLAppDelegate.m in Sources */,
 				F1A1A3421943440D0018B092 /* PLViewController.m in Sources */,
+				F14B748419859A4C00EE5BA0 /* Photos+addon.m in Sources */,
 				F1415CB81948ADF3007C5017 /* PLProperty.m in Sources */,
 				F16A11C3197C86AB00DF6D97 /* PLPropertySearchTVC.m in Sources */,
 				F1577AB41977536700117B9B /* PLHomeVC.m in Sources */,

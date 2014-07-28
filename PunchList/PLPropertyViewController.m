@@ -187,6 +187,7 @@
             } else {
                 if([segue.destinationViewController isKindOfClass:[PLLoadFloorviewVC class]]) {
                     PLLoadFloorviewVC *lfv=segue.destinationViewController;
+                    lfv.document=self.document;
                     lfv.property=self.property;
                 }
             }
@@ -231,7 +232,11 @@
             self.property=self.returnProperty;
             [self updateUI:self.property];
         } else {
+            if([sender.sourceViewController isKindOfClass:[PLLoadFloorviewVC class]]) {
+                CCLog(@"Back from PLLoadFloorviewVC");
+            }else {
             CCLog(@"Unknown sourceViewController - %@",sender.sourceViewController);
+            }
         }
     }
 }

@@ -8,6 +8,11 @@
 //  Allows user to select image from library, associate it with property, add a title and sequence to it.
 //
 #import "PLLoadFloorviewVC.h"
+#import "PLPropertyViewController.h"
+#import "Photos.h"
+#import "Photos+addon.h"
+#import "FloorPlans.h"
+#import "FloorPlans+addon.h"
 
 @interface PLLoadFloorviewVC ()
 @property (nonatomic,strong) UIImage *image;
@@ -38,12 +43,26 @@
 
 - (IBAction)saveButton:(UIBarButtonItem *)sender
 {
-    CCLog(@"ImageURL=%@",self.imageURL.path);
+    NSMutableDictionary *fpDict=[[NSMutableDictionary alloc] init];
+    [fpDict setObject:self.propertyTitle forKey:@"title"];
+    [fpDict setObject:self.imageURL forKey:@"imageURL"];
+    [fpDict setObject:self.imageTitle forKey:@"imageTitle"];
+    [fpDict setObject:self.imageSequence forKey:@"imageSequence"];
+    NSManagedObjectContext *context=[self.document managedObjectContext];
+    [FloorPlans addFloorPlan:fpDict toProperty:self.property onContext:context];
 }
 
+- (IBAction)deleteButton:(UIBarButtonItem *)sender
+{
+
+}
+
+- (IBAction)cancelButton:(UIBarButtonItem *)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 
 #pragma mark Camera Library Processing
-
 
 - (IBAction)selectImageFromLibrary:(UIButton *)sender
 {
@@ -62,6 +81,13 @@
     CCLog(@"Image =%@",[info objectForKey:UIImagePickerControllerReferenceURL]);
 //    self.image = [info objectForKey:UIImagePickerControllerOriginalImage];
     
+    [self displayImageFromURL:self.imageURL];
+    // You have the image. You can use this to present the image in the next view like you require in `#3`.
+    
+}
+
+- (void) displayImageFromURL:(NSURL*)urlIn
+{
     ALAuthorizationStatus status = [ALAssetsLibrary authorizationStatus];
     
     switch(status){
@@ -79,16 +105,20 @@
         }
         case ALAuthorizationStatusAuthorized: {
             CCLog(@"Authorized");
-            CCLog(@"self.imageURL=%@",self.imageURL);
+            CCLog(@"urlIn=%@",urlIn);
             ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
             __block UIImage *returnValue = nil;
-            [library assetForURL:self.imageURL resultBlock:^(ALAsset *asset) {
+            [library assetForURL:urlIn resultBlock:^(ALAsset *asset) {
                 returnValue = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullResolutionImage]];
-                } failureBlock:^(NSError *error) {
-                    NSLog(@"error : %@", error);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.imageDisplay setImage:returnValue];
+                    [self.imageDisplay setNeedsDisplay];
+                });
+            } failureBlock:^(NSError *error) {
+                NSLog(@"error : %@", error);
             }];
-            [self.imageDisplay setImage:returnValue];
-            [self.imageDisplay setNeedsDisplay];
+            //            [self.imageDisplay setImage:returnValue];
+            //            [self.imageDisplay setNeedsDisplay];
             break;
         }
         default: {
@@ -97,9 +127,7 @@
         }
             
     }
-    
-    // You have the image. You can use this to present the image in the next view like you require in `#3`.
-    
+
 }
 
 - (BOOL) startPhotoLibraryFromViewController: (UIViewController*) controller
@@ -127,15 +155,19 @@
 
 #pragma mark Segue Processing
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if([segue.destinationViewController isKindOfClass:[PLPropertyViewController class]]) {
+        CCLog(@"Preparing for segue to %@",segue.destinationViewController);
+        
+    } else {
+        CCLog(@"Preparing to segue to unknown destination view controller %@",segue.destinationViewController);
+    }
 }
-*/
+
 
 @end

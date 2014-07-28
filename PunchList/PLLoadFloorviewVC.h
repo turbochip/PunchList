@@ -13,5 +13,6 @@
 #import "Property.h"
 
 @interface PLLoadFloorviewVC : UIViewController <UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@property (nonatomic,strong) UIManagedDocument *document;
 @property (nonatomic,strong) Property *property;
 @end
