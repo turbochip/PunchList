@@ -103,6 +103,7 @@
 {
     [super viewDidLoad];
     self.cancel=NO;
+    self.IssueImage.layer.borderWidth=1;
     // Do any additional setup after loading the view.
     self.IssueNumber.text=[[NSString alloc] initWithFormat:@"Issue : %ld",(long)self.xIssue.itemNumber ];
     self.IssueDescription.text=[[NSString alloc] initWithFormat:@"%@",self.xIssue.itemDescription];

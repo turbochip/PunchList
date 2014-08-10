@@ -29,16 +29,17 @@
 +(FloorPlans *) addFloorPlan:(NSDictionary *)floorPlan toProperty:(Property *) property onContext:(NSManagedObjectContext *)context
 {
     FloorPlans *fp;
-    if((fp=[self doesFloorPlanExist:[floorPlan objectForKey:@"title"] inContext:context])!=Nil) {
+    if((fp=[self doesFloorPlanExist:[floorPlan objectForKey:@"imageTitle"] inContext:context])!=Nil) {
         CCLog(@"Update existing floor plan");
         fp.title=[floorPlan objectForKey:@"imageTitle"];
-        fp.sequence=[floorPlan objectForKey:@"imageSequence"];
+        fp.sequence= [floorPlan objectForKey:@"imageSequence"];
         fp.drawings=[Photos addPhotoURL:[floorPlan objectForKey:@"imageURL" ] toContext:context];
         fp.property=property;
     } else {
         CCLog(@"Add new floor plan");
         fp=[NSEntityDescription insertNewObjectForEntityForName:@"FloorPlans" inManagedObjectContext:context];
-        fp.title=[floorPlan objectForKey:@"title"];
+        NSLog(@"imageTitle=%@",[floorPlan objectForKey:@"imageTitle"]);
+        fp.title=[floorPlan objectForKey:@"imageTitle"];
         fp.sequence=[floorPlan objectForKey:@"sequence"];
         fp.drawings=[Photos addPhotoURL:[floorPlan objectForKey:@"imageURL" ] toContext:context];
         fp.property=property;

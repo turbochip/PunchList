@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 #import "CCExtras.h"
 #import "Property.h"
 #import "Contacts.h"
 
 
-@interface PLPropertyViewController : UIViewController //<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *loadImageBarButton;
+@interface PLPropertyViewController : UIViewController //<UIImagePickerControllerDelegate>
+//@property (weak, nonatomic) IBOutlet UIBarButtonItem *loadImageBarButton;
 @property (strong,nonatomic) Property *returnProperty;
 @property (nonatomic,strong) Contacts *transferContact;
 @property (nonatomic,strong) NSIndexPath *transferIndexPath;

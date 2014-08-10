@@ -29,6 +29,7 @@
 		F190A26B19846E6B003FFB71 /* Contacts.m in Sources */ = {isa = PBXBuildFile; fileRef = F190A26A19846E6B003FFB71 /* Contacts.m */; };
 		F190A26E198475C8003FFB71 /* PLLoadFloorviewVC.m in Sources */ = {isa = PBXBuildFile; fileRef = F190A26D198475C8003FFB71 /* PLLoadFloorviewVC.m */; };
 		F190A27019848252003FFB71 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F190A26F19848252003FFB71 /* AssetsLibrary.framework */; };
+		F1948FF419980B1A00086A4E /* Main-iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1948FF319980B1A00086A4E /* Main-iPad.storyboard */; };
 		F1A1A32C1943440D0018B092 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A1A32B1943440D0018B092 /* Foundation.framework */; };
 		F1A1A32E1943440D0018B092 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A1A32D1943440D0018B092 /* CoreGraphics.framework */; };
 		F1A1A3301943440D0018B092 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F1A1A32F1943440D0018B092 /* UIKit.framework */; };
@@ -101,6 +102,7 @@
 		F190A26C198475C8003FFB71 /* PLLoadFloorviewVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLLoadFloorviewVC.h; sourceTree = "<group>"; };
 		F190A26D198475C8003FFB71 /* PLLoadFloorviewVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLLoadFloorviewVC.m; sourceTree = "<group>"; };
 		F190A26F19848252003FFB71 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		F1948FF319980B1A00086A4E /* Main-iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = "Main-iPad.storyboard"; path = "../Main-iPad.storyboard"; sourceTree = "<group>"; };
 		F1A1A3281943440D0018B092 /* PunchList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PunchList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1A1A32B1943440D0018B092 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		F1A1A32D1943440D0018B092 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -211,6 +213,7 @@
 		F1A1A3311943440D0018B092 /* PunchList */ = {
 			isa = PBXGroup;
 			children = (
+				F1948FF319980B1A00086A4E /* Main-iPad.storyboard */,
 				F190A26919846E6B003FFB71 /* Contacts.h */,
 				F190A26A19846E6B003FFB71 /* Contacts.m */,
 				F190A26619846E6B003FFB71 /* Property.h */,
@@ -376,6 +379,7 @@
 				F1A1A3361943440D0018B092 /* InfoPlist.strings in Resources */,
 				F1A1A33F1943440D0018B092 /* Main.storyboard in Resources */,
 				F1A1A3611943481D0018B092 /* Winston FloorPlan 1st Floor.png in Resources */,
+				F1948FF419980B1A00086A4E /* Main-iPad.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,7 +550,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PunchList/PunchList-Prefix.pch";
 				INFOPLIST_FILE = "PunchList/PunchList-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -559,7 +565,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PunchList/PunchList-Prefix.pch";
 				INFOPLIST_FILE = "PunchList/PunchList-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

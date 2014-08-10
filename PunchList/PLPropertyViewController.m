@@ -15,6 +15,10 @@
 #import "PLContactsTVC.h"
 #import "Contacts.h"
 #import "PLLoadFloorviewVC.h"
+#import "FloorPlans.h"
+#import "FloorPlans+addon.h"
+#import "Photos+addon.h"
+#import "Photos.h"
 
 @interface PLPropertyViewController ()
 @property (strong,nonatomic) UIManagedDocument *document;
@@ -33,7 +37,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *realtorField;
 @property (strong,nonatomic) Contacts *realtorObject;
 @property (strong,nonatomic) Property *property;
-@property (strong, nonatomic) IBOutlet UIStepper *stepper;
+@property (nonatomic) NSInteger ccStepper;
+@property (strong, nonatomic) NSMutableArray *drawings;
 
 @property (strong,nonatomic) NSMutableArray *pArray;
 
@@ -48,6 +53,12 @@
         // Custom initialization
     }
     return self;
+}
+
+- (NSMutableArray *) drawings
+{
+    if(!_drawings) _drawings=[[NSMutableArray alloc] init];
+    return _drawings;
 }
 
 - (NSMutableArray *) pArray
@@ -69,16 +80,13 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.ImageDisplay.layer.borderWidth=1;
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     gestureRecognizer.cancelsTouchesInView = NO; //so that action such as clear text field button can be pressed
     [self.view addGestureRecognizer:gestureRecognizer];
+    self.ccStepper=0;
     
     // add vertical stepper next to imageview
-    CGRect frame = CGRectMake(245.0, 490.0, 25.0, 25.0);
-    self.stepper = [[UIStepper alloc] initWithFrame:frame];
-    self.stepper.transform= CGAffineTransformMakeRotation(degreesToRadians(-90));
-    [self.view addSubview:self.stepper];
 }
 
 - (void)updateUI:(Property *) prop
@@ -103,8 +111,58 @@
         self.realtorField.text=(prop.realtor.name=NULL ? @"" : prop.realtor.name);
         self.loanOfficerField.text=(prop.loanOfficer.name=NULL ? @"" : prop.loanOfficer.name);
         self.builderField.text=(prop.builder.name=NULL ? @"" : prop.builder.name);
+        if(self.drawings.count!=0){
+            Photos *photo=[self.drawings objectAtIndex:self.ccStepper];
+            CCLog(@"photo url=%@",photo.photoURL);
+            [self displayImageFromURL:[NSURL fileURLWithPath:photo.photoURL]];
+        }
     }
 }
+
+- (void) displayImageFromURL:(NSURL*)urlIn
+{
+    ALAuthorizationStatus status = [ALAssetsLibrary authorizationStatus];
+    
+    switch(status){
+        case ALAuthorizationStatusDenied: {
+            CCLog(@"not authorized");
+            break;
+        }
+        case ALAuthorizationStatusRestricted: {
+            CCLog(@"Restricted");
+            break;
+        }
+        case ALAuthorizationStatusNotDetermined: {
+            CCLog(@"Undetermined");
+            break;
+        }
+        case ALAuthorizationStatusAuthorized: {
+            CCLog(@"Authorized");
+            CCLog(@"urlIn=%@",urlIn.pathComponents);
+            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+            __block UIImage *returnValue = nil;
+            [library assetForURL:urlIn resultBlock:^(ALAsset *asset) {
+                returnValue = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullResolutionImage]];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.ImageDisplay setImage:returnValue];
+                    [self.ImageDisplay setNeedsDisplay];
+                });
+            } failureBlock:^(NSError *error) {
+                NSLog(@"error : %@", error);
+            }];
+            //            [self.imageDisplay setImage:returnValue];
+            //            [self.imageDisplay setNeedsDisplay];
+            break;
+        }
+        default: {
+            CCLog(@"Unknown hit default");
+            break;
+        }
+            
+    }
+    
+}
+
 
 - (void)resetUI
 {
@@ -112,6 +170,28 @@
     self.loanOfficerObject=nil;
     self.realtorObject=nil;
     [self updateUI:nil];
+}
+
+- (IBAction)ccStepper:(UIButton *)sender
+{
+    switch (sender.tag) {
+        case 0: {
+            if(self.ccStepper<self.drawings.count-1)
+                self.ccStepper++;
+            break;
+        }
+        case 1: {
+            if(self.ccStepper==0) {
+                self.ccStepper=0;
+            } else {
+                self.ccStepper--;
+            }
+            break;
+        }
+        default:
+            break;
+    }
+    [self updateUI:self.property];
 }
 
 - (IBAction)toolbarButtonClick:(UIBarButtonItem *)sender
@@ -230,10 +310,16 @@
             self.loanOfficerObject=self.returnProperty.loanOfficer;
             self.builderObject=self.returnProperty.builder;
             self.property=self.returnProperty;
+            for (FloorPlans *fp in self.returnProperty.floorPlan) {
+                CCLog(@"prop.floorplan = %@",fp.drawings);
+                [self.drawings addObject:fp.drawings];
+            }
+            self.ccStepper=0;
             [self updateUI:self.property];
         } else {
             if([sender.sourceViewController isKindOfClass:[PLLoadFloorviewVC class]]) {
                 CCLog(@"Back from PLLoadFloorviewVC");
+                [self updateUI:self.property];
             }else {
             CCLog(@"Unknown sourceViewController - %@",sender.sourceViewController);
             }

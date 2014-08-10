@@ -15,11 +15,11 @@
     Photos *photo;
     if((photo=[self doesPhotoExistWithURL:photoURL inContext:context])==Nil) {
         photo = [NSEntityDescription insertNewObjectForEntityForName:@"Photos" inManagedObjectContext:context];
-        photo.photoURL=photoURL.path;
+        photo.photoURL=[photoURL absoluteString];
         photo.photoTitle=@"Unknown";
     } else {
         CCLog(@"Update existing photo");
-        photo.photoURL=photoURL.path;
+        photo.photoURL=[photoURL absoluteString];
     }
     [context save:Nil];
     return photo;
@@ -32,7 +32,8 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Photos" inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     // Specify criteria for filtering which objects to fetch
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"photoURL=%@", photoURL.path];
+    CCLog(@"Checking for photo with url %@",[photoURL absoluteString]);
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"photoURL=%@", [photoURL absoluteString]];
     [fetchRequest setPredicate:predicate];
     // Specify how the fetched objects should be sorted
     NSSortDescriptor *sortDescriptor = nil;

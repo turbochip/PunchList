@@ -44,10 +44,11 @@
 - (IBAction)saveButton:(UIBarButtonItem *)sender
 {
     NSMutableDictionary *fpDict=[[NSMutableDictionary alloc] init];
-    [fpDict setObject:self.propertyTitle forKey:@"title"];
+    [fpDict setObject:self.propertyTitle.text forKey:@"title"];
     [fpDict setObject:self.imageURL forKey:@"imageURL"];
-    [fpDict setObject:self.imageTitle forKey:@"imageTitle"];
-    [fpDict setObject:self.imageSequence forKey:@"imageSequence"];
+    CCLog(@"self.imageURL=%@",self.imageURL);
+    [fpDict setObject:self.imageTitle.text forKey:@"imageTitle"];
+    [fpDict setObject:[NSNumber numberWithInteger:[self.imageSequence.text integerValue]] forKey:@"imageSequence"];
     NSManagedObjectContext *context=[self.document managedObjectContext];
     [FloorPlans addFloorPlan:fpDict toProperty:self.property onContext:context];
 }
@@ -79,11 +80,8 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     self.imageURL=[info objectForKey:UIImagePickerControllerReferenceURL];
     CCLog(@"Image =%@",[info objectForKey:UIImagePickerControllerReferenceURL]);
-//    self.image = [info objectForKey:UIImagePickerControllerOriginalImage];
     
-    [self displayImageFromURL:self.imageURL];
-    // You have the image. You can use this to present the image in the next view like you require in `#3`.
-    
+    [self displayImageFromURL:self.imageURL];    
 }
 
 - (void) displayImageFromURL:(NSURL*)urlIn
@@ -105,7 +103,7 @@
         }
         case ALAuthorizationStatusAuthorized: {
             CCLog(@"Authorized");
-            CCLog(@"urlIn=%@",urlIn);
+            CCLog(@"urlIn=%@",urlIn.pathComponents);
             ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
             __block UIImage *returnValue = nil;
             [library assetForURL:urlIn resultBlock:^(ALAsset *asset) {
