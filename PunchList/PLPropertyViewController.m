@@ -212,22 +212,7 @@
         }
         case 3: {
             CCLog(@"Save Property");
-            NSManagedObjectContext *context=self.document.managedObjectContext;
-            NSMutableDictionary *propertyDict=[[NSMutableDictionary alloc] init];
-            
-            [propertyDict setObject:self.propertyNameField.text forKey:@"Name"];
-            [propertyDict setObject:self.StreetAddressField.text forKey:@"Street"];
-            [propertyDict setObject:self.CityAddressField.text forKey:@"City"];
-            [propertyDict setObject:self.StateAddressField.text forKey:@"State"];
-            [propertyDict setObject:self.zipAddressField.text forKey:@"ZIP"];
-            [propertyDict setObject:self.realtorObject==nil ? [NSNull null] :self.realtorObject forKey:@"Realtor"];
-            [propertyDict setObject:self.loanOfficerObject==nil ? [NSNull null] :self.loanOfficerObject forKey:@"LoanOfficer"];
-            [propertyDict setObject:self.builderObject==nil ? [NSNull null] :self.builderObject forKey:@"Builder"];
-            
-            
-            if(!(self.property = [Property addProperty:propertyDict onContext:context])) {
-                CCLog(@"Error adding or updating property");
-            }
+            [self saveProperty];
             
             [self resetUI];
             break;
@@ -236,6 +221,26 @@
             CCLog(@"Unknown tabbar item pressed =%d", sender.tag);
             break;
         }
+    }
+}
+
+- (void) saveProperty
+{
+    NSManagedObjectContext *context=self.document.managedObjectContext;
+    NSMutableDictionary *propertyDict=[[NSMutableDictionary alloc] init];
+    
+    [propertyDict setObject:self.propertyNameField.text forKey:@"Name"];
+    [propertyDict setObject:self.StreetAddressField.text forKey:@"Street"];
+    [propertyDict setObject:self.CityAddressField.text forKey:@"City"];
+    [propertyDict setObject:self.StateAddressField.text forKey:@"State"];
+    [propertyDict setObject:self.zipAddressField.text forKey:@"ZIP"];
+    [propertyDict setObject:self.realtorObject==nil ? [NSNull null] :self.realtorObject forKey:@"Realtor"];
+    [propertyDict setObject:self.loanOfficerObject==nil ? [NSNull null] :self.loanOfficerObject forKey:@"LoanOfficer"];
+    [propertyDict setObject:self.builderObject==nil ? [NSNull null] :self.builderObject forKey:@"Builder"];
+    
+    
+    if(!(self.property = [Property addProperty:propertyDict onContext:context])) {
+        CCLog(@"Error adding or updating property");
     }
 }
 
@@ -266,6 +271,7 @@
                 avc.transferIndexPath=[NSIndexPath indexPathForRow:myButton.tag inSection:0];
             } else {
                 if([segue.destinationViewController isKindOfClass:[PLLoadFloorviewVC class]]) {
+                    [self saveProperty];
                     PLLoadFloorviewVC *lfv=segue.destinationViewController;
                     lfv.document=self.document;
                     lfv.property=self.property;
@@ -319,6 +325,11 @@
         } else {
             if([sender.sourceViewController isKindOfClass:[PLLoadFloorviewVC class]]) {
                 CCLog(@"Back from PLLoadFloorviewVC");
+                for (FloorPlans *fp in self.property.floorPlan) {
+                    CCLog(@"prop.floorplan = %@",fp.drawings);
+                    [self.drawings addObject:fp.drawings];
+                }
+
                 [self updateUI:self.property];
             }else {
             CCLog(@"Unknown sourceViewController - %@",sender.sourceViewController);
