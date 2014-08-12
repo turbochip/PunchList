@@ -345,6 +345,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Home;
 				TargetAttributes = {
+					F1A1A3271943440D0018B092 = {
+						DevelopmentTeam = CC4XQ6NEA6;
+					};
 					F1A1A3481943440D0018B092 = {
 						TestTargetID = F1A1A3271943440D0018B092;
 					};
@@ -547,6 +550,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PunchList/PunchList-Prefix.pch";
 				INFOPLIST_FILE = "PunchList/PunchList-Info.plist";
@@ -562,6 +566,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PunchList/PunchList-Prefix.pch";
 				INFOPLIST_FILE = "PunchList/PunchList-Info.plist";

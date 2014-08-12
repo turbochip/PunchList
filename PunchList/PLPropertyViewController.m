@@ -114,7 +114,7 @@
         if(self.drawings.count!=0){
             Photos *photo=[self.drawings objectAtIndex:self.ccStepper];
             CCLog(@"photo url=%@",photo.photoURL);
-            [self displayImageFromURL:[NSURL fileURLWithPath:photo.photoURL]];
+            [self displayImageFromURL:[NSURL URLWithString:photo.photoURL]];
         }
     }
 }
@@ -150,8 +150,6 @@
             } failureBlock:^(NSError *error) {
                 NSLog(@"error : %@", error);
             }];
-            //            [self.imageDisplay setImage:returnValue];
-            //            [self.imageDisplay setNeedsDisplay];
             break;
         }
         default: {
@@ -169,6 +167,8 @@
     self.builderObject=nil;
     self.loanOfficerObject=nil;
     self.realtorObject=nil;
+    self.drawings=nil;
+    self.ImageDisplay.image=nil;
     [self updateUI:nil];
 }
 
