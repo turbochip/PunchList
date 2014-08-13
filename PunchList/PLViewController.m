@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *propertyNameTextField;
 @property (nonatomic,strong) UIManagedDocument *document;
 @property (nonatomic,strong) Property *property;
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 
 @end
 
@@ -60,20 +61,6 @@
     [self.PropertyScrollView setMaximumZoomScale:1];
     [self.PropertyScrollView setMinimumZoomScale:0.05];
     [self.PropertyScrollView setDelegate:self];
-//    NSManagedObjectContext *context=self.document.managedObjectContext;
-//    NSFetchRequest *fr=[[NSFetchRequest alloc] initWithEntityName:@"Property"];
-//    fr.predicate=nil;
-//    NSSortDescriptor *propSort=[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
-//    fr.sortDescriptors=@[propSort];
-//    NSArray *rs=[context executeFetchRequest:fr error:nil];
-//    if((rs==nil) || (rs.count==0)) {
-//        CCLog(@"No properties found");
-//    } else {
-//        for(Property *p in rs) {
-//            [self.propertyArray addObject:p];
-//        }
-//        [self updateUI];
-//    }
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -93,6 +80,14 @@
 {
     if(!_itemArray) _itemArray= [[NSMutableArray alloc] init];
     return _itemArray;
+}
+- (IBAction)pageControlTap:(UIPageControl *)sender
+{
+    CCLog(@"currentPage %d, numberOfPages %d", self.pageControl.currentPage,self.pageControl.numberOfPages);
+//    if(self.pageControl.currentPage+1<=self.pageControl.numberOfPages-1) {
+//        self.pageControl.currentPage++;
+//        CCLog(@"currentPage=%d",self.pageControl.currentPage);
+//    }
 }
 
 // multiple functions based on state when tap is performed.
@@ -137,38 +132,6 @@
     [self updateUI];
 }
 
-//- (void)itemSelectedatRow:(NSInteger)row
-//{
-//    CCLog(@"row %lu selected", (unsigned long)row);
-//    NSString *selectedName=[self.propertyArray objectAtIndex:row];
-//    
-//    [self.propertyName setText:[NSString stringWithFormat:@"Name : %@",selectedName]];
-//
-//    // build image
-//    self.itemArray=nil;
-//    // Now we need to query the database for the name returned in selectedName.  That will give us our floor plans.
-//    // if there is more than one image associated with the property, then we can use a page control to navigate between them.
-//    self.propertyImage =[UIImage imageNamed:@"Winston 1st Floor"];
-//    
-//    
-//    //from here on down will probably go into a delegate for a page control.
-//    self.propertyView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.PropertyScrollView.contentSize.width, self.PropertyScrollView.contentSize.height)];
-//    [self.PropertyScrollView addSubview:self.propertyView];
-//    
-//    
-//    //propertyimageview is a UIView subview that will lay on top of the imageview subview.
-//    // Build the view at the same size as the scroll view contents.
-//    self.propertyImageView=[[PLfloorView alloc] initWithFrame:CGRectMake(0, 0, self.PropertyScrollView.contentSize.width, self.PropertyScrollView.contentSize.height)];
-//    // add the image subview
-//    [self.propertyView addSubview:[[UIImageView alloc] initWithImage:self.propertyImage]];
-//    // add the UIView subview to hold the bezier dots representing items.
-//    [self.propertyView addSubview:self.propertyImageView];
-//    
-//    
-//    [self updateUI];
-//    
-//}
-
 - (void) loadProperty:(Property *) prop
 {
     self.propertyNameTextField.text=prop.name;
@@ -180,6 +143,9 @@
         [photoDict setValue:fp.title forKey:@"TITLE"];
         [fpArray addObject:photoDict];
     }
+    self.pageControl.numberOfPages=prop.floorPlan.count;
+    self.pageControl.currentPage=0;
+    self.pageControl.enabled=YES;
     // build image
     self.itemArray=nil;
     // Now we need to query the database for the name returned in selectedName.  That will give us our floor plans.

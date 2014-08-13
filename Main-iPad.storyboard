@@ -37,7 +37,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cx0-h0-LSM">
-                                <rect key="frame" x="20" y="108" width="728" height="846"/>
+                                <rect key="frame" x="20" y="108" width="728" height="810"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <gestureRecognizers/>
                                 <connections>
@@ -55,7 +55,7 @@
                                 <rect key="frame" x="108" y="70" width="164" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="164" id="SPd-tO-ToV"/>
+                                    <constraint firstAttribute="width" constant="164" id="jzC-e5-gcH"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -71,24 +71,36 @@
                                     <segue destination="2uU-j9-zMP" kind="push" id="9ZK-YS-Yqp"/>
                                 </connections>
                             </button>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="WDQ-4B-lqp">
+                                <rect key="frame" x="376" y="926" width="39" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="pageIndicatorTintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="currentPageIndicatorTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="pageControlTap:" destination="kGX-l5-GkM" eventType="valueChanged" id="eBa-lf-X3f"/>
+                                </connections>
+                            </pageControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="Cx0-h0-LSM" secondAttribute="trailing" constant="20" symbolic="YES" id="2tS-WJ-zj5"/>
-                            <constraint firstItem="Cx0-h0-LSM" firstAttribute="top" secondItem="7rJ-aI-gpr" secondAttribute="top" constant="108" id="9Hr-0h-RfT"/>
-                            <constraint firstItem="Pvc-qy-y5m" firstAttribute="top" secondItem="kV3-3L-4Qz" secondAttribute="top" id="HjR-zH-ixj"/>
-                            <constraint firstItem="Cx0-h0-LSM" firstAttribute="leading" secondItem="7rJ-aI-gpr" secondAttribute="leading" constant="20" symbolic="YES" id="LpP-e4-d3H"/>
-                            <constraint firstItem="Cx0-h0-LSM" firstAttribute="leading" secondItem="GbF-rS-Khc" secondAttribute="leading" id="apq-fz-0HX"/>
-                            <constraint firstItem="Cx0-h0-LSM" firstAttribute="trailing" secondItem="kV3-3L-4Qz" secondAttribute="trailing" id="cQ3-dR-ney"/>
-                            <constraint firstItem="Cx0-h0-LSM" firstAttribute="top" secondItem="Pvc-qy-y5m" secondAttribute="bottom" constant="8" symbolic="YES" id="koh-io-cbk"/>
-                            <constraint firstItem="Pvc-qy-y5m" firstAttribute="leading" secondItem="GbF-rS-Khc" secondAttribute="trailing" constant="8" symbolic="YES" id="nsf-o1-ouG"/>
-                            <constraint firstItem="Pvc-qy-y5m" firstAttribute="baseline" secondItem="GbF-rS-Khc" secondAttribute="baseline" id="pJ0-rd-krp"/>
-                            <constraint firstItem="e2g-CO-W6x" firstAttribute="top" secondItem="Cx0-h0-LSM" secondAttribute="bottom" constant="21" id="uKY-O3-bm9"/>
+                            <constraint firstItem="Cx0-h0-LSM" firstAttribute="top" secondItem="Pvc-qy-y5m" secondAttribute="bottom" constant="8" symbolic="YES" id="BWK-ga-yA3"/>
+                            <constraint firstItem="e2g-CO-W6x" firstAttribute="top" secondItem="WDQ-4B-lqp" secondAttribute="bottom" constant="12" id="Ii2-Q8-QEJ"/>
+                            <constraint firstItem="Pvc-qy-y5m" firstAttribute="leading" secondItem="GbF-rS-Khc" secondAttribute="trailing" constant="8" symbolic="YES" id="XaG-61-U2J"/>
+                            <constraint firstItem="Pvc-qy-y5m" firstAttribute="top" secondItem="6hj-hZ-Yhv" secondAttribute="bottom" constant="6" id="YXL-Xn-C8P"/>
+                            <constraint firstItem="GbF-rS-Khc" firstAttribute="leading" secondItem="7rJ-aI-gpr" secondAttribute="leading" constant="20" symbolic="YES" id="bWx-3f-wHb"/>
+                            <constraint firstItem="WDQ-4B-lqp" firstAttribute="leading" secondItem="7rJ-aI-gpr" secondAttribute="leading" constant="376" id="f4B-cE-TCR"/>
+                            <constraint firstItem="Cx0-h0-LSM" firstAttribute="leading" secondItem="GbF-rS-Khc" secondAttribute="leading" id="hmv-7G-nQA"/>
+                            <constraint firstItem="WDQ-4B-lqp" firstAttribute="top" secondItem="Cx0-h0-LSM" secondAttribute="bottom" constant="8" symbolic="YES" id="lMW-fP-a9F"/>
+                            <constraint firstItem="GbF-rS-Khc" firstAttribute="baseline" secondItem="Pvc-qy-y5m" secondAttribute="baseline" id="ozd-ma-GlR"/>
+                            <constraint firstItem="kV3-3L-4Qz" firstAttribute="top" secondItem="Pvc-qy-y5m" secondAttribute="top" id="qTc-Yg-AHn"/>
+                            <constraint firstItem="kV3-3L-4Qz" firstAttribute="trailing" secondItem="Cx0-h0-LSM" secondAttribute="trailing" id="vQB-Ke-xlH"/>
+                            <constraint firstAttribute="trailing" secondItem="kV3-3L-4Qz" secondAttribute="trailing" constant="20" symbolic="YES" id="zSl-s8-Zim"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="View Property" id="4nh-gg-xBI"/>
                     <connections>
                         <outlet property="PropertyScrollView" destination="Cx0-h0-LSM" id="mES-0L-Gkl"/>
+                        <outlet property="pageControl" destination="WDQ-4B-lqp" id="CTO-Xt-hlr"/>
                         <outlet property="propertyNameTextField" destination="Pvc-qy-y5m" id="YFq-Ba-C1x"/>
                         <segue destination="mKB-FH-qxK" kind="push" identifier="IssueSegue" id="iV1-u9-tYA"/>
                     </connections>
@@ -956,6 +968,6 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="mbK-gm-iWn"/>
-        <segue reference="9ZK-YS-Yqp"/>
+        <segue reference="z3P-0J-r5O"/>
     </inferredMetricsTieBreakers>
 </document>
