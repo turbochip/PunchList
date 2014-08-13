@@ -53,5 +53,44 @@
     return photoExists;
 }
 
++(void) displayImageFromURL:(NSURL*)urlIn inImageView: (UIImageView *)imageView
+{
+    ALAuthorizationStatus status = [ALAssetsLibrary authorizationStatus];
+    
+    switch(status){
+        case ALAuthorizationStatusDenied: {
+            CCLog(@"not authorized");
+            break;
+        }
+        case ALAuthorizationStatusRestricted: {
+            CCLog(@"Restricted");
+            break;
+        }
+        case ALAuthorizationStatusNotDetermined: {
+            CCLog(@"Undetermined");
+            break;
+        }
+        case ALAuthorizationStatusAuthorized: {
+            CCLog(@"Authorized");
+            CCLog(@"urlIn=%@",urlIn.pathComponents);
+            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+            __block UIImage *returnValue = nil;
+            [library assetForURL:urlIn resultBlock:^(ALAsset *asset) {
+                returnValue = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullResolutionImage]];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [imageView setImage:returnValue];
+                    [imageView setNeedsDisplay];
+                });
+            } failureBlock:^(NSError *error) {
+                CCLog(@"error : %@", error);
+            }];
+            break;
+        }
+        default: {
+            CCLog(@"Unknown hit default");
+            break;
+        }
+    }
+}
 
 @end

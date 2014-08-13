@@ -8,6 +8,8 @@
 
 #import "PLPropertyViewController.h"
 #import "PLAppDelegate.h"
+#import "Photos+addon.h"
+#import "Photos.h"
 #import "Property+addon.h"
 #import "Property.h"
 #import "PLPropertySearchTVC.h"
@@ -17,8 +19,6 @@
 #import "PLLoadFloorviewVC.h"
 #import "FloorPlans.h"
 #import "FloorPlans+addon.h"
-#import "Photos+addon.h"
-#import "Photos.h"
 
 @interface PLPropertyViewController ()
 @property (strong,nonatomic) UIManagedDocument *document;
@@ -114,53 +114,10 @@
         if(self.drawings.count!=0){
             Photos *photo=[self.drawings objectAtIndex:self.ccStepper];
             CCLog(@"photo url=%@",photo.photoURL);
-            [self displayImageFromURL:[NSURL URLWithString:photo.photoURL]];
+            [Photos displayImageFromURL:[NSURL URLWithString:photo.photoURL] inImageView:self.ImageDisplay];
         }
     }
 }
-
-- (void) displayImageFromURL:(NSURL*)urlIn
-{
-    ALAuthorizationStatus status = [ALAssetsLibrary authorizationStatus];
-    
-    switch(status){
-        case ALAuthorizationStatusDenied: {
-            CCLog(@"not authorized");
-            break;
-        }
-        case ALAuthorizationStatusRestricted: {
-            CCLog(@"Restricted");
-            break;
-        }
-        case ALAuthorizationStatusNotDetermined: {
-            CCLog(@"Undetermined");
-            break;
-        }
-        case ALAuthorizationStatusAuthorized: {
-            CCLog(@"Authorized");
-            CCLog(@"urlIn=%@",urlIn.pathComponents);
-            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-            __block UIImage *returnValue = nil;
-            [library assetForURL:urlIn resultBlock:^(ALAsset *asset) {
-                returnValue = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullResolutionImage]];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.ImageDisplay setImage:returnValue];
-                    [self.ImageDisplay setNeedsDisplay];
-                });
-            } failureBlock:^(NSError *error) {
-                NSLog(@"error : %@", error);
-            }];
-            break;
-        }
-        default: {
-            CCLog(@"Unknown hit default");
-            break;
-        }
-            
-    }
-    
-}
-
 
 - (void)resetUI
 {

@@ -8,10 +8,12 @@
 
 #import "Photos.h"
 #import "CCExtras.h"
+#import <AssetsLibrary/AssetsLibrary.h>
 
 @interface Photos (addon)
 
-
 +(Photos *) addPhotoURL:(NSURL *)photoURL toContext:(NSManagedObjectContext *)context;
 +(Photos *) doesPhotoExistWithURL:(NSURL *)photoURL inContext:(NSManagedObjectContext *)context;
++(void) displayImageFromURL:(NSURL*)urlIn inImageView: (UIImageView *)imageView;
+
 @end

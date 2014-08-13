@@ -7,8 +7,15 @@
 //
 
 #import "PLViewController.h"
+#import "PLAppDelegate.h"
 #import "PLIssueViewController.h"
 #import "PLPropertySearchTVC.h"
+#import "FloorPlans+addon.h"
+#import "FloorPlans.h"
+#import "Property+addon.h"
+#import "Property.h"
+#import "Photos+addon.h"
+#import "Photos.h"
 
 @interface PLViewController () <UIScrollViewDelegate>
 @property (nonatomic,strong) NSMutableArray *itemArray;
@@ -17,8 +24,10 @@
 @property (nonatomic,strong) UIView *propertyViewOverlay;
 @property (nonatomic,strong) UIView *propertyView;
 @property (nonatomic) NSInteger selectedIssue;
-@property (nonatomic,strong) NSMutableArray *propertyArray;
+@property (nonatomic,strong) NSMutableArray *propertyArray; //of Property
 @property (weak, nonatomic) IBOutlet UITextField *propertyNameTextField;
+@property (nonatomic,strong) UIManagedDocument *document;
+@property (nonatomic,strong) Property *property;
 
 @end
 
@@ -29,6 +38,16 @@
     if(!_propertyArray) _propertyArray=[[NSMutableArray alloc] init];
     return _propertyArray;
 }
+
+- (UIManagedDocument *)document
+{
+    if(!_document) {
+        PLAppDelegate *delegate = (PLAppDelegate *)[[UIApplication sharedApplication] delegate];
+        _document = delegate.document;
+    }
+    return _document;
+}
+
 
 - (void)viewDidLoad
 {
@@ -41,9 +60,20 @@
     [self.PropertyScrollView setMaximumZoomScale:1];
     [self.PropertyScrollView setMinimumZoomScale:0.05];
     [self.PropertyScrollView setDelegate:self];
-    NSString * pName=[NSString stringWithFormat:@"Winston"];
-    [self.propertyArray addObject:[NSString stringWithFormat:@"%@",pName]];
-    [self updateUI];
+//    NSManagedObjectContext *context=self.document.managedObjectContext;
+//    NSFetchRequest *fr=[[NSFetchRequest alloc] initWithEntityName:@"Property"];
+//    fr.predicate=nil;
+//    NSSortDescriptor *propSort=[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES];
+//    fr.sortDescriptors=@[propSort];
+//    NSArray *rs=[context executeFetchRequest:fr error:nil];
+//    if((rs==nil) || (rs.count==0)) {
+//        CCLog(@"No properties found");
+//    } else {
+//        for(Property *p in rs) {
+//            [self.propertyArray addObject:p];
+//        }
+//        [self updateUI];
+//    }
 }
 
 - (void) viewWillAppear:(BOOL)animated
@@ -139,15 +169,26 @@
 //    
 //}
 
-- (void) loadProperty
+- (void) loadProperty:(Property *) prop
 {
+    self.propertyNameTextField.text=prop.name;
+    NSMutableDictionary *photoDict=[[NSMutableDictionary alloc] init];
+    NSMutableArray *fpArray=[[NSMutableArray alloc] init];
+    for(FloorPlans *fp in prop.floorPlan){
+        [photoDict setValue:fp.sequence forKey:@"SEQUENCE"];
+        [photoDict setValue:fp.drawings forKey:@"DRAWING"];
+        [photoDict setValue:fp.title forKey:@"TITLE"];
+        [fpArray addObject:photoDict];
+    }
     // build image
     self.itemArray=nil;
     // Now we need to query the database for the name returned in selectedName.  That will give us our floor plans.
     // if there is more than one image associated with the property, then we can use a page control to navigate between them.
-    self.propertyImage =[UIImage imageNamed:@"Winston 1st Floor"];
+    //self.propertyImage =[UIImage imageNamed:@"Winston 1st Floor"];
 
-
+    
+    
+    
     //from here on down will probably go into a delegate for a page control.
     self.propertyView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.PropertyScrollView.contentSize.width, self.PropertyScrollView.contentSize.height)];
     [self.PropertyScrollView addSubview:self.propertyView];
@@ -156,11 +197,15 @@
     //propertyimageview is a UIView subview that will lay on top of the imageview subview.
     // Build the view at the same size as the scroll view contents.
     self.propertyImageView=[[PLfloorView alloc] initWithFrame:CGRectMake(0, 0, self.PropertyScrollView.contentSize.width, self.PropertyScrollView.contentSize.height)];
+    Photos *fpImage=[fpArray[0] valueForKey:@"DRAWING"];
     // add the image subview
-    [self.propertyView addSubview:[[UIImageView alloc] initWithImage:self.propertyImage]];
+    UIImageView *pIV=[[UIImageView alloc] initWithFrame:self.propertyImageView.frame];
+    CCLog(@"fpImage.photoURL=%@",fpImage.photoURL);
+    [Photos displayImageFromURL:[NSURL URLWithString:fpImage.photoURL] inImageView:pIV];
+    [self.propertyView addSubview:pIV];
+    [self.propertyView setNeedsDisplay];
     // add the UIView subview to hold the bezier dots representing items.
     [self.propertyView addSubview:self.propertyImageView];
-    
     
     [self updateUI];
 
@@ -191,9 +236,9 @@
 
 - (IBAction)searchReturn:(UIStoryboardSegue *)sender
 {
-    CCLog(@"in searchReturn returnProp=%@",self.returnPropertyName);
-    self.propertyNameTextField.text=self.returnPropertyName;
-    [self loadProperty];
+    CCLog(@"in searchReturn returnProp=%@",self.returnProperty.name);
+    self.property=self.returnProperty;
+    [self loadProperty:self.property];
 }
 
 @end

@@ -92,7 +92,8 @@
     } else {
         if([segue.destinationViewController isKindOfClass:[PLViewController class]]) {
             PLViewController *plvc=segue.destinationViewController;
-            plvc.returnPropertyName=self.returnProp.name;
+            CCLog(@"Returning property %@",[self.propArray objectAtIndex:[self.tableView indexPathForSelectedRow].row]);
+            plvc.returnProperty=[self.propArray objectAtIndex:[self.tableView indexPathForSelectedRow].row];
         }
     }
 }

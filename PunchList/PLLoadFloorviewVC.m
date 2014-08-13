@@ -80,52 +80,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     self.imageURL=[info objectForKey:UIImagePickerControllerReferenceURL];
     CCLog(@"Image =%@",[info objectForKey:UIImagePickerControllerReferenceURL]);
-    
-    [self displayImageFromURL:self.imageURL];    
-}
-
-- (void) displayImageFromURL:(NSURL*)urlIn
-{
-    ALAuthorizationStatus status = [ALAssetsLibrary authorizationStatus];
-    
-    switch(status){
-        case ALAuthorizationStatusDenied: {
-            CCLog(@"not authorized");
-            break;
-        }
-        case ALAuthorizationStatusRestricted: {
-            CCLog(@"Restricted");
-            break;
-        }
-        case ALAuthorizationStatusNotDetermined: {
-            CCLog(@"Undetermined");
-            break;
-        }
-        case ALAuthorizationStatusAuthorized: {
-            CCLog(@"Authorized");
-            CCLog(@"urlIn=%@",urlIn.pathComponents);
-            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-            __block UIImage *returnValue = nil;
-            [library assetForURL:urlIn resultBlock:^(ALAsset *asset) {
-                returnValue = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullResolutionImage]];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.imageDisplay setImage:returnValue];
-                    [self.imageDisplay setNeedsDisplay];
-                });
-            } failureBlock:^(NSError *error) {
-                NSLog(@"error : %@", error);
-            }];
-            //            [self.imageDisplay setImage:returnValue];
-            //            [self.imageDisplay setNeedsDisplay];
-            break;
-        }
-        default: {
-            CCLog(@"Unknown hit default");
-            break;
-        }
-            
-    }
-
+    [Photos displayImageFromURL:self.imageURL inImageView:self.imageDisplay];
 }
 
 - (BOOL) startPhotoLibraryFromViewController: (UIViewController*) controller

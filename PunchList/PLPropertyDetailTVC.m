@@ -8,8 +8,6 @@
 
 #import "PLPropertyDetailTVC.h"
 #import "PLAppDelegate.h"
-//#import "PLContactAssociationVC.h"
-//#import "PLFloorPlanAssociationVC.h"
 #import "PLContactsTVC.h"
 #import "Property+addon.h"
 #import "Property.h"
@@ -62,18 +60,6 @@
 
     CCLog(@"Segue to %d:%d",indexPath.section,indexPath.row );
     
-/*    if([segue.destinationViewController isKindOfClass:[PLContactsTVC class]]) {
-        PLContactAssociationVC *avc=segue.destinationViewController;
-        avc.transferIndexPath=indexPath;
-    } else {
-        if([segue.destinationViewController isKindOfClass:[PLFloorPlanAssociationVC class]]) {
-            PLFloorPlanAssociationVC *fpvc=segue.destinationViewController;
-            fpvc.transferIndexPath=indexPath;
-        } else {
-            CCLog(@"Unknown segue destination");
-        }
-    }
- */
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
