@@ -7,6 +7,9 @@
 //
 
 #import "PLIssueViewController.h"
+#import "Photos+addon.h"
+#import "Photos.h"
+
 
 @interface PLIssueViewController ()
 @property (nonatomic) BOOL cancel;
@@ -105,18 +108,21 @@
     self.cancel=NO;
     self.IssueImage.layer.borderWidth=1;
     // Do any additional setup after loading the view.
-    self.IssueNumber.text=[[NSString alloc] initWithFormat:@"Issue : %ld",(long)self.xIssue.itemNumber ];
-    self.IssueDescription.text=[[NSString alloc] initWithFormat:@"%@",self.xIssue.itemDescription];
-    [self.IssueImage setImage:self.xIssue.itemPic];
-    
+    self.IssueNumber.text=[[NSString alloc] initWithFormat:@"Issue : %ld",(long)self.xIssue.itemNo ];
+    self.IssueDescription.text=[[NSString alloc] initWithFormat:@"%@",self.xIssue.description];
+    Photos *photo=[self.xIssue.photoOf anyObject];
+    [Photos displayImageFromURL:[NSURL URLWithString:photo.photoURL] inImageView:self.IssueImage];
+//    [self.IssueImage setImage: self.xIssue.photoOf[0]];
 }
 
 - (void) viewWillDisappear:(BOOL)animated
 {
     if (!self.cancel)
     {
-        self.xIssue.itemDescription=self.IssueDescription.text;
-        self.xIssue.itemPic=self.image;
+        CCLog(@"how did I get here");
+//        self.xIssue.description=self.IssueDescription.text;
+//        Photos *photo=self.xIssue.photoOf
+//        self.xIssue.=self.image;
     }
 
 }

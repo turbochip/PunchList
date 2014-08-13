@@ -13,7 +13,7 @@
 #import "Property.h"
 #import "CCExtras.h"
 
-@interface PLViewController : UIViewController // <KMCSimpleTableViewControllerDelegate>
+@interface PLViewController : UIViewController 
 
 @property (weak, nonatomic) IBOutlet UIScrollView *PropertyScrollView;
 @property (nonatomic,strong) Property *returnProperty;

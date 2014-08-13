@@ -16,6 +16,7 @@
 #import "Property.h"
 #import "Photos+addon.h"
 #import "Photos.h"
+#import "Issue.h"
 
 @interface PLViewController () <UIScrollViewDelegate>
 @property (nonatomic,strong) NSMutableArray *itemArray;
@@ -23,7 +24,7 @@
 @property (nonatomic,strong) PLfloorView *propertyImageView;
 @property (nonatomic,strong) UIView *propertyViewOverlay;
 @property (nonatomic,strong) UIView *propertyView;
-@property (nonatomic) NSInteger selectedIssue;
+@property (nonatomic,strong) Issue *selectedIssue;
 @property (nonatomic,strong) NSMutableArray *propertyArray; //of Property
 @property (weak, nonatomic) IBOutlet UITextField *propertyNameTextField;
 @property (nonatomic,strong) UIManagedDocument *document;
@@ -81,17 +82,15 @@
     if(!_itemArray) _itemArray= [[NSMutableArray alloc] init];
     return _itemArray;
 }
+
 - (IBAction)pageControlTap:(UIPageControl *)sender
 {
     CCLog(@"currentPage %d, numberOfPages %d", self.pageControl.currentPage,self.pageControl.numberOfPages);
-//    if(self.pageControl.currentPage+1<=self.pageControl.numberOfPages-1) {
-//        self.pageControl.currentPage++;
-//        CCLog(@"currentPage=%d",self.pageControl.currentPage);
-//    }
 }
 
 // multiple functions based on state when tap is performed.
 - (IBAction)scrollTap:(UITapGestureRecognizer *)sender {
+    NSManagedObjectContext *context=self.document.managedObjectContext;
     CGPoint locationOfTap=[sender locationInView:sender.view];
     CGFloat currentZoomScale=self.PropertyScrollView.zoomScale;
     // first if we are zoomed, we need to unzoom to the area where the tap was.
@@ -109,23 +108,42 @@
         if([self.propertyImageView.path containsPoint:locationOfTap])
         {
             CCLog(@"Point already exists");
-            for(PLItem *issue in self.itemArray)
-                if(((issue.itemLoc.x>=locationOfTap.x-5) && (issue.itemLoc.x<=locationOfTap.x+5)) &&
-                   ((issue.itemLoc.y>=locationOfTap.y-5) && (issue.itemLoc.y<=locationOfTap.y+5))) {
-                    self.selectedIssue=issue.itemNumber;
-                    [self performSegueWithIdentifier:@"IssueSegue" sender:self];
-                }
+            
+            NSFetchRequest *fr=[NSFetchRequest fetchRequestWithEntityName:@"issue"];
+            fr.predicate=[NSPredicate predicateWithFormat:@"isOnFloorPlan.sequence=%d",self.pageControl.currentPage];
+            fr.sortDescriptors=nil;
+            NSArray *rs=[context executeFetchRequest:fr error:nil];
+            if((rs==nil) || (rs.count==0)) {
+                CCLog(@"No issues found");
+            } else {
+            
+                for(Issue *issue in rs)
+                    if(((issue.locationX.floatValue >=locationOfTap.x-5) && (issue.locationX.floatValue<=locationOfTap.x+5)) &&
+                       ((issue.locationY.floatValue>=locationOfTap.y-5) && (issue.locationY.floatValue<=locationOfTap.y+5))) {
+                        self.selectedIssue=issue;
+                        [self performSegueWithIdentifier:@"IssueSegue" sender:self];
+                    }
+            }
             // we need to segue to a new screen showing the information about the existing point.
         } else {
+            
             //we need to segue to a new screen allowing us to enter the information about the new point.
             CCLog(@"Adding point");
-            PLItem *newItem= [[PLItem alloc] init];
-            newItem.itemDescription=@"Test Description";
-            newItem.itemLoc=locationOfTap;
-            newItem.itemPic=[[UIImage alloc] init];
-            [self.itemArray addObject:newItem];
-            [[self.itemArray lastObject] setItemNumber:self.itemArray.count-1];
-            self.selectedIssue=self.itemArray.count-1;
+//            NSMutableDictionary *itemDict=[[NSMutableDictionary alloc] init];
+//            PLItem *newItem= [[PLItem alloc] init];
+//            newItem.itemDescription=@"Test Description";
+//            newItem.itemLoc=locationOfTap;
+//            newItem.itemPic=[[UIImage alloc] init];
+//            [itemDict setObject:newItem forKey:@"Item"];
+//            [itemDict setValue:[NSString stringWithFormat:@"%d",self.pageControl.currentPage] forKey:@"Page"];
+//            [self.itemArray addObject:itemDict];
+//            [[self.itemArray lastObject] setItemNumber:self.itemArray.count-1];
+//            self.selectedIssue=self.itemArray.count-1;
+            Issue *i = [NSEntityDescription insertNewObjectForEntityForName:@"Issue" inManagedObjectContext:context];
+            i.title =@"Test Description";
+            i.locationX=[NSNumber numberWithFloat:locationOfTap.x];
+            i.locationY=[NSNumber numberWithFloat:locationOfTap.y];
+            self.selectedIssue=i;
             [self performSegueWithIdentifier:@"IssueSegue" sender:self];
         }
     }
@@ -191,7 +209,7 @@
     // Get the new view controller using [segue destinationViewController].
     if([segue.destinationViewController isKindOfClass:[PLIssueViewController class]]) {
         PLIssueViewController *pivc=(PLIssueViewController *) segue.destinationViewController;
-        pivc.xIssue=self.itemArray[self.selectedIssue];
+        pivc.xIssue=self.selectedIssue;
     } else {
         if([segue.destinationViewController isKindOfClass:[PLPropertySearchTVC class]]) {
             PLPropertySearchTVC *pstvc=segue.destinationViewController;

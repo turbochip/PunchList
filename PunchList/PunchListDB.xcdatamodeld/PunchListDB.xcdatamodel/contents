@@ -10,16 +10,18 @@
         <attribute name="sequence" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="drawings" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Photos" inverseName="ofFloorPlan" inverseEntity="Photos" syncable="YES"/>
+        <relationship name="haveIssues" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Issue" inverseName="isOnFloorPlan" inverseEntity="Issue" syncable="YES"/>
         <relationship name="property" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Property" inverseName="floorPlan" inverseEntity="Property" syncable="YES"/>
     </entity>
     <entity name="Issue" representedClassName="Issue" syncable="YES">
         <attribute name="dateEntered" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="dateResolved" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="locationx" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="itemNo" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="locationX" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="locationY" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="isOnFloorPlan" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FloorPlans" inverseName="haveIssues" inverseEntity="FloorPlans" syncable="YES"/>
         <relationship name="photoOf" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photos" inverseName="photoOf" inverseEntity="Photos" syncable="YES"/>
-        <relationship name="property" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Property" inverseName="issues" inverseEntity="Property" syncable="YES"/>
     </entity>
     <entity name="Photos" representedClassName="Photos" syncable="YES">
         <attribute name="photoTitle" optional="YES" attributeType="String" syncable="YES"/>
@@ -38,16 +40,16 @@
         <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="builder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contacts" inverseName="builderFor" inverseEntity="Contacts" syncable="YES"/>
         <relationship name="floorPlan" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FloorPlans" inverseName="property" inverseEntity="FloorPlans" syncable="YES"/>
-        <relationship name="issues" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Issue" inverseName="property" inverseEntity="Issue" syncable="YES"/>
+        <relationship name="issues" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Issue" syncable="YES"/>
         <relationship name="loanOfficer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contacts" inverseName="loanOfficerFor" inverseEntity="Contacts" syncable="YES"/>
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photos" inverseName="ofProperty" inverseEntity="Photos" syncable="YES"/>
         <relationship name="realtor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contacts" inverseName="realtorFor" inverseEntity="Contacts" syncable="YES"/>
     </entity>
     <elements>
-        <element name="FloorPlans" positionX="-110" positionY="-5236" width="128" height="103"/>
-        <element name="Issue" positionX="-11" positionY="-5017" width="128" height="148"/>
+        <element name="Contacts" positionX="-506" positionY="-5040" width="128" height="103"/>
+        <element name="FloorPlans" positionX="-110" positionY="-5236" width="128" height="120"/>
+        <element name="Issue" positionX="-11" positionY="-5017" width="128" height="163"/>
         <element name="Photos" positionX="52" positionY="-5184" width="128" height="118"/>
         <element name="Property" positionX="-335" positionY="-5157" width="128" height="238"/>
-        <element name="Contacts" positionX="-506" positionY="-5040" width="128" height="103"/>
     </elements>
 </model>

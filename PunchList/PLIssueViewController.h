@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PLItem.h"
+#import "Issue.h"
 #import "CCExtras.h"
 
 @interface PLIssueViewController : UIViewController <UINavigationControllerDelegate,UIImagePickerControllerDelegate>
@@ -17,5 +18,5 @@
 @property (weak, nonatomic) IBOutlet UIImageView *IssueImage;
 @property (weak, nonatomic) IBOutlet UIScrollView *baseScrollView;
 
-@property (nonatomic) PLItem * xIssue;
+@property (nonatomic,strong) Issue *xIssue;
 @end
