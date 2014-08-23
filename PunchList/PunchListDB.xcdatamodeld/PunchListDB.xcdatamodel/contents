@@ -10,7 +10,7 @@
         <attribute name="sequence" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="drawings" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Photos" inverseName="ofFloorPlan" inverseEntity="Photos" syncable="YES"/>
-        <relationship name="haveIssues" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Issue" inverseName="isOnFloorPlan" inverseEntity="Issue" syncable="YES"/>
+        <relationship name="hasIssues" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Issue" inverseName="isOnFloorPlan" inverseEntity="Issue" syncable="YES"/>
         <relationship name="property" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Property" inverseName="floorPlan" inverseEntity="Property" syncable="YES"/>
     </entity>
     <entity name="Issue" representedClassName="Issue" syncable="YES">
@@ -20,15 +20,16 @@
         <attribute name="locationX" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="locationY" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="isOnFloorPlan" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FloorPlans" inverseName="haveIssues" inverseEntity="FloorPlans" syncable="YES"/>
-        <relationship name="photoOf" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photos" inverseName="photoOf" inverseEntity="Photos" syncable="YES"/>
+        <relationship name="hasPhotos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photos" inverseName="ofIssue" inverseEntity="Photos" syncable="YES"/>
+        <relationship name="isForProperty" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Property" inverseName="issues" inverseEntity="Property" syncable="YES"/>
+        <relationship name="isOnFloorPlan" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FloorPlans" inverseName="hasIssues" inverseEntity="FloorPlans" syncable="YES"/>
     </entity>
     <entity name="Photos" representedClassName="Photos" syncable="YES">
         <attribute name="photoTitle" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="photoURL" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="ofFloorPlan" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FloorPlans" inverseName="drawings" inverseEntity="FloorPlans" syncable="YES"/>
+        <relationship name="ofIssue" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Issue" inverseName="hasPhotos" inverseEntity="Issue" syncable="YES"/>
         <relationship name="ofProperty" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Property" inverseName="photos" inverseEntity="Property" syncable="YES"/>
-        <relationship name="photoOf" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Issue" inverseName="photoOf" inverseEntity="Issue" syncable="YES"/>
     </entity>
     <entity name="Property" representedClassName="Property" syncable="YES">
         <attribute name="askingPrice" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
@@ -40,16 +41,16 @@
         <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="builder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contacts" inverseName="builderFor" inverseEntity="Contacts" syncable="YES"/>
         <relationship name="floorPlan" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FloorPlans" inverseName="property" inverseEntity="FloorPlans" syncable="YES"/>
-        <relationship name="issues" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Issue" syncable="YES"/>
+        <relationship name="issues" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Issue" inverseName="isForProperty" inverseEntity="Issue" syncable="YES"/>
         <relationship name="loanOfficer" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contacts" inverseName="loanOfficerFor" inverseEntity="Contacts" syncable="YES"/>
         <relationship name="photos" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Photos" inverseName="ofProperty" inverseEntity="Photos" syncable="YES"/>
         <relationship name="realtor" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contacts" inverseName="realtorFor" inverseEntity="Contacts" syncable="YES"/>
     </entity>
     <elements>
         <element name="Contacts" positionX="-506" positionY="-5040" width="128" height="103"/>
-        <element name="FloorPlans" positionX="-110" positionY="-5236" width="128" height="120"/>
-        <element name="Issue" positionX="-11" positionY="-5017" width="128" height="163"/>
-        <element name="Photos" positionX="52" positionY="-5184" width="128" height="118"/>
+        <element name="FloorPlans" positionX="-126" positionY="-5310" width="128" height="118"/>
+        <element name="Issue" positionX="54" positionY="-5038" width="128" height="178"/>
+        <element name="Photos" positionX="223" positionY="-5167" width="128" height="118"/>
         <element name="Property" positionX="-335" positionY="-5157" width="128" height="238"/>
     </elements>
 </model>

@@ -24,10 +24,10 @@
             </objects>
             <point key="canvasLocation" x="596" y="2204"/>
         </scene>
-        <!--View Controller - View Property-->
+        <!--Floor IssueVC - View Property-->
         <scene sceneID="dLV-bE-QTi">
             <objects>
-                <viewController id="kGX-l5-GkM" customClass="PLViewController" sceneMemberID="viewController">
+                <viewController id="kGX-l5-GkM" customClass="PLFloorIssueVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="6hj-hZ-Yhv"/>
                         <viewControllerLayoutGuide type="bottom" id="e2g-CO-W6x"/>
@@ -127,15 +127,18 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Issue : 00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5fS-oS-DRW">
-                                <rect key="frame" x="20" y="109" width="728" height="21"/>
+                                <rect key="frame" x="20" y="104" width="728" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8SC-Qz-Vy2">
-                                <rect key="frame" x="0.0" y="65" width="768" height="44"/>
+                                <rect key="frame" x="0.0" y="64" width="768" height="40"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="1DA-kN-AAP"/>
+                                </constraints>
                                 <items>
                                     <barButtonItem title="Take Picture" id="VJP-73-HFW">
                                         <connections>
@@ -157,32 +160,32 @@
                                 </items>
                             </toolbar>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Be0-VK-gOX">
-                                <rect key="frame" x="20" y="138" width="728" height="675"/>
+                                <rect key="frame" x="20" y="147" width="728" height="425"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BEV-1c-1qH">
-                                        <rect key="frame" x="20" y="0.0" width="688" height="226"/>
+                                        <rect key="frame" x="26" y="20" width="682" height="385"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <gestureRecognizers/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="226" id="k6D-od-iIe"/>
+                                            <constraint firstAttribute="width" constant="682" id="pGG-L7-uoH"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="BEV-1c-1qH" firstAttribute="centerX" secondItem="Be0-VK-gOX" secondAttribute="centerX" id="52Y-rw-2dI"/>
-                                    <constraint firstAttribute="bottom" secondItem="BEV-1c-1qH" secondAttribute="bottom" constant="-7" id="E7q-rq-Dsc"/>
-                                    <constraint firstAttribute="trailing" secondItem="BEV-1c-1qH" secondAttribute="trailing" constant="20" symbolic="YES" id="irb-cv-FJH"/>
-                                    <constraint firstItem="BEV-1c-1qH" firstAttribute="leading" secondItem="Be0-VK-gOX" secondAttribute="leading" constant="20" symbolic="YES" id="mO9-Wf-Ar2"/>
-                                    <constraint firstItem="BEV-1c-1qH" firstAttribute="top" secondItem="Be0-VK-gOX" secondAttribute="top" id="mpW-U0-9PI"/>
+                                    <constraint firstAttribute="trailing" secondItem="BEV-1c-1qH" secondAttribute="trailing" constant="20" symbolic="YES" id="HSb-48-tGd"/>
+                                    <constraint firstAttribute="bottom" secondItem="BEV-1c-1qH" secondAttribute="bottom" constant="20" symbolic="YES" id="JzW-dP-eo6"/>
+                                    <constraint firstItem="BEV-1c-1qH" firstAttribute="leading" secondItem="Be0-VK-gOX" secondAttribute="leading" constant="26" id="Tss-sI-jtY"/>
+                                    <constraint firstItem="BEV-1c-1qH" firstAttribute="centerY" secondItem="Be0-VK-gOX" secondAttribute="centerY" id="brg-tP-cmK"/>
+                                    <constraint firstItem="BEV-1c-1qH" firstAttribute="top" secondItem="Be0-VK-gOX" secondAttribute="top" constant="20" symbolic="YES" id="ka4-uh-ocQ"/>
                                 </constraints>
                             </scrollView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="interactive" translatesAutoresizingMaskIntoConstraints="NO" id="9D0-8x-x1l">
-                                <rect key="frame" x="20" y="821" width="728" height="140"/>
+                                <rect key="frame" x="20" y="580" width="728" height="387"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="140" id="nP8-hR-sf3"/>
+                                    <constraint firstAttribute="height" constant="387" id="2B7-ZE-TnJ"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -191,19 +194,19 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="5fS-oS-DRW" secondAttribute="trailing" constant="20" symbolic="YES" id="23u-1m-sne"/>
-                            <constraint firstItem="qiC-jl-ZHW" firstAttribute="top" secondItem="9D0-8x-x1l" secondAttribute="bottom" constant="14" id="2Nf-57-5Gw"/>
-                            <constraint firstItem="9D0-8x-x1l" firstAttribute="leading" secondItem="Be0-VK-gOX" secondAttribute="leading" id="45M-Tb-t9R"/>
-                            <constraint firstItem="5fS-oS-DRW" firstAttribute="leading" secondItem="jEz-kN-EW5" secondAttribute="leading" constant="20" symbolic="YES" id="72A-x0-DSN"/>
-                            <constraint firstItem="9D0-8x-x1l" firstAttribute="trailing" secondItem="Be0-VK-gOX" secondAttribute="trailing" id="8Ck-Wl-G8i"/>
-                            <constraint firstItem="5fS-oS-DRW" firstAttribute="top" secondItem="8SC-Qz-Vy2" secondAttribute="bottom" id="GKg-2k-jRS"/>
-                            <constraint firstItem="5fS-oS-DRW" firstAttribute="trailing" secondItem="Be0-VK-gOX" secondAttribute="trailing" id="a5X-s9-uwa"/>
-                            <constraint firstItem="8SC-Qz-Vy2" firstAttribute="centerX" secondItem="5fS-oS-DRW" secondAttribute="centerX" id="ceC-mc-gUp"/>
-                            <constraint firstItem="8SC-Qz-Vy2" firstAttribute="leading" secondItem="jEz-kN-EW5" secondAttribute="leading" id="i2L-ff-f4a"/>
-                            <constraint firstItem="8SC-Qz-Vy2" firstAttribute="top" secondItem="Tgq-7W-TI6" secondAttribute="bottom" constant="1" id="ilp-6U-dE8"/>
-                            <constraint firstItem="Be0-VK-gOX" firstAttribute="leading" secondItem="5fS-oS-DRW" secondAttribute="leading" id="qwM-QZ-vcX"/>
-                            <constraint firstItem="9D0-8x-x1l" firstAttribute="top" secondItem="Be0-VK-gOX" secondAttribute="bottom" constant="8" symbolic="YES" id="sRd-B1-9uf"/>
-                            <constraint firstItem="Be0-VK-gOX" firstAttribute="top" secondItem="5fS-oS-DRW" secondAttribute="bottom" constant="8" symbolic="YES" id="so8-4g-k8O"/>
+                            <constraint firstItem="5fS-oS-DRW" firstAttribute="trailing" secondItem="Be0-VK-gOX" secondAttribute="trailing" id="8wz-fq-Tyq"/>
+                            <constraint firstItem="Be0-VK-gOX" firstAttribute="leading" secondItem="5fS-oS-DRW" secondAttribute="leading" id="A8S-3X-Kvv"/>
+                            <constraint firstItem="8SC-Qz-Vy2" firstAttribute="top" secondItem="Tgq-7W-TI6" secondAttribute="bottom" id="E3C-81-3gX"/>
+                            <constraint firstItem="9D0-8x-x1l" firstAttribute="trailing" secondItem="Be0-VK-gOX" secondAttribute="trailing" id="FdF-WD-ewT"/>
+                            <constraint firstItem="9D0-8x-x1l" firstAttribute="leading" secondItem="Be0-VK-gOX" secondAttribute="leading" id="HB2-nZ-ARS"/>
+                            <constraint firstItem="Be0-VK-gOX" firstAttribute="top" secondItem="5fS-oS-DRW" secondAttribute="bottom" constant="22" id="Q6g-xP-Qsp"/>
+                            <constraint firstItem="5fS-oS-DRW" firstAttribute="top" secondItem="8SC-Qz-Vy2" secondAttribute="bottom" id="TSx-qR-WUH"/>
+                            <constraint firstItem="8SC-Qz-Vy2" firstAttribute="leading" secondItem="jEz-kN-EW5" secondAttribute="leading" id="V2i-Vz-Cqg"/>
+                            <constraint firstItem="9D0-8x-x1l" firstAttribute="top" secondItem="Be0-VK-gOX" secondAttribute="bottom" constant="8" symbolic="YES" id="XHF-Qg-09J"/>
+                            <constraint firstItem="8SC-Qz-Vy2" firstAttribute="centerX" secondItem="5fS-oS-DRW" secondAttribute="centerX" id="gkd-rQ-Os3"/>
+                            <constraint firstItem="qiC-jl-ZHW" firstAttribute="top" secondItem="9D0-8x-x1l" secondAttribute="bottom" constant="8" id="hYj-x9-haH"/>
+                            <constraint firstItem="5fS-oS-DRW" firstAttribute="leading" secondItem="jEz-kN-EW5" secondAttribute="leading" constant="20" symbolic="YES" id="ngj-P9-oBu"/>
+                            <constraint firstAttribute="trailing" secondItem="5fS-oS-DRW" secondAttribute="trailing" constant="20" symbolic="YES" id="yE2-BF-pGc"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="n2r-Ci-b8q"/>
@@ -801,32 +804,6 @@
             </objects>
             <point key="canvasLocation" x="2681" y="943"/>
         </scene>
-        <!--Contact AssociationVC-->
-        <scene sceneID="P5F-bB-F26">
-            <objects>
-                <viewController id="JbC-N0-3hD" customClass="PLContactAssociationVC" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="uo7-8E-DOQ"/>
-                        <viewControllerLayoutGuide type="bottom" id="8h3-im-sBj"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="6a8-Iu-p4U">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="5sn-rl-nAn">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="rCb-t5-fbl">
-                            <connections>
-                                <segue destination="G3c-xU-hFA" kind="unwind" unwindAction="returnSegue:" id="Wf7-o4-PHB"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XXq-sM-xg9" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="G3c-xU-hFA" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="-2731" y="1378"/>
-        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="pls-cU-U25">
             <objects>
@@ -967,7 +944,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="9ZK-YS-Yqp"/>
         <segue reference="mbK-gm-iWn"/>
-        <segue reference="z3P-0J-r5O"/>
     </inferredMetricsTieBreakers>
 </document>

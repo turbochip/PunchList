@@ -1,5 +1,5 @@
 //
-//  PLViewController.h
+//  PLFloorIssueVC.h
 //  PunchList
 //
 //  Created by Chip Cox on 6/7/14.
@@ -13,8 +13,8 @@
 #import "Property.h"
 #import "CCExtras.h"
 
-@interface PLViewController : UIViewController 
-
+@interface PLFloorIssueVC : UIViewController 
+@property (nonatomic,strong) UIManagedDocument *document;
 @property (weak, nonatomic) IBOutlet UIScrollView *PropertyScrollView;
 @property (nonatomic,strong) Property *returnProperty;
 

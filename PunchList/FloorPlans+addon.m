@@ -40,7 +40,7 @@
         fp=[NSEntityDescription insertNewObjectForEntityForName:@"FloorPlans" inManagedObjectContext:context];
         NSLog(@"imageTitle=%@",[floorPlan objectForKey:@"imageTitle"]);
         fp.title=[floorPlan objectForKey:@"imageTitle"];
-        fp.sequence=[floorPlan objectForKey:@"sequence"];
+        fp.sequence=[floorPlan objectForKey:@"imageSequence"];
         fp.drawings=[Photos addPhotoURL:[floorPlan objectForKey:@"imageURL" ] toContext:context];
         fp.property=property;
     }

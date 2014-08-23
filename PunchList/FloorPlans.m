@@ -2,7 +2,7 @@
 //  FloorPlans.m
 //  PunchList
 //
-//  Created by Chip Cox on 8/13/14.
+//  Created by Chip Cox on 8/22/14.
 //  Copyright (c) 2014 Home. All rights reserved.
 //
 
@@ -17,7 +17,7 @@
 @dynamic sequence;
 @dynamic title;
 @dynamic drawings;
+@dynamic hasIssues;
 @dynamic property;
-@dynamic haveIssues;
 
 @end

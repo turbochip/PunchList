@@ -11,7 +11,7 @@
 #import "Property.h"
 #import "Property+addon.h"
 #import "PLPropertyViewController.h"
-#import "PLViewController.h"
+#import "PLFloorIssueVC.h"
 
 @interface PLPropertySearchTVC ()
 @property (nonatomic,strong) UIManagedDocument *document;
@@ -90,8 +90,8 @@
         PLPropertyViewController *pvc=segue.destinationViewController;
         pvc.returnProperty=self.returnProp;
     } else {
-        if([segue.destinationViewController isKindOfClass:[PLViewController class]]) {
-            PLViewController *plvc=segue.destinationViewController;
+        if([segue.destinationViewController isKindOfClass:[PLFloorIssueVC class]]) {
+            PLFloorIssueVC *plvc=segue.destinationViewController;
             CCLog(@"Returning property %@",[self.propArray objectAtIndex:[self.tableView indexPathForSelectedRow].row]);
             plvc.returnProperty=[self.propArray objectAtIndex:[self.tableView indexPathForSelectedRow].row];
         }

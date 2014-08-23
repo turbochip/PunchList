@@ -1,12 +1,12 @@
 //
-//  PLViewController.m
+//  PLFloorIssueVC.m
 //  PunchList
 //
 //  Created by Chip Cox on 6/7/14.
 //  Copyright (c) 2014 Home. All rights reserved.
 //
 
-#import "PLViewController.h"
+#import "PLFloorIssueVC.h"
 #import "PLAppDelegate.h"
 #import "PLIssueViewController.h"
 #import "PLPropertySearchTVC.h"
@@ -17,24 +17,26 @@
 #import "Photos+addon.h"
 #import "Photos.h"
 #import "Issue.h"
+#import "Issue+addon.h"
 
-@interface PLViewController () <UIScrollViewDelegate>
-@property (nonatomic,strong) NSMutableArray *itemArray;
+@interface PLFloorIssueVC () <UIScrollViewDelegate>
+@property (nonatomic,strong) NSMutableArray *issueArray;
 @property (nonatomic,strong) UIImage *propertyImage;
-@property (nonatomic,strong) PLfloorView *propertyImageView;
+@property (strong, nonatomic) UIImageView *pFPV;   // floorplan property view picture
+@property (nonatomic,strong) PLfloorView *propertyIssueView;  // dots overlay over floor plan picture
 @property (nonatomic,strong) UIView *propertyViewOverlay;
 @property (nonatomic,strong) UIView *propertyView;
 @property (nonatomic,strong) Issue *selectedIssue;
 @property (nonatomic,strong) NSMutableArray *propertyArray; //of Property
 @property (weak, nonatomic) IBOutlet UITextField *propertyNameTextField;
-@property (nonatomic,strong) UIManagedDocument *document;
 @property (nonatomic,strong) Property *property;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
-
+@property (strong,nonatomic) NSManagedObjectContext *context;
 @end
 
-@implementation PLViewController
+@implementation PLFloorIssueVC
 
+#pragma mark Setters and Getters
 - (NSMutableArray *) propertyArray
 {
     if(!_propertyArray) _propertyArray=[[NSMutableArray alloc] init];
@@ -50,7 +52,23 @@
     return _document;
 }
 
+- (NSManagedObjectContext *)context
+{
+    if(!_context) _context=self.document.managedObjectContext;
+    return _context;
+}
 
+- (NSMutableArray *) issueArray
+{
+    if(!_issueArray) _issueArray= [[NSMutableArray alloc] init];
+    return _issueArray;
+}
+
+#pragma mark screen setup
+
+// we have a scorll view with a UIView for a subview
+// The UIView has subviews for pIV (which holds the floor plans
+// and a subview for propertyIssueView which holds the dots I think.
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -62,11 +80,20 @@
     [self.PropertyScrollView setMaximumZoomScale:1];
     [self.PropertyScrollView setMinimumZoomScale:0.05];
     [self.PropertyScrollView setDelegate:self];
+    
+    // This is the subview that holds the floor plan image.
+    self.pFPV=[[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.PropertyScrollView.contentSize.width, self.PropertyScrollView.contentSize.height)];
+    [self.PropertyScrollView addSubview:self.pFPV];
+    
+    // This is the subview where we draw the issue dots.
+    self.propertyIssueView=[[PLfloorView alloc] initWithFrame:CGRectMake(0, 0, self.PropertyScrollView.contentSize.width, self.PropertyScrollView.contentSize.height)];
+    [self.PropertyScrollView addSubview:self.propertyIssueView];
 }
 
+//I don't think we need this since it only does a log message
 - (void) viewWillAppear:(BOOL)animated
 {
-    CCLog(@"view will now appear %d",self.selectedIssue);
+    CCLog(@"view will now appear %@",self.selectedIssue);
 }
 
 // required method for zooming
@@ -74,15 +101,11 @@
 {
     // this gets called periodically while zooming occurs.
     // return the name of the view being zoomed.
-    return self.propertyView;
+    return self.pFPV;
+//    return self.propertyView;
 }
 
-- (NSMutableArray *) itemArray
-{
-    if(!_itemArray) _itemArray= [[NSMutableArray alloc] init];
-    return _itemArray;
-}
-
+// handles switching between floorplans
 - (IBAction)pageControlTap:(UIPageControl *)sender
 {
     CCLog(@"currentPage %d, numberOfPages %d", self.pageControl.currentPage,self.pageControl.numberOfPages);
@@ -90,7 +113,6 @@
 
 // multiple functions based on state when tap is performed.
 - (IBAction)scrollTap:(UITapGestureRecognizer *)sender {
-    NSManagedObjectContext *context=self.document.managedObjectContext;
     CGPoint locationOfTap=[sender locationInView:sender.view];
     CGFloat currentZoomScale=self.PropertyScrollView.zoomScale;
     // first if we are zoomed, we need to unzoom to the area where the tap was.
@@ -105,110 +127,106 @@
     }
     else {
         // ok, we are zoomed at the normal level so are we clicking on an existing point or a new point
-        if([self.propertyImageView.path containsPoint:locationOfTap])
+        if([self.propertyIssueView.path containsPoint:locationOfTap])
         {
             CCLog(@"Point already exists");
             
             NSFetchRequest *fr=[NSFetchRequest fetchRequestWithEntityName:@"issue"];
+            
+#warning We need to re-address this and use a unique identifier over all of the floor plans, not just the floor plans in this property, or we need to include the property in the predicate.
             fr.predicate=[NSPredicate predicateWithFormat:@"isOnFloorPlan.sequence=%d",self.pageControl.currentPage];
             fr.sortDescriptors=nil;
-            NSArray *rs=[context executeFetchRequest:fr error:nil];
+            NSArray *rs=[self.context executeFetchRequest:fr error:nil];
             if((rs==nil) || (rs.count==0)) {
-                CCLog(@"No issues found");
+                CCLog(@"No issues found in database at all");
             } else {
-            
                 for(Issue *issue in rs)
                     if(((issue.locationX.floatValue >=locationOfTap.x-5) && (issue.locationX.floatValue<=locationOfTap.x+5)) &&
                        ((issue.locationY.floatValue>=locationOfTap.y-5) && (issue.locationY.floatValue<=locationOfTap.y+5))) {
                         self.selectedIssue=issue;
                         [self performSegueWithIdentifier:@"IssueSegue" sender:self];
+                        break;
                     }
             }
-            // we need to segue to a new screen showing the information about the existing point.
         } else {
-            
-            //we need to segue to a new screen allowing us to enter the information about the new point.
             CCLog(@"Adding point");
-//            NSMutableDictionary *itemDict=[[NSMutableDictionary alloc] init];
-//            PLItem *newItem= [[PLItem alloc] init];
-//            newItem.itemDescription=@"Test Description";
-//            newItem.itemLoc=locationOfTap;
-//            newItem.itemPic=[[UIImage alloc] init];
-//            [itemDict setObject:newItem forKey:@"Item"];
-//            [itemDict setValue:[NSString stringWithFormat:@"%d",self.pageControl.currentPage] forKey:@"Page"];
-//            [self.itemArray addObject:itemDict];
-//            [[self.itemArray lastObject] setItemNumber:self.itemArray.count-1];
-//            self.selectedIssue=self.itemArray.count-1;
-            Issue *i = [NSEntityDescription insertNewObjectForEntityForName:@"Issue" inManagedObjectContext:context];
-            i.title =@"Test Description";
-            i.locationX=[NSNumber numberWithFloat:locationOfTap.x];
-            i.locationY=[NSNumber numberWithFloat:locationOfTap.y];
-            self.selectedIssue=i;
+            NSMutableDictionary *newDict=[[NSMutableDictionary alloc] init];
+            [newDict setObject:@"Issue Description" forKey:@"TITLE"];
+            [newDict setObject:[NSNumber numberWithFloat:locationOfTap.x] forKey:@"LOCATIONX"];
+            [newDict setObject:[NSNumber numberWithFloat:locationOfTap.y] forKey:@"LOCATIONY"];
+            [newDict setObject:self.property forKey:@"PROPERTY"];
+            for(FloorPlans *fpt in self.property.floorPlan) {
+                CCLog(@"currentPage=%d, sequence=%d",self.pageControl.currentPage+1, [fpt.sequence integerValue]);
+                if([fpt.sequence integerValue]==self.pageControl.currentPage+1) {
+                    [newDict setObject:fpt forKey:@"FLOORPLAN"];
+                    break;
+                }
+            }            
+            self.selectedIssue=[Issue addIssueFromDictionary:newDict toContext:self.context];
             [self performSegueWithIdentifier:@"IssueSegue" sender:self];
         }
     }
     [self updateUI];
 }
 
+// initialize screen with property information
 - (void) loadProperty:(Property *) prop
 {
     self.propertyNameTextField.text=prop.name;
-    NSMutableDictionary *photoDict=[[NSMutableDictionary alloc] init];
     NSMutableArray *fpArray=[[NSMutableArray alloc] init];
     for(FloorPlans *fp in prop.floorPlan){
+        NSMutableDictionary *photoDict=[[NSMutableDictionary alloc] init];
         [photoDict setValue:fp.sequence forKey:@"SEQUENCE"];
         [photoDict setValue:fp.drawings forKey:@"DRAWING"];
         [photoDict setValue:fp.title forKey:@"TITLE"];
+        [photoDict setObject:fp forKey:@"FLOORPLAN"];
         [fpArray addObject:photoDict];
+        photoDict=nil;
     }
+    // sort fpArray on sequence just to make sure we have everything in order.
+    NSSortDescriptor *sortSequence = [NSSortDescriptor sortDescriptorWithKey:@"SEQUENCE" ascending:YES];
+    [fpArray sortUsingDescriptors:@[sortSequence]];
+    // set page control based on the number of floorplans in the property returned.
     self.pageControl.numberOfPages=prop.floorPlan.count;
     self.pageControl.currentPage=0;
     self.pageControl.enabled=YES;
+    
     // build image
-    self.itemArray=nil;
-    // Now we need to query the database for the name returned in selectedName.  That will give us our floor plans.
-    // if there is more than one image associated with the property, then we can use a page control to navigate between them.
-    //self.propertyImage =[UIImage imageNamed:@"Winston 1st Floor"];
-
-    
-    
-    
-    //from here on down will probably go into a delegate for a page control.
-    self.propertyView=[[UIView alloc] initWithFrame:CGRectMake(0, 0, self.PropertyScrollView.contentSize.width, self.PropertyScrollView.contentSize.height)];
-    [self.PropertyScrollView addSubview:self.propertyView];
-
-
-    //propertyimageview is a UIView subview that will lay on top of the imageview subview.
-    // Build the view at the same size as the scroll view contents.
-    self.propertyImageView=[[PLfloorView alloc] initWithFrame:CGRectMake(0, 0, self.PropertyScrollView.contentSize.width, self.PropertyScrollView.contentSize.height)];
-    Photos *fpImage=[fpArray[0] valueForKey:@"DRAWING"];
-    // add the image subview
-    UIImageView *pIV=[[UIImageView alloc] initWithFrame:self.propertyImageView.frame];
+    self.issueArray=nil;
+    Photos *fpImage=[fpArray[self.pageControl.currentPage] valueForKey:@"DRAWING"];
     CCLog(@"fpImage.photoURL=%@",fpImage.photoURL);
-    [Photos displayImageFromURL:[NSURL URLWithString:fpImage.photoURL] inImageView:pIV];
-    [self.propertyView addSubview:pIV];
+    [Photos displayImageFromURL:[NSURL URLWithString:fpImage.photoURL] inImageView:self.pFPV];
     [self.propertyView setNeedsDisplay];
-    // add the UIView subview to hold the bezier dots representing items.
-    [self.propertyView addSubview:self.propertyImageView];
+    
+    NSFetchRequest *fr=[[NSFetchRequest alloc] initWithEntityName:@"Issue"];
+    fr.predicate=[NSPredicate predicateWithFormat:@"isOnFloorPlan=%@",[fpArray[self.pageControl.currentPage] objectForKey:@"FLOORPLAN"]];
+    fr.sortDescriptors=nil;
+    NSArray *rs=[self.context executeFetchRequest:fr error:nil];
+    for (Issue *r in rs) {
+        [self.issueArray addObject:r];
+    }
     
     [self updateUI];
 
 }
 
+// updateUI is going to loop through all the issues for the active floorplan and display them.
 - (void) updateUI
 {
-    for(PLItem *item in self.itemArray) {
+    for(Issue *item in self.issueArray) {
         //redraw each item in the uiview subview
-        self.propertyImageView.ploc=item.itemLoc;
+        self.propertyIssueView.ploc=CGPointMake([item.locationX floatValue], [item.locationY floatValue]);
     }
 }
 
+#pragma mark segue processing
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     CCLog(@"Destination view controller is %@",[[segue destinationViewController] description]);
     // Get the new view controller using [segue destinationViewController].
     if([segue.destinationViewController isKindOfClass:[PLIssueViewController class]]) {
         PLIssueViewController *pivc=(PLIssueViewController *) segue.destinationViewController;
+        pivc.document=self.document;
         pivc.xIssue=self.selectedIssue;
     } else {
         if([segue.destinationViewController isKindOfClass:[PLPropertySearchTVC class]]) {

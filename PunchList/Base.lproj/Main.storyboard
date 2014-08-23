@@ -23,10 +23,10 @@
             </objects>
             <point key="canvasLocation" x="372" y="1628"/>
         </scene>
-        <!--View Controller - View Property-->
+        <!--Floor IssueVC - View Property-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="PLViewController" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="PLFloorIssueVC" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -677,32 +677,6 @@
                 <exit id="zXB-nD-b0Y" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1293" y="1015"/>
-        </scene>
-        <!--Contact AssociationVC-->
-        <scene sceneID="8qw-IF-LCy">
-            <objects>
-                <viewController id="QKv-rL-H26" customClass="PLContactAssociationVC" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="eQi-jL-vtc"/>
-                        <viewControllerLayoutGuide type="bottom" id="XFn-7C-2hb"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="lpS-CI-3V1">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="aff-Jl-VL8">
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="HkY-QT-6Mu">
-                            <connections>
-                                <segue destination="VZo-9b-sNO" kind="unwind" unwindAction="returnSegue:" id="Jkc-p1-GLS"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="i4l-6a-ZmU" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="VZo-9b-sNO" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="-1083" y="1034"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="oXw-kN-b5C">

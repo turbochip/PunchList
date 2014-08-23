@@ -9,17 +9,60 @@
 #import "PLIssueViewController.h"
 #import "Photos+addon.h"
 #import "Photos.h"
+#import "issue.h"
+#import "Issue+addon.h"
 
 
 @interface PLIssueViewController ()
+@property (nonatomic,strong) NSManagedObjectContext *context;
 @property (nonatomic) BOOL cancel;
 @property (nonatomic,strong) UIImage *image;
 @property (nonatomic,strong) UITextView *activeField;
+@property (nonatomic,strong) Photos *issuePhoto;
 
 @end
 
 @implementation PLIssueViewController
 
+- (Photos *)issuePhoto
+{
+    if(!_issuePhoto) _issuePhoto=[[Photos alloc] init];
+    return _issuePhoto;
+}
+
+- (NSManagedObjectContext *)context
+{
+    if(!_context) _context=self.document.managedObjectContext;
+    return _context;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.cancel=NO;
+    self.IssueImage.layer.borderWidth=1;
+    // Do any additional setup after loading the view.
+    self.IssueNumber.text=[[NSString alloc] initWithFormat:@"Issue : %d",[self.xIssue.itemNo integerValue] ];
+    self.IssueDescription.text=[[NSString alloc] initWithFormat:@"%@",self.xIssue.title];
+    
+#warning fix this to get the correct photo not just any object
+    Photos *photo=[self.xIssue.hasPhotos anyObject];
+    [Photos displayImageFromURL:[NSURL URLWithString:photo.photoURL] inImageView:self.IssueImage];
+    //    [self.IssueImage setImage: self.xIssue.photoOf[0]];
+}
+
+
+//Not sure if this is called
+- (void) viewWillDisappear:(BOOL)animated
+{
+    if (!self.cancel)
+    {
+        CCLog(@"how did I get here");
+    }
+    
+}
+
+// exit out by clicking cancel
 - (void) closeScreenCancel: (BOOL) cancel
 {
     self.cancel=cancel;
@@ -27,32 +70,108 @@
 }
 
 - (IBAction)saveButton:(UIBarButtonItem *)sender {
-#warning Need to add save code in here.
+    // actually we do an update here to the issue information we already saved back in the main view controller
+    NSMutableDictionary *updateDict=[[NSMutableDictionary alloc] init];
+    [updateDict setObject:self.IssueDescription.text forKey:@"DESCRIPTION"];
+    self.xIssue=[Issue updateIssue:self.xIssue withDictionary:updateDict onContext:self.document.managedObjectContext];
+    [self.xIssue addHasPhotosObject:self.issuePhoto];
     [self closeScreenCancel:NO];
 }
 
+//Load pictures form photolibrary
 - (IBAction)photoLibrary:(UIBarButtonItem *)sender {
     [self startPhotoLibraryFromViewController:self usingDelegate:self];
 }
 
+//Take a picture
 - (IBAction)pictureButton:(UIBarButtonItem *)sender {
     [self startCameraControllerFromViewController:self usingDelegate:self];
 
 }
 
+//Cancel button to leave here
 - (IBAction)cancelButton:(UIBarButtonItem *)sender {
 #warning need to add code to tell parent that it should remove place marker
     [self closeScreenCancel:YES];
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+// cancel button clicked either from taking picture or in the library
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+
+//We have a picture coming back from the pickerController
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    self.image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    // put url into issuePhoto which is a photo class object
+    self.issuePhoto =[Photos addPhotoURL:[info objectForKey:UIImagePickerControllerReferenceURL] toContext:self.context];
+    [self.issuePhoto setPhotoTitle:self.xIssue.title];
+    //display the image on the screen.
+    [self.IssueImage setImage:self.image];
+    [self.IssueImage setNeedsDisplay];
+    
+    //close the pickercontroller
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+// show the camera controller view
+- (BOOL) startCameraControllerFromViewController: (UIViewController*) controller
+                                   usingDelegate: (id <UIImagePickerControllerDelegate,
+                                                   UINavigationControllerDelegate>) delegate {
+    
+    if (([UIImagePickerController isSourceTypeAvailable:
+          UIImagePickerControllerSourceTypeCamera] == NO)
+        || (delegate == nil)
+        || (controller == nil))
+        return NO;
+    
+    
+    UIImagePickerController *cameraUI = [[UIImagePickerController alloc] init];
+    cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+    
+    // Displays a control that allows the user to choose picture or
+    // movie capture, if both are available:
+    cameraUI.mediaTypes =
+    [UIImagePickerController availableMediaTypesForSourceType:
+     UIImagePickerControllerSourceTypeCamera];
+    
+    // Hides the controls for moving & scaling pictures, or for
+    // trimming movies. To instead show the controls, use YES.
+    cameraUI.allowsEditing = NO;
+    
+    cameraUI.delegate = delegate;
+    
+    [controller presentViewController:cameraUI animated:YES completion:nil];
+    return YES;
+}
+
+// Show the photo library controller view
+- (BOOL) startPhotoLibraryFromViewController: (UIViewController*) controller
+                               usingDelegate: (id <UIImagePickerControllerDelegate,
+                                               UINavigationControllerDelegate>) delegate {
+    
+    UIImagePickerController *cameraUI = [[UIImagePickerController alloc] init];
+    cameraUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    // Displays a control that allows the user to choose picture or
+    // movie capture, if both are available:
+    cameraUI.mediaTypes =
+    [UIImagePickerController availableMediaTypesForSourceType:
+     UIImagePickerControllerSourceTypePhotoLibrary];
+    
+    // Hides the controls for moving & scaling pictures, or for
+    // trimming movies. To instead show the controls, use YES.
+    cameraUI.allowsEditing = NO;
+    
+    cameraUI.delegate = delegate;
+    
+    [controller presentViewController:cameraUI animated:YES completion:nil];
+    return YES;
+}
+
+
 
 - (void)registerForKeyboardNotifications
 {
@@ -102,106 +221,16 @@
     self.baseScrollView.scrollIndicatorInsets = contentInsets;
 }
 
-- (void)viewDidLoad
+/*
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    [super viewDidLoad];
-    self.cancel=NO;
-    self.IssueImage.layer.borderWidth=1;
-    // Do any additional setup after loading the view.
-    self.IssueNumber.text=[[NSString alloc] initWithFormat:@"Issue : %ld",(long)self.xIssue.itemNo ];
-    self.IssueDescription.text=[[NSString alloc] initWithFormat:@"%@",self.xIssue.description];
-    Photos *photo=[self.xIssue.photoOf anyObject];
-    [Photos displayImageFromURL:[NSURL URLWithString:photo.photoURL] inImageView:self.IssueImage];
-//    [self.IssueImage setImage: self.xIssue.photoOf[0]];
-}
-
-- (void) viewWillDisappear:(BOOL)animated
-{
-    if (!self.cancel)
-    {
-        CCLog(@"how did I get here");
-//        self.xIssue.description=self.IssueDescription.text;
-//        Photos *photo=self.xIssue.photoOf
-//        self.xIssue.=self.image;
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
     }
-
+    return self;
 }
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    self.image = [info objectForKey:UIImagePickerControllerOriginalImage];
-
-    [self.IssueImage setImage:self.image];
-    [self.IssueImage setNeedsDisplay];
-    
-    // You have the image. You can use this to present the image in the next view like you require in `#3`.
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (BOOL) startCameraControllerFromViewController: (UIViewController*) controller
-                                   usingDelegate: (id <UIImagePickerControllerDelegate,
-                                                   UINavigationControllerDelegate>) delegate {
-    
-    if (([UIImagePickerController isSourceTypeAvailable:
-          UIImagePickerControllerSourceTypeCamera] == NO)
-        || (delegate == nil)
-        || (controller == nil))
-        return NO;
-    
-    
-    UIImagePickerController *cameraUI = [[UIImagePickerController alloc] init];
-    cameraUI.sourceType = UIImagePickerControllerSourceTypeCamera;
-    
-    // Displays a control that allows the user to choose picture or
-    // movie capture, if both are available:
-    cameraUI.mediaTypes =
-    [UIImagePickerController availableMediaTypesForSourceType:
-     UIImagePickerControllerSourceTypeCamera];
-    
-    // Hides the controls for moving & scaling pictures, or for
-    // trimming movies. To instead show the controls, use YES.
-    cameraUI.allowsEditing = NO;
-    
-    cameraUI.delegate = delegate;
-    
-    [controller presentViewController:cameraUI animated:YES completion:nil];
-    return YES;
-}
-
-- (BOOL) startPhotoLibraryFromViewController: (UIViewController*) controller
-                                   usingDelegate: (id <UIImagePickerControllerDelegate,
-                                                   UINavigationControllerDelegate>) delegate {
-    
-    UIImagePickerController *cameraUI = [[UIImagePickerController alloc] init];
-    cameraUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    
-    // Displays a control that allows the user to choose picture or
-    // movie capture, if both are available:
-    cameraUI.mediaTypes =
-    [UIImagePickerController availableMediaTypesForSourceType:
-     UIImagePickerControllerSourceTypePhotoLibrary];
-    
-    // Hides the controls for moving & scaling pictures, or for
-    // trimming movies. To instead show the controls, use YES.
-    cameraUI.allowsEditing = NO;
-    
-    cameraUI.delegate = delegate;
-    
-    [controller presentViewController:cameraUI animated:YES completion:nil];
-    return YES;
-}
-
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+*/
 
 /*
 #pragma mark - Navigation

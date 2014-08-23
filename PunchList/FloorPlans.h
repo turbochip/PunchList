@@ -2,7 +2,7 @@
 //  FloorPlans.h
 //  PunchList
 //
-//  Created by Chip Cox on 8/13/14.
+//  Created by Chip Cox on 8/22/14.
 //  Copyright (c) 2014 Home. All rights reserved.
 //
 
@@ -16,7 +16,15 @@
 @property (nonatomic, retain) NSNumber * sequence;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) Photos *drawings;
+@property (nonatomic, retain) NSSet *hasIssues;
 @property (nonatomic, retain) Property *property;
-@property (nonatomic, retain) Issue *haveIssues;
+@end
+
+@interface FloorPlans (CoreDataGeneratedAccessors)
+
+- (void)addHasIssuesObject:(Issue *)value;
+- (void)removeHasIssuesObject:(Issue *)value;
+- (void)addHasIssues:(NSSet *)values;
+- (void)removeHasIssues:(NSSet *)values;
 
 @end
