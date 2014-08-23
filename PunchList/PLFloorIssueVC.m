@@ -161,8 +161,9 @@
                     [newDict setObject:fpt forKey:@"FLOORPLAN"];
                     break;
                 }
-            }            
+            }
             self.selectedIssue=[Issue addIssueFromDictionary:newDict toContext:self.context];
+            [self.issueArray addObject:self.selectedIssue];
             [self performSegueWithIdentifier:@"IssueSegue" sender:self];
         }
     }
@@ -201,6 +202,7 @@
     NSFetchRequest *fr=[[NSFetchRequest alloc] initWithEntityName:@"Issue"];
     fr.predicate=[NSPredicate predicateWithFormat:@"isOnFloorPlan=%@",[fpArray[self.pageControl.currentPage] objectForKey:@"FLOORPLAN"]];
     fr.sortDescriptors=nil;
+    CCLog(@"fr.predicate=%@",fr.predicate);
     NSArray *rs=[self.context executeFetchRequest:fr error:nil];
     for (Issue *r in rs) {
         [self.issueArray addObject:r];
@@ -213,10 +215,8 @@
 // updateUI is going to loop through all the issues for the active floorplan and display them.
 - (void) updateUI
 {
-    for(Issue *item in self.issueArray) {
-        //redraw each item in the uiview subview
-        self.propertyIssueView.ploc=CGPointMake([item.locationX floatValue], [item.locationY floatValue]);
-    }
+    self.propertyIssueView.issuePoints= self.issueArray;
+    [self.propertyIssueView setNeedsDisplay];
 }
 
 #pragma mark segue processing

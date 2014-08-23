@@ -7,6 +7,8 @@
 //
 
 #import "PLfloorView.h"
+#import "Issue+addon.h"
+#import "Issue.h"
 #import "PLItem.h"
 
 @interface PLfloorView()
@@ -25,15 +27,24 @@
     return self;
 }
 
+- (NSMutableArray *) issuePoints
+{
+    if(!_issuePoints) _issuePoints=[[NSMutableArray alloc] init];
+    [self setNeedsDisplay];
+    return _issuePoints;
+}
+
 - (UIBezierPath *) path
 {
     if(!_path) _path=[[UIBezierPath alloc] init];
     return _path;
 }
+
 - (void) setPloc:(CGPoint) p
 {
     _ploc=CGPointMake(p.x, p.y);
-    [self setNeedsDisplay];
+    [self drawPoint:_ploc];
+//    [self setNeedsDisplay];
     
 }
 
@@ -42,7 +53,10 @@
 - (void)drawRect:(CGRect)rect
 {
     // Drawing code
-    [self drawPoint:CGPointMake(self.ploc.x,self.ploc.y)];
+    for(Issue *issue in self.issuePoints) {
+        self.ploc=CGPointMake([issue.locationX floatValue],[issue.locationY floatValue]);
+ //       [self drawPoint:CGPointMake(self.ploc.x,self.ploc.y)];
+    }
     
 }
 
@@ -51,7 +65,7 @@
 {
     //use move to point, this raises the pen to avoid drawing lines between points.
     [self.path moveToPoint:pointLoc];
-    
+    CCLog(@"path=%@",self.path);
     [self.path addArcWithCenter:CGPointMake(pointLoc.x-4, pointLoc.y-4)
                          radius:10 startAngle:0
                        endAngle:(2*M_PI)
@@ -62,6 +76,7 @@
 
     [self.path stroke];
     [self.path fill];
-    [self setNeedsDisplay];
+    CCLog(@"Leaving drawPoint");
+//    [self setNeedsDisplay];
 }
 @end

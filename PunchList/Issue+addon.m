@@ -42,11 +42,9 @@
     }
     Issue *i = [rs objectAtIndex:0];
     i.title=[dict valueForKey:@"DESCRIPTION"];
-//    NSMutableSet *tset=[[NSMutableSet alloc] init];
-//    [tset addobject:[dict valueForKey:@"PHOTOOF"]];
-//    [i addHasPhotoObject:[dict valueForKey:@"PHOTOOF"]];
     return i;
 }
+
 +(void)deleteIssue:(Issue *) issue
 {
     
