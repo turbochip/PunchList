@@ -32,6 +32,7 @@
 @property (nonatomic,strong) Property *property;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (strong,nonatomic) NSManagedObjectContext *context;
+@property (nonatomic,strong) NSMutableArray *fpArray;
 @end
 
 @implementation PLFloorIssueVC
@@ -109,6 +110,7 @@
 - (IBAction)pageControlTap:(UIPageControl *)sender
 {
     CCLog(@"currentPage %d, numberOfPages %d", self.pageControl.currentPage,self.pageControl.numberOfPages);
+    [self loadFloorPlan:self.property];
 }
 
 // multiple functions based on state when tap is performed.
@@ -131,22 +133,24 @@
         {
             CCLog(@"Point already exists");
             
-            NSFetchRequest *fr=[NSFetchRequest fetchRequestWithEntityName:@"issue"];
+            NSFetchRequest *fr=[NSFetchRequest fetchRequestWithEntityName:@"Issue"];
             
-#warning We need to re-address this and use a unique identifier over all of the floor plans, not just the floor plans in this property, or we need to include the property in the predicate.
-            fr.predicate=[NSPredicate predicateWithFormat:@"isOnFloorPlan.sequence=%d",self.pageControl.currentPage];
+            fr.predicate=[NSPredicate predicateWithFormat:@"isOnFloorPlan=%@",[self.fpArray[self.pageControl.currentPage] objectForKey:@"FLOORPLAN"]];
+            //fr.predicate=[NSPredicate predicateWithFormat:@"isOnFloorPlan=%@",self.pageControl.currentPage];
             fr.sortDescriptors=nil;
             NSArray *rs=[self.context executeFetchRequest:fr error:nil];
             if((rs==nil) || (rs.count==0)) {
                 CCLog(@"No issues found in database at all");
             } else {
-                for(Issue *issue in rs)
+                for(Issue *issue in rs) {
+                    CCLog(@"lX=%f, lY=%f, tX=%f, tY=%f",issue.locationX.floatValue,issue.locationY.floatValue,locationOfTap.x,locationOfTap.y);
                     if(((issue.locationX.floatValue >=locationOfTap.x-5) && (issue.locationX.floatValue<=locationOfTap.x+5)) &&
                        ((issue.locationY.floatValue>=locationOfTap.y-5) && (issue.locationY.floatValue<=locationOfTap.y+5))) {
                         self.selectedIssue=issue;
                         [self performSegueWithIdentifier:@"IssueSegue" sender:self];
                         break;
                     }
+                }
             }
         } else {
             CCLog(@"Adding point");
@@ -174,33 +178,39 @@
 - (void) loadProperty:(Property *) prop
 {
     self.propertyNameTextField.text=prop.name;
-    NSMutableArray *fpArray=[[NSMutableArray alloc] init];
+    self.fpArray=nil;
+    self.fpArray=[[NSMutableArray alloc] init];
     for(FloorPlans *fp in prop.floorPlan){
         NSMutableDictionary *photoDict=[[NSMutableDictionary alloc] init];
         [photoDict setValue:fp.sequence forKey:@"SEQUENCE"];
         [photoDict setValue:fp.drawings forKey:@"DRAWING"];
         [photoDict setValue:fp.title forKey:@"TITLE"];
         [photoDict setObject:fp forKey:@"FLOORPLAN"];
-        [fpArray addObject:photoDict];
+        [self.fpArray addObject:photoDict];
         photoDict=nil;
     }
     // sort fpArray on sequence just to make sure we have everything in order.
     NSSortDescriptor *sortSequence = [NSSortDescriptor sortDescriptorWithKey:@"SEQUENCE" ascending:YES];
-    [fpArray sortUsingDescriptors:@[sortSequence]];
+    [self.fpArray sortUsingDescriptors:@[sortSequence]];
     // set page control based on the number of floorplans in the property returned.
     self.pageControl.numberOfPages=prop.floorPlan.count;
     self.pageControl.currentPage=0;
     self.pageControl.enabled=YES;
-    
+    [self loadFloorPlan:prop];
+
+}
+
+- (void) loadFloorPlan:(Property *) prop
+{
     // build image
     self.issueArray=nil;
-    Photos *fpImage=[fpArray[self.pageControl.currentPage] valueForKey:@"DRAWING"];
+    Photos *fpImage=[self.fpArray[self.pageControl.currentPage] valueForKey:@"DRAWING"];
     CCLog(@"fpImage.photoURL=%@",fpImage.photoURL);
     [Photos displayImageFromURL:[NSURL URLWithString:fpImage.photoURL] inImageView:self.pFPV];
     [self.propertyView setNeedsDisplay];
     
     NSFetchRequest *fr=[[NSFetchRequest alloc] initWithEntityName:@"Issue"];
-    fr.predicate=[NSPredicate predicateWithFormat:@"isOnFloorPlan=%@",[fpArray[self.pageControl.currentPage] objectForKey:@"FLOORPLAN"]];
+    fr.predicate=[NSPredicate predicateWithFormat:@"isOnFloorPlan=%@",[self.fpArray[self.pageControl.currentPage] objectForKey:@"FLOORPLAN"]];
     fr.sortDescriptors=nil;
     CCLog(@"fr.predicate=%@",fr.predicate);
     NSArray *rs=[self.context executeFetchRequest:fr error:nil];

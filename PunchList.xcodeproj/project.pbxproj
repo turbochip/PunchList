@@ -85,6 +85,9 @@
 		F16A11C2197C86AB00DF6D97 /* PLPropertySearchTVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLPropertySearchTVC.m; sourceTree = "<group>"; };
 		F16A11C5197C874F00DF6D97 /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
 		F16A11C6197C874F00DF6D97 /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
+		F171688E19A93D8A002ADDBC /* punchlist_768x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = punchlist_768x1024.png; sourceTree = "<group>"; };
+		F171688F19A93D9C002ADDBC /* punchlist_1536x2048.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = punchlist_1536x2048.png; sourceTree = "<group>"; };
+		F171689019A93DD2002ADDBC /* punchlist_1024x768.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = punchlist_1024x768.png; sourceTree = "<group>"; };
 		F173D9D21944C25F00980960 /* PLfloorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PLfloorView.h; sourceTree = "<group>"; };
 		F173D9D31944C25F00980960 /* PLfloorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PLfloorView.m; sourceTree = "<group>"; };
 		F175D3CA1966FF250070F296 /* PunchListDB.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PunchListDB.xcdatamodel; sourceTree = "<group>"; };
@@ -183,6 +186,9 @@
 		F1A1A31F1943440D0018B092 = {
 			isa = PBXGroup;
 			children = (
+				F171689019A93DD2002ADDBC /* punchlist_1024x768.png */,
+				F171688F19A93D9C002ADDBC /* punchlist_1536x2048.png */,
+				F171688E19A93D8A002ADDBC /* punchlist_768x1024.png */,
 				F1A1A3311943440D0018B092 /* PunchList */,
 				F1A1A3501943440D0018B092 /* PunchListTests */,
 				F1A1A32A1943440D0018B092 /* Frameworks */,
@@ -555,7 +561,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PunchList/PunchList-Prefix.pch";
@@ -571,8 +577,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PunchList/PunchList-Prefix.pch";
 				INFOPLIST_FILE = "PunchList/PunchList-Info.plist";

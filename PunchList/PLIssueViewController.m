@@ -47,6 +47,7 @@
     
 #warning fix this to get the correct photo not just any object
     Photos *photo=[self.xIssue.hasPhotos anyObject];
+    self.issuePhoto=photo;
     [Photos displayImageFromURL:[NSURL URLWithString:photo.photoURL] inImageView:self.IssueImage];
     //    [self.IssueImage setImage: self.xIssue.photoOf[0]];
 }
@@ -74,7 +75,17 @@
     NSMutableDictionary *updateDict=[[NSMutableDictionary alloc] init];
     [updateDict setObject:self.IssueDescription.text forKey:@"DESCRIPTION"];
     self.xIssue=[Issue updateIssue:self.xIssue withDictionary:updateDict onContext:self.document.managedObjectContext];
-    [self.xIssue addHasPhotosObject:self.issuePhoto];
+    CCLog(@"xIssue.hasPhotos=%@, self.issuePhoto=%@",self.xIssue.hasPhotos,self.issuePhoto);
+    BOOL found=NO;
+    for(Photos *p in self.xIssue.hasPhotos) {
+        CCLog(@"p.photoURL=%@, self.issuePhoto.photoURL=%@",p.photoURL,self.issuePhoto.photoURL);
+        if(p.photoURL==self.issuePhoto.photoURL) {
+            found=YES;
+            break;
+        }
+    }
+    if(!found)
+        [self.xIssue addHasPhotosObject:self.issuePhoto];
     [self closeScreenCancel:NO];
 }
 
