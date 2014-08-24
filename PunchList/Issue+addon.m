@@ -45,9 +45,9 @@
     return i;
 }
 
-+(void)deleteIssue:(Issue *) issue
++(void)deleteIssue:(Issue *) issue withDictionary:(NSDictionary *)dict onContext:(NSManagedObjectContext *) context
 {
-    
+    CCLog(@"Preparing to delete issue");
 }
 
 @end

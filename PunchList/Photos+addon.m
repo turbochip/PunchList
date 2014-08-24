@@ -32,7 +32,7 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"Photos" inManagedObjectContext:context];
     [fetchRequest setEntity:entity];
     // Specify criteria for filtering which objects to fetch
-    CCLog(@"Checking for photo with url %@",[photoURL absoluteString]);
+    //CCLog(@"Checking for photo with url %@",[photoURL absoluteString]);
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"photoURL=%@", [photoURL absoluteString]];
     [fetchRequest setPredicate:predicate];
     // Specify how the fetched objects should be sorted
@@ -72,7 +72,7 @@
         }
         case ALAuthorizationStatusAuthorized: {
             CCLog(@"Authorized");
-            CCLog(@"urlIn=%@",urlIn.pathComponents);
+            //CCLog(@"urlIn=%@",urlIn.pathComponents);
             ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
             __block UIImage *returnValue = nil;
             [library assetForURL:urlIn resultBlock:^(ALAsset *asset) {

@@ -54,7 +54,7 @@
 
 
 //Not sure if this is called
-- (void) viewWillDisappear:(BOOL)animated
+/*- (void) viewWillDisappear:(BOOL)animated
 {
     if (!self.cancel)
     {
@@ -62,6 +62,7 @@
     }
     
 }
+ */
 
 // exit out by clicking cancel
 - (void) closeScreenCancel: (BOOL) cancel
@@ -75,10 +76,10 @@
     NSMutableDictionary *updateDict=[[NSMutableDictionary alloc] init];
     [updateDict setObject:self.IssueDescription.text forKey:@"DESCRIPTION"];
     self.xIssue=[Issue updateIssue:self.xIssue withDictionary:updateDict onContext:self.document.managedObjectContext];
-    CCLog(@"xIssue.hasPhotos=%@, self.issuePhoto=%@",self.xIssue.hasPhotos,self.issuePhoto);
+    //CCLog(@"xIssue.hasPhotos=%@, self.issuePhoto=%@",self.xIssue.hasPhotos,self.issuePhoto);
     BOOL found=NO;
     for(Photos *p in self.xIssue.hasPhotos) {
-        CCLog(@"p.photoURL=%@, self.issuePhoto.photoURL=%@",p.photoURL,self.issuePhoto.photoURL);
+        //CCLog(@"p.photoURL=%@, self.issuePhoto.photoURL=%@",p.photoURL,self.issuePhoto.photoURL);
         if(p.photoURL==self.issuePhoto.photoURL) {
             found=YES;
             break;
@@ -103,6 +104,11 @@
 //Cancel button to leave here
 - (IBAction)cancelButton:(UIBarButtonItem *)sender {
 #warning need to add code to tell parent that it should remove place marker
+
+    NSMutableDictionary *updateDict=[[NSMutableDictionary alloc] init];
+    [updateDict setObject:self.IssueDescription.text forKey:@"DESCRIPTION"];
+    [Issue deleteIssue:self.xIssue withDictionary:updateDict onContext:self.document.managedObjectContext];
+
     [self closeScreenCancel:YES];
 }
 
@@ -231,27 +237,5 @@
     self.baseScrollView.contentInset = contentInsets;
     self.baseScrollView.scrollIndicatorInsets = contentInsets;
 }
-
-/*
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -12,5 +12,5 @@
 @interface Issue (addon)
 +(Issue *)addIssueFromDictionary:(NSDictionary *)dict toContext:(NSManagedObjectContext *)context;
 +(Issue *)updateIssue:(Issue *)issue withDictionary:(NSDictionary *)dict  onContext:(NSManagedObjectContext *) context;
-+(void)deleteIssue:(Issue *) issue;
++(void)deleteIssue:(Issue *) issue withDictionary:(NSDictionary *)dict onContext:(NSManagedObjectContext *) context;
 @end

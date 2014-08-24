@@ -44,7 +44,6 @@
 {
     _ploc=CGPointMake(p.x, p.y);
     [self drawPoint:_ploc];
-//    [self setNeedsDisplay];
     
 }
 
@@ -53,9 +52,9 @@
 - (void)drawRect:(CGRect)rect
 {
     // Drawing code
+    self.path=nil;
     for(Issue *issue in self.issuePoints) {
         self.ploc=CGPointMake([issue.locationX floatValue],[issue.locationY floatValue]);
- //       [self drawPoint:CGPointMake(self.ploc.x,self.ploc.y)];
     }
     
 }
@@ -65,7 +64,7 @@
 {
     //use move to point, this raises the pen to avoid drawing lines between points.
     [self.path moveToPoint:pointLoc];
-    CCLog(@"path=%@",self.path);
+    //CCLog(@"path=%@",self.path);
     [self.path addArcWithCenter:CGPointMake(pointLoc.x-4, pointLoc.y-4)
                          radius:10 startAngle:0
                        endAngle:(2*M_PI)
@@ -76,7 +75,6 @@
 
     [self.path stroke];
     [self.path fill];
-    CCLog(@"Leaving drawPoint");
-//    [self setNeedsDisplay];
+    //CCLog(@"Leaving drawPoint");
 }
 @end

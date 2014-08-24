@@ -91,12 +91,6 @@
     [self.PropertyScrollView addSubview:self.propertyIssueView];
 }
 
-//I don't think we need this since it only does a log message
-- (void) viewWillAppear:(BOOL)animated
-{
-    CCLog(@"view will now appear %@",self.selectedIssue);
-}
-
 // required method for zooming
 - (UIView *) viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
@@ -109,7 +103,7 @@
 // handles switching between floorplans
 - (IBAction)pageControlTap:(UIPageControl *)sender
 {
-    CCLog(@"currentPage %d, numberOfPages %d", self.pageControl.currentPage,self.pageControl.numberOfPages);
+    CCLog(@"currentPage %ld, numberOfPages %ld", (long)self.pageControl.currentPage,(long)self.pageControl.numberOfPages);
     [self loadFloorPlan:self.property];
 }
 
@@ -136,7 +130,6 @@
             NSFetchRequest *fr=[NSFetchRequest fetchRequestWithEntityName:@"Issue"];
             
             fr.predicate=[NSPredicate predicateWithFormat:@"isOnFloorPlan=%@",[self.fpArray[self.pageControl.currentPage] objectForKey:@"FLOORPLAN"]];
-            //fr.predicate=[NSPredicate predicateWithFormat:@"isOnFloorPlan=%@",self.pageControl.currentPage];
             fr.sortDescriptors=nil;
             NSArray *rs=[self.context executeFetchRequest:fr error:nil];
             if((rs==nil) || (rs.count==0)) {
@@ -212,7 +205,7 @@
     NSFetchRequest *fr=[[NSFetchRequest alloc] initWithEntityName:@"Issue"];
     fr.predicate=[NSPredicate predicateWithFormat:@"isOnFloorPlan=%@",[self.fpArray[self.pageControl.currentPage] objectForKey:@"FLOORPLAN"]];
     fr.sortDescriptors=nil;
-    CCLog(@"fr.predicate=%@",fr.predicate);
+    //CCLog(@"fr.predicate=%@",fr.predicate);
     NSArray *rs=[self.context executeFetchRequest:fr error:nil];
     for (Issue *r in rs) {
         [self.issueArray addObject:r];
