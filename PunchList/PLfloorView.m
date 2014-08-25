@@ -5,6 +5,7 @@
 //  Created by Chip Cox on 6/8/14.
 //  Copyright (c) 2014 Home. All rights reserved.
 //
+// class to handle dots on the floor
 
 #import "PLfloorView.h"
 #import "Issue+addon.h"
@@ -17,19 +18,12 @@
 @end
 @implementation PLfloorView
 @synthesize ploc=_ploc;
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-        self.backgroundColor=[UIColor clearColor];
-    }
-    return self;
-}
 
+#pragma mark    Setters & Getters
 - (NSMutableArray *) issuePoints
 {
     if(!_issuePoints) _issuePoints=[[NSMutableArray alloc] init];
+    //we've got new points to display (this is set outside of this class)
     [self setNeedsDisplay];
     return _issuePoints;
 }
@@ -47,12 +41,25 @@
     
 }
 
+#pragma mark    screen initialization
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        // Initialization code
+        self.backgroundColor=[UIColor clearColor];
+    }
+    return self;
+}
+
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
     // Drawing code
+    // re-initialize the path
     self.path=nil;
+    //go through all the issuepoints and assign points for each issue
     for(Issue *issue in self.issuePoints) {
         self.ploc=CGPointMake([issue.locationX floatValue],[issue.locationY floatValue]);
     }

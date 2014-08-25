@@ -10,6 +10,7 @@
 
 @implementation Contacts (addon)
 
+// addContact from dictionary entry
 +(BOOL) addContact:(NSDictionary *) c onContext:(NSManagedObjectContext *) context
 {
     BOOL status=NO;
@@ -27,6 +28,7 @@
         CCLog(@"Error executing fetch %@",[c valueForKeyPath:@"Name"]);
         status=NO;
     }else {
+        // decide what to do based on the number of records matching contact name we found.
         switch (contactArray.count) {
             case 0: {
                 CCLog(@"Add new record");
@@ -57,9 +59,10 @@
 
 +(void) deleteContact:(NSString *) ContactName onContext:(NSManagedObjectContext *) context
 {
-    
+#warning Need to implement deleteContact
 }
 
+//Find the contact with the given name
 +(NSArray *) searchContact:(NSString *)contactName onContext:(NSManagedObjectContext *) context
 {
     NSFetchRequest *request=[[NSFetchRequest alloc] initWithEntityName:@"Contacts"];

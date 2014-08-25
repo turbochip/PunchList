@@ -5,6 +5,7 @@
 //  Created by Chip Cox on 7/4/14.
 //  Copyright (c) 2014 Home. All rights reserved.
 //
+//  used to add new contacts, or select contacts to relate to properties.
 
 #import "PLContactsTVC.h"
 #import "PLPropertyDetailTVC.h"
@@ -25,6 +26,7 @@
 
 @implementation PLContactsTVC
 
+#pragma mark Setters & Getters
 - (NSMutableArray *) contacts
 {
     if(!_contacts) _contacts=[[NSMutableArray alloc] init];
@@ -37,15 +39,6 @@
     return _contactsArray;
 }
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (UIManagedDocument *)document
 {
     if(!_document) {
@@ -55,19 +48,33 @@
     return _document;
 }
 
+#pragma mark initialize screen
+- (id)initWithStyle:(UITableViewStyle)style
+{
+    self = [super initWithStyle:style];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+//viewDidLoad only runs the first time the view is loaded
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self.searchString setDelegate:self];
+    
+    [self loadAddressData];
+}
+
+//viewDidAppear gets called when we come back from a segue
 - (void) viewDidAppear:(BOOL)animated
 {
     [self loadAddressData];
     [self.tableView reloadData];
 }
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    [self.searchString setDelegate:self];
 
-    [self loadAddressData];
-}
-
+//Get our list of contacts to use in the tableview cell method
 - (void) loadAddressData
 {
     NSManagedObjectContext *context=self.document.managedObjectContext;
@@ -90,9 +97,11 @@
   
 }
 
+/*
 - (IBAction)refreshTable:(UIRefreshControl *)sender {
   //  [self loadAddressData];
 }
+*/
 
 #pragma mark - Table view data source
 
@@ -121,9 +130,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     UITableViewCell *senderCell=sender;
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
     if([segue.destinationViewController isKindOfClass:[PLPropertyDetailTVC class]] ) {
+        //Enter Property Details
         PLPropertyDetailTVC *pdtvc=segue.destinationViewController;
         pdtvc.transferContact=senderCell.textLabel.text;
         pdtvc.transferIndexPath=self.transferIndexPath;
@@ -131,9 +139,11 @@
         CCLog(@"sender text=%@",senderCell.textLabel.text);
     } else {
         if([segue.destinationViewController isKindOfClass:[PLPropertyViewController class]]) {
+            // we selected a contact
             CCLog(@"Returning to plpropertyviewcontroller");
             NSManagedObjectContext *context=self.document.managedObjectContext;
             UITableViewCell *senderCell=sender;
+            //see if selected name already exists in contacts table.
             NSFetchRequest *request=[[NSFetchRequest alloc] initWithEntityName:@"Contacts"];
             request.sortDescriptors=@[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
             NSError *error;
@@ -142,6 +152,7 @@
             NSArray *propArray=[context executeFetchRequest:request error:&error];
             CCLog(@"propArray=%@",propArray);
             
+            //based on the number of rows returned decide whether to add new contact or update an existing one.
             if(!propArray) {
                 CCLog(@"Error fetching contact for %@",senderCell.textLabel.text);
             } else {
@@ -169,6 +180,9 @@
     }
 }
 
+#pragma mark AddressBookAuthorization
+
+// Are we authorized to use the address book
 - (void) checkAddressBookAuthorization
 {
     if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied ||

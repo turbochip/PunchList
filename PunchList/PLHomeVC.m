@@ -5,6 +5,7 @@
 //  Created by Chip Cox on 7/16/14.
 //  Copyright (c) 2014 Home. All rights reserved.
 //
+// basically this is our splash screen but we do some stuff in here like opening the database, etc
 
 #import "PLHomeVC.h"
 #import "PLAppDelegate.h"
@@ -74,20 +75,11 @@
     CCLog(@"Database is open.");
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
     CCLog(@"Prepayring to segue");
 }
 

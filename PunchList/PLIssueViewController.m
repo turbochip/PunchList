@@ -5,6 +5,7 @@
 //  Created by Chip Cox on 6/9/14.
 //  Copyright (c) 2014 Home. All rights reserved.
 //
+// add/update issues
 
 #import "PLIssueViewController.h"
 #import "Photos+addon.h"
@@ -19,11 +20,11 @@
 @property (nonatomic,strong) UIImage *image;
 @property (nonatomic,strong) UITextView *activeField;
 @property (nonatomic,strong) Photos *issuePhoto;
-
 @end
 
 @implementation PLIssueViewController
 
+#pragma mark    Setters & Getters
 - (Photos *)issuePhoto
 {
     if(!_issuePhoto) _issuePhoto=[[Photos alloc] init];
@@ -36,6 +37,7 @@
     return _context;
 }
 
+#pragma mark    Screen Initialization
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -49,7 +51,6 @@
     Photos *photo=[self.xIssue.hasPhotos anyObject];
     self.issuePhoto=photo;
     [Photos displayImageFromURL:[NSURL URLWithString:photo.photoURL] inImageView:self.IssueImage];
-    //    [self.IssueImage setImage: self.xIssue.photoOf[0]];
 }
 
 
@@ -71,6 +72,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+//Save updates to the issue
 - (IBAction)saveButton:(UIBarButtonItem *)sender {
     // actually we do an update here to the issue information we already saved back in the main view controller
     NSMutableDictionary *updateDict=[[NSMutableDictionary alloc] init];
@@ -78,6 +80,7 @@
     self.xIssue=[Issue updateIssue:self.xIssue withDictionary:updateDict onContext:self.document.managedObjectContext];
     //CCLog(@"xIssue.hasPhotos=%@, self.issuePhoto=%@",self.xIssue.hasPhotos,self.issuePhoto);
     BOOL found=NO;
+    //Does the photo for this issue already exist
     for(Photos *p in self.xIssue.hasPhotos) {
         //CCLog(@"p.photoURL=%@, self.issuePhoto.photoURL=%@",p.photoURL,self.issuePhoto.photoURL);
         if(p.photoURL==self.issuePhoto.photoURL) {
@@ -85,6 +88,7 @@
             break;
         }
     }
+    // if the photo does not already exist add it.  If it does then just ignore it.
     if(!found)
         [self.xIssue addHasPhotosObject:self.issuePhoto];
     [self closeScreenCancel:NO];

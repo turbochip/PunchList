@@ -944,7 +944,7 @@
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
+        <segue reference="fTh-g7-gIS"/>
         <segue reference="9ZK-YS-Yqp"/>
-        <segue reference="mbK-gm-iWn"/>
     </inferredMetricsTieBreakers>
 </document>
