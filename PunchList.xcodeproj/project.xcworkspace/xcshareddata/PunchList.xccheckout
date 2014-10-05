@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>A8097596-6DC8-4B9D-BB2C-6E423E780887</string>
+	<key>IDESourceControlProjectName</key>
+	<string>PunchList</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C81E7DD7D58D8BEA6351059948C09CAE356B0E65</key>
+		<string>https://github.com/turbochip/PunchList.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>PunchList.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C81E7DD7D58D8BEA6351059948C09CAE356B0E65</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/turbochip/PunchList.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C81E7DD7D58D8BEA6351059948C09CAE356B0E65</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C81E7DD7D58D8BEA6351059948C09CAE356B0E65</string>
+			<key>IDESourceControlWCCName</key>
+			<string>PunchList</string>
+		</dict>
+	</array>
+</dict>
+</plist>

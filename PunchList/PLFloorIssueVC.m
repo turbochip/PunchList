@@ -173,24 +173,27 @@
     self.propertyNameTextField.text=prop.name;
     self.fpArray=nil;
     self.fpArray=[[NSMutableArray alloc] init];
-    for(FloorPlans *fp in prop.floorPlan){
-        NSMutableDictionary *photoDict=[[NSMutableDictionary alloc] init];
-        [photoDict setValue:fp.sequence forKey:@"SEQUENCE"];
-        [photoDict setValue:fp.drawings forKey:@"DRAWING"];
-        [photoDict setValue:fp.title forKey:@"TITLE"];
-        [photoDict setObject:fp forKey:@"FLOORPLAN"];
-        [self.fpArray addObject:photoDict];
-        photoDict=nil;
+    if(prop.floorPlan.count==0){
+        CCLog(@"No floorplans available");
+    } else {
+        for(FloorPlans *fp in prop.floorPlan){
+            NSMutableDictionary *photoDict=[[NSMutableDictionary alloc] init];
+            [photoDict setValue:fp.sequence forKey:@"SEQUENCE"];
+            [photoDict setValue:fp.drawings forKey:@"DRAWING"];
+            [photoDict setValue:fp.title forKey:@"TITLE"];
+            [photoDict setObject:fp forKey:@"FLOORPLAN"];
+            [self.fpArray addObject:photoDict];
+            photoDict=nil;
+        }
+        // sort fpArray on sequence just to make sure we have everything in order.
+        NSSortDescriptor *sortSequence = [NSSortDescriptor sortDescriptorWithKey:@"SEQUENCE" ascending:YES];
+        [self.fpArray sortUsingDescriptors:@[sortSequence]];
+        // set page control based on the number of floorplans in the property returned.
+        self.pageControl.numberOfPages=prop.floorPlan.count;
+        self.pageControl.currentPage=0;
+        self.pageControl.enabled=YES;
+        [self loadFloorPlan:prop];
     }
-    // sort fpArray on sequence just to make sure we have everything in order.
-    NSSortDescriptor *sortSequence = [NSSortDescriptor sortDescriptorWithKey:@"SEQUENCE" ascending:YES];
-    [self.fpArray sortUsingDescriptors:@[sortSequence]];
-    // set page control based on the number of floorplans in the property returned.
-    self.pageControl.numberOfPages=prop.floorPlan.count;
-    self.pageControl.currentPage=0;
-    self.pageControl.enabled=YES;
-    [self loadFloorPlan:prop];
-
 }
 
 - (void) loadFloorPlan:(Property *) prop
